@@ -48,6 +48,10 @@ export default function NavBar() {
                 color={active ? 'primary' : 'inherit'}
                 variant={active ? 'contained' : 'text'}
                 size="small"
+                sx={{
+                  textDecoration: active ? 'underline' : 'none',
+                  textUnderlineOffset: active ? '4px' : undefined,
+                }}
               >
                 {l.label}
               </Button>

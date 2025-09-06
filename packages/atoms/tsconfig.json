@@ -1,7 +1,12 @@
 {
-  "extends": "@joey/tsconfig/tsconfig.lib.json",
+  "extends": "@joey/tsconfig/tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": "."
-  }
+    "baseUrl": ".",
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": false,
+    "outDir": "dist"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["dist", "node_modules"]
 }
-

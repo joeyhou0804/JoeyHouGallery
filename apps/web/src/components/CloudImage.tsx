@@ -6,7 +6,7 @@ function cloudinaryLoader({ src, width, quality }: ImageLoaderProps) {
   // Inject Cloudinary transformations for auto format/quality and width limit.
   const q = quality || 75;
   // Replace the first '/upload/' with transformation string
-  return src.replace('/upload/', `/upload/f_auto,q_${q},c_limit,w_${width}/`);
+  return src.replace('/upload/', `/upload/f_auto,q_${q},c_limit,w_${width},dpr_auto/`);
 }
 
 export default function CloudImage({ src, alt }: { src: string; alt: string }) {
@@ -22,4 +22,3 @@ export default function CloudImage({ src, alt }: { src: string; alt: string }) {
     />
   );
 }
-

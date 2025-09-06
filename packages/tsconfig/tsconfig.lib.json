@@ -6,7 +6,5 @@
     "emitDeclarationOnly": false,
     "outDir": "dist",
     "jsx": "react-jsx"
-  },
-  "include": ["src"]
+  }
 }
-
