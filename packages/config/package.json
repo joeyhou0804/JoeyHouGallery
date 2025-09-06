@@ -1,0 +1,12 @@
+{
+  "name": "@joey/config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./eslint/base": "./eslint/base.js",
+    "./eslint/next": "./eslint/next.js",
+    "./prettier": "./prettier/base.cjs"
+  }
+}
+

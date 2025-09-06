@@ -1,0 +1,24 @@
+{
+  "name": "@joey/atoms",
+  "version": "0.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "src"],
+  "scripts": {
+    "dev": "tsc -w",
+    "build": "tsc -p tsconfig.json",
+    "lint": "eslint src --ext .ts,.tsx",
+    "test": "vitest",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "format": "prettier --write ."
+  },
+  "peerDependencies": {
+    "jotai": "^2.4.0",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "@joey/tsconfig": "workspace:*"
+  }
+}

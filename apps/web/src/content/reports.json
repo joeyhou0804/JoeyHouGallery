@@ -1,0 +1,51 @@
+{
+  "title": "Reports",
+  "sections": [
+    {
+      "type": "intro",
+      "title": "Featured Columbia University Assignment",
+      "body": [
+        "Here is the featured coursework I have finished at Columbia University."
+      ]
+    },
+    {
+      "type": "gallery",
+      "title": "Descriptive Hungarian Grammar — Final Paper & Handout",
+      "images": [
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639376152/joeyhougallery/reports/Hungarian/IMG_8767_jdqdw4.jpg",
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639376161/joeyhougallery/reports/Hungarian/IMG_8768_cwlfmh.jpg",
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639376171/joeyhougallery/reports/Hungarian/IMG_8769_q5dsry.jpg",
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639376185/joeyhougallery/reports/Hungarian/IMG_8770_tm7iji.jpg"
+      ]
+    },
+    {
+      "type": "gallery",
+      "title": "Assignment Template",
+      "body": "Cover designed in early 2020 using Microsoft Publisher.",
+      "images": [
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639372416/joeyhougallery/reports/IMG_8757_bkgvdc.jpg",
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639372417/joeyhougallery/reports/IMG_8758_nabudq.jpg"
+      ]
+    },
+    {
+      "type": "gallery",
+      "title": "Course 1 — Computer Science Theory",
+      "body": "Pages selected from homework; figures drawn in Word; compiled by LaTeX.",
+      "images": [
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639373173/joeyhougallery/reports/CS%20Theory/IMG_8763_hjk0om.jpg",
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639373166/joeyhougallery/reports/CS%20Theory/IMG_8760_jdlaye.jpg",
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639373169/joeyhougallery/reports/CS%20Theory/IMG_8762_ozmopo.jpg",
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639373178/joeyhougallery/reports/CS%20Theory/%E7%85%A7%E7%89%87_2021-12-13_12.25.18_%E4%B8%8A%E5%8D%88_wunz16.jpg"
+      ]
+    },
+    {
+      "type": "gallery",
+      "title": "Course 2 — Ordinary Differential Equations",
+      "body": "Pages selected from Summer 2020 ODE course work; compiled by LaTeX.",
+      "images": [
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639375168/joeyhougallery/reports/ODE/IMG_8765_n7zgq7.jpg",
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639375176/joeyhougallery/reports/ODE/IMG_8766_syxy0a.jpg"
+      ]
+    }
+  ]
+}

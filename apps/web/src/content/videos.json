@@ -1,0 +1,41 @@
+{
+  "title": "Videos",
+  "sections": [
+    {
+      "type": "intro",
+      "title": "Video Essay & Introduction",
+      "body": [
+        "Welcome to my video section!",
+        "This is a video essay for master degree programs. It is also a nice 2-minute introduction video!"
+      ]
+    },
+    {
+      "type": "videos",
+      "title": "Video Essay",
+      "items": [
+        {
+          "title": "Video Essay - Jiangtian (Joey) Hou 侯江天",
+          "youtubeId": "Xz08rpOaU0M",
+          "description": "A two minutes long introduction video"
+        }
+      ]
+    },
+    {
+      "type": "videos",
+      "title": "Columbia & CityU HK JBDP Pre-departure Orientation Session",
+      "items": [
+        {
+          "title": "Joey's Question & Answer [Episode 2] (2021)",
+          "youtubeId": "8d3AIE3-kQA",
+          "description": "Orientation Session 2021"
+        },
+        {
+          "title": "Joey's Question & Answer [Episode 1] (2020)",
+          "youtubeId": "DNJFN6HK7MQ",
+          "description": "Orientation Session 2020"
+        }
+      ]
+    }
+  ]
+}
+

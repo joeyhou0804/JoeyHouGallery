@@ -1,0 +1,39 @@
+{
+  "title": "Posters",
+  "sections": [
+    {
+      "type": "intro",
+      "title": "Wall Newspaper / Bulletin Boards",
+      "body": [
+        "I was in charge of designing and maintaining class wall newspaper/bulletin boards for over 6 years.",
+        "Some of the designs are displayed here."
+      ]
+    },
+    {
+      "type": "gallery",
+      "title": "High School 1",
+      "body": "A career planning themed bulletin board (background) design.",
+      "images": [
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638407917/joeyhougallery/posters/IMG_0949_wm7cwx.jpg",
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638407917/joeyhougallery/posters/IMG_0950_w7fhod.jpg"
+      ]
+    },
+    {
+      "type": "gallery",
+      "title": "High School 2",
+      "body": "A friendship/classmates themed bulletin board (background) design.",
+      "images": [
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638407917/joeyhougallery/posters/IMG_0953_vuilc2.jpg"
+      ]
+    },
+    {
+      "type": "gallery",
+      "title": "High School 3",
+      "body": "A Gao Kao themed bulletin board (background) design.",
+      "images": [
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638407917/joeyhougallery/posters/IMG_0955_s8ia2h.jpg"
+      ]
+    }
+  ]
+}
+

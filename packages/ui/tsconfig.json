@@ -1,0 +1,7 @@
+{
+  "extends": "@joey/tsconfig/tsconfig.lib.json",
+  "compilerOptions": {
+    "baseUrl": "."
+  }
+}
+
