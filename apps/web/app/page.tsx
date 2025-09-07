@@ -47,6 +47,7 @@ export default function HomePage() {
               fontSize="inherit"
               fontWeight={language === 'zh-CN' ? 'normal' : 'bold'}
               language={language}
+              variant="gradient"
             />
           </Typography>
           

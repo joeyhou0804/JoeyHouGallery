@@ -22,11 +22,16 @@ const COLOR_SEQUENCE: MarioColor[] = ['red', 'yellow', 'blue', 'green'];
 /**
  * Generates color assignments for Mario text following the constraints
  * @param text - The text to colorize
+ * @param startColorIndex - Optional starting color index for variety (0-3)
  * @returns Array of color assignments for each character
  */
-export function generateMarioColors(text: string): MarioColor[] {
+export function generateMarioColors(text: string, startColorIndex?: number): MarioColor[] {
   const chars = text.split('');
   const colors: MarioColor[] = [];
+  
+  // Use provided start index or generate a random one based on text content
+  const textHash = text.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const actualStartIndex = startColorIndex !== undefined ? startColorIndex : textHash % COLOR_SEQUENCE.length;
   
   for (let i = 0; i < chars.length; i++) {
     // For spaces, still assign a color but it won't be used for rendering
@@ -50,9 +55,10 @@ export function generateMarioColors(text: string): MarioColor[] {
     });
     
     // If no colors are available (shouldn't happen with 4 colors), use the first one
+    // Apply the starting offset to add variety
     const selectedColor = availableColors.length > 0 
-      ? availableColors[i % availableColors.length]
-      : COLOR_SEQUENCE[0];
+      ? availableColors[(i + actualStartIndex) % availableColors.length]
+      : COLOR_SEQUENCE[actualStartIndex % COLOR_SEQUENCE.length];
     
     colors.push(selectedColor);
   }
@@ -70,4 +76,5 @@ export interface ColorizedMarioTextProps {
   fontWeight?: string | number;
   className?: string;
   language?: 'en' | 'zh-CN';
+  variant?: 'colorful' | 'gradient';
 }
