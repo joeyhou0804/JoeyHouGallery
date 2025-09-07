@@ -15,22 +15,25 @@ import { usePathname } from 'next/navigation';
 import { useTheme } from '@mui/material/styles';
 import { useContext } from 'react';
 import { ThemeModeContext } from '@/themeMode';
+import LanguageSelector from './LanguageSelector';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const links = [
-  { href: '/', label: 'Home' },
-  { href: '/applications', label: 'Applications' },
-  { href: '/arts', label: 'Arts' },
-  { href: '/handbooks', label: 'Handbooks' },
-  { href: '/posters', label: 'Posters' },
-  { href: '/reports', label: 'Reports' },
-  { href: '/videos', label: 'Videos' },
-  { href: '/websites', label: 'Websites' },
+  { href: '/', labelKey: 'home' },
+  { href: '/applications', labelKey: 'applications' },
+  { href: '/arts', labelKey: 'arts' },
+  { href: '/handbooks', labelKey: 'handbooks' },
+  { href: '/posters', labelKey: 'posters' },
+  { href: '/reports', labelKey: 'reports' },
+  { href: '/videos', labelKey: 'videos' },
+  { href: '/websites', labelKey: 'websites' },
 ];
 
 export default function NavBar() {
   const pathname = usePathname();
   const theme = useTheme();
   const { toggle } = useContext(ThemeModeContext);
+  const { t } = useTranslation();
   return (
     <AppBar position="sticky" color="default" elevation={1}>
       <Toolbar sx={{ gap: 2, justifyContent: 'space-between' }}>
@@ -53,10 +56,11 @@ export default function NavBar() {
                   textUnderlineOffset: active ? '4px' : undefined,
                 }}
               >
-                {l.label}
+                {t(l.labelKey)}
               </Button>
             );
           })}
+          <LanguageSelector />
           <Tooltip title={theme.palette.mode === 'dark' ? 'Switch to light' : 'Switch to dark'}>
             <IconButton onClick={toggle} color="inherit" size="small">
               {theme.palette.mode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}

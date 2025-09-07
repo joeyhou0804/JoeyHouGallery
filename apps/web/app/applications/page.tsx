@@ -1,3 +1,5 @@
+"use client";
+
 import Section from '@/components/Section';
 import ImageGrid from '@/components/ImageGrid';
 import type { PageContent, Section as SectionType } from '@/content/types';
@@ -7,24 +9,35 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-
-export const metadata = { title: 'Applications · Joey Hou Gallery' };
+import { useTranslation } from '@/hooks/useTranslation';
 
 function Intro({ section }: { section: Extract<SectionType, { type: 'intro' }> }) {
+  const { t, language } = useTranslation();
+  
+  // Use translated content for Chinese, original content for English
+  const isChineseLang = language === 'zh-CN';
+  const title = isChineseLang ? t('pages.applications.stickyarTitle') : section.title;
+  const bodyContent = isChineseLang 
+    ? t('pages.applications.stickyarDescription') 
+    : section.body || [];
+  const linkLabel = isChineseLang ? t('pages.applications.githubLabel') : (section.links?.[0]?.label || 'GitHub');
+
   return (
     <Card>
       <CardContent>
         <Typography variant="h4" gutterBottom>
-          {section.title}
+          {title}
         </Typography>
         <Stack spacing={1} sx={{ mb: 2 }}>
-          {section.body?.map((p, i) => (
+          {Array.isArray(bodyContent) ? bodyContent.map((p, i) => (
             <Typography key={i}>{p}</Typography>
-          ))}
+          )) : (
+            <Typography>{bodyContent}</Typography>
+          )}
         </Stack>
         {section.links?.map((l) => (
           <Button key={l.href} href={l.href} target="_blank" rel="noreferrer" variant="contained">
-            {l.label}
+            {linkLabel}
           </Button>
         ))}
       </CardContent>
@@ -33,22 +46,31 @@ function Intro({ section }: { section: Extract<SectionType, { type: 'intro' }> }
 }
 
 function Gallery({ section }: { section: Extract<SectionType, { type: 'gallery' }> }) {
+  const { t, language } = useTranslation();
+  
+  // Use translated content for Chinese, original content for English
+  const isChineseLang = language === 'zh-CN';
+  const title = isChineseLang ? t('pages.applications.applicationIdeaTitle') : section.title;
+  const body = isChineseLang ? t('pages.applications.applicationIdeaDescription') : section.body;
+
   return (
     <Stack spacing={2}>
-      <Typography variant="h5">{section.title}</Typography>
-      {section.body && <Typography color="text.secondary">{section.body}</Typography>}
+      <Typography variant="h5">{title}</Typography>
+      {body && <Typography color="text.secondary">{body}</Typography>}
       <ImageGrid images={section.images} />
     </Stack>
   );
 }
 
 export default function ApplicationsPage() {
+  const { t } = useTranslation();
   const data = content as PageContent;
+  
   return (
     <>
       <Section>
         <Typography variant="h3" gutterBottom>
-          {data.title}
+          {t('pages.applications.title')}
         </Typography>
       </Section>
       {data.sections.map((s, i) => (

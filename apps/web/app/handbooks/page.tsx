@@ -1,5 +1,6 @@
 import Section from '@/components/Section';
 import ImageGrid from '@/components/ImageGrid';
+import PageHeader from '@/components/PageHeader';
 import type { PageContent } from '@/content/types';
 import content from '@/content/handbooks.json';
 import Typography from '@mui/material/Typography';
@@ -14,11 +15,7 @@ export default function HandbooksPage() {
   const data = content as PageContent;
   return (
     <>
-      <Section>
-        <Typography variant="h3" gutterBottom>
-          {data.title}
-        </Typography>
-      </Section>
+      <PageHeader pageKey="handbooks" />
       {data.sections.map((s, i) => (
         <Section key={i}>
           {s.type === 'intro' ? (

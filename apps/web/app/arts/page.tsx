@@ -1,5 +1,6 @@
 import Section from '@/components/Section';
 import ImageGrid from '@/components/ImageGrid';
+import PageHeader from '@/components/PageHeader';
 import type { PageContent } from '@/content/types';
 import content from '@/content/arts.json';
 import Typography from '@mui/material/Typography';
@@ -12,11 +13,7 @@ export default function ArtsPage() {
   const data = content as PageContent;
   return (
     <>
-      <Section>
-        <Typography variant="h3" gutterBottom>
-          {data.title}
-        </Typography>
-      </Section>
+      <PageHeader pageKey="arts" />
       {data.sections.map((s, i) => (
         <Section key={i}>
           {s.type === 'intro' ? (

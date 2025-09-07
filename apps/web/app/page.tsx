@@ -7,18 +7,20 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Link from 'next/link';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const sections = [
-  { href: '/applications', label: 'Applications 应用' },
-  { href: '/arts', label: 'Arts 画作' },
-  { href: '/handbooks', label: 'Handbooks 手册' },
-  { href: '/posters', label: 'Posters 海报' },
-  { href: '/reports', label: 'Reports 报告' },
-  { href: '/videos', label: 'Videos 视频' },
-  { href: '/websites', label: 'Websites 网站' }
+  { href: '/applications', labelKey: 'sectionsLabels.applications' },
+  { href: '/arts', labelKey: 'sectionsLabels.arts' },
+  { href: '/handbooks', labelKey: 'sectionsLabels.handbooks' },
+  { href: '/posters', labelKey: 'sectionsLabels.posters' },
+  { href: '/reports', labelKey: 'sectionsLabels.reports' },
+  { href: '/videos', labelKey: 'sectionsLabels.videos' },
+  { href: '/websites', labelKey: 'sectionsLabels.websites' }
 ];
 
 export default function HomePage() {
+  const { t } = useTranslation();
   return (
     <Box sx={{
       minHeight: 'calc(100vh - 120px)',
@@ -33,21 +35,14 @@ export default function HomePage() {
         <Grid container spacing={4}>
           <Grid item xs={12} md={6}>
             <Typography variant="h3" gutterBottom>
-              This is Joey Hou's Gallery
+              {t('galleryTitle')}
             </Typography>
             <Typography variant="h6" gutterBottom>
-              Welcome to my gallery! Here you can find arts, videos, handbooks, and posters designed by me!
-            </Typography>
-            <Box mt={3} />
-            <Typography variant="h4" gutterBottom>
-              小猴同学作品集
-            </Typography>
-            <Typography variant="h6">
-              欢迎来到我的作品集！这里有不少我设计的画、视频、手册以及海报哦！
+              {t('welcomeMessage')}
             </Typography>
             <Box mt={4}>
               <Button href="http://www.joeyhou.org" target="_blank" rel="noreferrer" variant="outlined" color="inherit">
-                Back to My Homepage
+                {t('backToHomepage')}
               </Button>
             </Box>
           </Grid>
@@ -55,7 +50,7 @@ export default function HomePage() {
             <Stack spacing={1}>
               {sections.map((s) => (
                 <Button key={s.href} component={Link} href={s.href} variant="contained" color="primary">
-                  {s.label}
+                  {t(s.labelKey)}
                 </Button>
               ))}
             </Stack>
