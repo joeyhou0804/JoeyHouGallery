@@ -11,12 +11,19 @@ interface PageHeaderProps {
 }
 
 export default function PageHeader({ pageKey, children }: PageHeaderProps) {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   
   return (
     <PageBackground>
       <Section>
-        <Typography variant="h3" gutterBottom>
+        <Typography 
+          variant="h3" 
+          gutterBottom 
+          sx={{ 
+            textAlign: 'center',
+            fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif'
+          }}
+        >
           {t(`pages.${pageKey}.title`)}
         </Typography>
       </Section>

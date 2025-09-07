@@ -1,6 +1,7 @@
 import Section from '@/components/Section';
 import PageHeader from '@/components/PageHeader';
 import ImageGrid from '@/components/ImageGrid';
+import TextBlock from '@/components/TextBlock';
 import type { PageContent } from '@/content/types';
 import content from '@/content/websites.json';
 import Typography from '@mui/material/Typography';
@@ -36,9 +37,11 @@ export default function WebsitesPage() {
             </Card>
           ) : (
             <>
-              <Typography variant="h5" gutterBottom>
-                {s.title}
-              </Typography>
+              <TextBlock centered>
+                <Typography variant="h5">
+                  {s.title}
+                </Typography>
+              </TextBlock>
               <ImageGrid images={(s as any).images} />
             </>
           )}

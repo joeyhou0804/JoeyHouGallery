@@ -1,6 +1,7 @@
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import Providers from './providers';
+import './globals.css';
 
 export const metadata = {
   title: 'Joey Hou Gallery',

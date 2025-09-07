@@ -1,5 +1,6 @@
 import Section from '@/components/Section';
 import PageHeader from '@/components/PageHeader';
+import TextBlock from '@/components/TextBlock';
 import YouTubeEmbed from '@/components/YouTubeEmbed';
 import type { VideosPageContent } from '@/content/types';
 import content from '@/content/videos.json';
@@ -31,9 +32,11 @@ export default function VideosPage() {
             </Card>
           ) : (
             <>
-              <Typography variant="h5" gutterBottom>
-                {section.title}
-              </Typography>
+              <TextBlock centered>
+                <Typography variant="h5">
+                  {section.title}
+                </Typography>
+              </TextBlock>
               <Grid container spacing={2}>
                 {section.items.map((v) => (
                   <Grid key={v.youtubeId} item xs={12} md={6}>

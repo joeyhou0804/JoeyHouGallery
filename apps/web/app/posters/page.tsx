@@ -1,5 +1,6 @@
 import Section from '@/components/Section';
 import PageHeader from '@/components/PageHeader';
+import TextBlock from '@/components/TextBlock';
 import ImageGrid from '@/components/ImageGrid';
 import type { PageContent } from '@/content/types';
 import content from '@/content/posters.json';
@@ -30,14 +31,16 @@ export default function PostersPage() {
             </Card>
           ) : (
             <>
-              <Typography variant="h5" gutterBottom>
-                {s.title}
-              </Typography>
-              {'body' in s && s.body && (
-                <Typography variant="body1" color="text.secondary" paragraph>
-                  {s.body as any}
+              <TextBlock centered>
+                <Typography variant="h5" gutterBottom>
+                  {s.title}
                 </Typography>
-              )}
+                {'body' in s && s.body && (
+                  <Typography variant="body1" color="text.secondary">
+                    {s.body as any}
+                  </Typography>
+                )}
+              </TextBlock>
               <ImageGrid images={(s as any).images} />
             </>
           )}

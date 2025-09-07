@@ -3,6 +3,7 @@
 import Section from '@/components/Section';
 import ImageGrid from '@/components/ImageGrid';
 import PageHeader from '@/components/PageHeader';
+import TextBlock from '@/components/TextBlock';
 import type { PageContent, Section as SectionType } from '@/content/types';
 import content from '@/content/applications.json';
 import Typography from '@mui/material/Typography';
@@ -56,8 +57,10 @@ function Gallery({ section }: { section: Extract<SectionType, { type: 'gallery' 
 
   return (
     <Stack spacing={2}>
-      <Typography variant="h5">{title}</Typography>
-      {body && <Typography color="text.secondary">{body}</Typography>}
+      <TextBlock centered>
+        <Typography variant="h5" gutterBottom>{title}</Typography>
+        {body && <Typography color="text.secondary">{body}</Typography>}
+      </TextBlock>
       <ImageGrid images={section.images} />
     </Stack>
   );

@@ -1,0 +1,23 @@
+@font-face {
+  font-family: 'Mario';
+  src: url('/MarioFontv3Remakefull.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MarioChinese';
+  src: url('/Mario_chinese.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.mario-font {
+  font-family: 'Mario', sans-serif !important;
+}
+
+.mario-font-chinese {
+  font-family: 'MarioChinese', 'Mario', sans-serif !important;
+}

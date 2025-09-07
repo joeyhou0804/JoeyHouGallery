@@ -20,7 +20,7 @@ const sections = [
 ];
 
 export default function HomePage() {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   return (
     <Box sx={{
       minHeight: 'calc(100vh - 120px)',
@@ -39,7 +39,11 @@ export default function HomePage() {
           </Typography>
           
           {/* Second row: Gallery title */}
-          <Typography variant="h2" gutterBottom sx={{ fontWeight: 'bold', mb: 3 }}>
+          <Typography variant="h2" gutterBottom sx={{ 
+            fontWeight: language === 'zh-CN' ? 'normal' : 'bold', 
+            mb: 3, 
+            fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif' 
+          }}>
             {t('galleryTitle')}
           </Typography>
           
