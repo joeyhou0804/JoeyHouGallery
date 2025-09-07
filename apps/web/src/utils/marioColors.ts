@@ -56,9 +56,12 @@ export function generateMarioColors(text: string, startColorIndex?: number): Mar
     
     // If no colors are available (shouldn't happen with 4 colors), use the first one
     // Apply the starting offset to add variety
-    const selectedColor = availableColors.length > 0 
-      ? availableColors[(i + actualStartIndex) % availableColors.length]
-      : COLOR_SEQUENCE[actualStartIndex % COLOR_SEQUENCE.length];
+    let selectedColor: MarioColor;
+    if (availableColors.length > 0) {
+      selectedColor = availableColors[(i + actualStartIndex) % availableColors.length] || 'red';
+    } else {
+      selectedColor = COLOR_SEQUENCE[actualStartIndex % COLOR_SEQUENCE.length] || 'red';
+    }
     
     colors.push(selectedColor);
   }

@@ -65,21 +65,24 @@ export default function ColorizedMarioText({
         lineHeight: 1.2
       }}
     >
-      {characters.map((char, index) => (
-        <Box
-          key={index}
-          component="span"
-          sx={{
-            color: char === ' ' ? 'transparent' : MARIO_COLORS[colors[index]],
-            WebkitTextStroke: char === ' ' ? 'none' : `${borderWidth} black`,
-            textStroke: char === ' ' ? 'none' : `${borderWidth} black`,
-            display: 'inline-block',
-            position: 'relative'
-          }}
-        >
-          {char === ' ' ? '\u00A0' : char} {/* Use non-breaking space to preserve spaces */}
-        </Box>
-      ))}
+      {characters.map((char, index) => {
+        const colorKey = colors[index];
+        return (
+          <Box
+            key={index}
+            component="span"
+            sx={{
+              color: char === ' ' ? 'transparent' : MARIO_COLORS[colorKey || 'red'],
+              WebkitTextStroke: char === ' ' ? 'none' : `${borderWidth} black`,
+              textStroke: char === ' ' ? 'none' : `${borderWidth} black`,
+              display: 'inline-block',
+              position: 'relative'
+            }}
+          >
+            {char === ' ' ? '\u00A0' : char} {/* Use non-breaking space to preserve spaces */}
+          </Box>
+        );
+      })}
     </Box>
   );
 }
