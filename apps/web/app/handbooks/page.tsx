@@ -14,8 +14,7 @@ export const metadata = { title: 'Handbooks · Joey Hou Gallery' };
 export default function HandbooksPage() {
   const data = content as PageContent;
   return (
-    <>
-      <PageHeader pageKey="handbooks" />
+    <PageHeader pageKey="handbooks">
       {data.sections.map((s, i) => (
         <Section key={i}>
           {s.type === 'intro' ? (
@@ -53,6 +52,6 @@ export default function HandbooksPage() {
           )}
         </Section>
       ))}
-    </>
+    </PageHeader>
   );
 }

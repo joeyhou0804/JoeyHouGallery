@@ -1,4 +1,5 @@
 import Section from '@/components/Section';
+import PageHeader from '@/components/PageHeader';
 import ImageGrid from '@/components/ImageGrid';
 import type { PageContent } from '@/content/types';
 import content from '@/content/websites.json';
@@ -12,12 +13,7 @@ export const metadata = { title: 'Websites · Joey Hou Gallery' };
 export default function WebsitesPage() {
   const data = content as PageContent;
   return (
-    <>
-      <Section>
-        <Typography variant="h3" gutterBottom>
-          {data.title}
-        </Typography>
-      </Section>
+    <PageHeader pageKey="websites">
       {data.sections.map((s, i) => (
         <Section key={i}>
           {s.type === 'intro' ? (
@@ -48,6 +44,6 @@ export default function WebsitesPage() {
           )}
         </Section>
       ))}
-    </>
+    </PageHeader>
   );
 }

@@ -2,6 +2,7 @@
 
 import Section from '@/components/Section';
 import ImageGrid from '@/components/ImageGrid';
+import PageHeader from '@/components/PageHeader';
 import type { PageContent, Section as SectionType } from '@/content/types';
 import content from '@/content/applications.json';
 import Typography from '@mui/material/Typography';
@@ -67,15 +68,10 @@ export default function ApplicationsPage() {
   const data = content as PageContent;
   
   return (
-    <>
-      <Section>
-        <Typography variant="h3" gutterBottom>
-          {t('pages.applications.title')}
-        </Typography>
-      </Section>
+    <PageHeader pageKey="applications">
       {data.sections.map((s, i) => (
         <Section key={i}>{s.type === 'intro' ? <Intro section={s} /> : <Gallery section={s} />}</Section>
       ))}
-    </>
+    </PageHeader>
   );
 }

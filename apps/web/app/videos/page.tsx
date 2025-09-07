@@ -1,4 +1,5 @@
 import Section from '@/components/Section';
+import PageHeader from '@/components/PageHeader';
 import YouTubeEmbed from '@/components/YouTubeEmbed';
 import type { VideosPageContent } from '@/content/types';
 import content from '@/content/videos.json';
@@ -12,12 +13,7 @@ export const metadata = { title: 'Videos · Joey Hou Gallery' };
 export default function VideosPage() {
   const data = content as unknown as VideosPageContent;
   return (
-    <>
-      <Section>
-        <Typography variant="h3" gutterBottom>
-          {data.title}
-        </Typography>
-      </Section>
+    <PageHeader pageKey="videos">
       {data.sections.map((section, i) => (
         <Section key={i}>
           {section.type === 'intro' ? (
@@ -59,6 +55,6 @@ export default function VideosPage() {
           )}
         </Section>
       ))}
-    </>
+    </PageHeader>
   );
 }

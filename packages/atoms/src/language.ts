@@ -17,9 +17,9 @@ export const translations = {
     websites: 'Websites',
     
     // Homepage
-    galleryTitle: "This is Joey Hou's Gallery",
+    thisIs: "This is",
+    galleryTitle: "Joey Hou's Gallery",
     welcomeMessage: "Welcome to my gallery! Here you can find arts, videos, handbooks, and posters designed by me!",
-    backToHomepage: "Back to My Homepage",
     
     // Section labels for buttons
     sectionsLabels: {
@@ -77,9 +77,9 @@ export const translations = {
     websites: '网站',
     
     // Homepage
+    thisIs: "这里是",
     galleryTitle: "小猴同学作品集",
     welcomeMessage: "欢迎来到我的作品集！这里有不少我设计的画、视频、手册以及海报哦！",
-    backToHomepage: "返回我的主页",
     
     // Section labels for buttons
     sectionsLabels: {

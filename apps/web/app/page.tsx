@@ -26,36 +26,65 @@ export default function HomePage() {
       minHeight: 'calc(100vh - 120px)',
       display: 'flex',
       alignItems: 'center',
-      backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638396794/joeyhougallery/arts/IMG_0954_ursbh1.jpg)`,
+      backgroundImage: `url(/title_background.jpg)`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       color: '#fff'
     }}>
       <Container>
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={6}>
-            <Typography variant="h3" gutterBottom>
-              {t('galleryTitle')}
-            </Typography>
-            <Typography variant="h6" gutterBottom>
-              {t('welcomeMessage')}
-            </Typography>
-            <Box mt={4}>
-              <Button href="http://www.joeyhou.org" target="_blank" rel="noreferrer" variant="outlined" color="inherit">
-                {t('backToHomepage')}
-              </Button>
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Stack spacing={1}>
+        <Box sx={{ textAlign: 'center', py: 4 }}>
+          {/* First row: "This is" / "这里是" */}
+          <Typography variant="h5" gutterBottom>
+            {t('thisIs')}
+          </Typography>
+          
+          {/* Second row: Gallery title */}
+          <Typography variant="h2" gutterBottom sx={{ fontWeight: 'bold', mb: 3 }}>
+            {t('galleryTitle')}
+          </Typography>
+          
+          {/* Third row: Welcome message */}
+          <Typography variant="h6" sx={{ py: 3, maxWidth: 600, mx: 'auto' }}>
+            {t('welcomeMessage')}
+          </Typography>
+          
+          {/* Fourth row: Navigation buttons */}
+          <Box sx={{ mt: 4 }}>
+            <Stack 
+              direction="row" 
+              spacing={2} 
+              justifyContent="center" 
+              flexWrap="wrap" 
+              sx={{ gap: 2 }}
+            >
               {sections.map((s) => (
-                <Button key={s.href} component={Link} href={s.href} variant="contained" color="primary">
+                <Button 
+                  key={s.href} 
+                  component={Link} 
+                  href={s.href}
+                  variant="outlined"
+                  sx={{
+                    borderRadius: '50px',
+                    border: '2px solid white',
+                    backgroundColor: 'transparent',
+                    color: 'white',
+                    px: 3,
+                    py: 1,
+                    fontSize: '0.9rem',
+                    fontWeight: '500',
+                    textTransform: 'none',
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                      border: '2px solid white',
+                    }
+                  }}
+                >
                   {t(s.labelKey)}
                 </Button>
               ))}
             </Stack>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       </Container>
     </Box>
   );
