@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Link from 'next/link';
 import { useTranslation } from '@/hooks/useTranslation';
+import ColorizedMarioText from '@/components/ColorizedMarioText';
 
 const sections = [
   { href: '/applications', labelKey: 'sectionsLabels.applications' },
@@ -39,12 +40,14 @@ export default function HomePage() {
           </Typography>
           
           {/* Second row: Gallery title */}
-          <Typography variant="h2" gutterBottom sx={{ 
-            fontWeight: language === 'zh-CN' ? 'normal' : 'bold', 
-            mb: 3, 
-            fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif' 
-          }}>
-            {t('galleryTitle')}
+          <Typography variant="h2" gutterBottom sx={{ mb: 3, textAlign: 'center' }}>
+            <ColorizedMarioText
+              text={t('galleryTitle')}
+              fontFamily={language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif'}
+              fontSize="inherit"
+              fontWeight={language === 'zh-CN' ? 'normal' : 'bold'}
+              language={language}
+            />
           </Typography>
           
           {/* Third row: Welcome message */}
