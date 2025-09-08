@@ -77,21 +77,52 @@ export default function ApplicationsPage() {
     <PageBackground>
       {/* Light blue section with title and zigzag bottom */}
       <Box
-        sx={{
-          backgroundImage: `
-            repeating-linear-gradient(
+        sx={(theme) => {
+          const depth = 10;      // zigzag tip depth in px
+          const steps = 120;     // number of teeth * 2  (keep your ~0.83% spacing)
+
+          // Build a NON-intersecting polygon: clockwise around the shape.
+          const zigzagPolygon = (() => {
+            const pts: string[] = [];
+            // top edge (L → R)
+            pts.push('0% 0%', '100% 0%');
+            // drop to the inner bottom line at right
+            pts.push(`100% calc(100% - ${depth}px)`);
+            // walk left creating the teeth (R → L)
+            for (let i = steps; i >= 0; i--) {
+              const x = (i / steps) * 100;
+              const isPeak = i % 2 === 0; // peak = outer bottom edge
+              const y = isPeak ? '100%' : `calc(100% - ${depth}px)`;
+              pts.push(`${x.toFixed(2)}% ${y}`);
+            }
+            // close up the left inner corner
+            pts.push(`0% calc(100% - ${depth}px)`);
+            return `polygon(${pts.join(', ')})`;
+          })();
+
+          return {
+            // one background, so no phase/mismatch issues
+            '--stripe': `repeating-linear-gradient(
               -45deg,
               transparent,
               transparent 8px,
               rgba(255, 255, 255, 0.3) 8px,
               rgba(255, 255, 255, 0.3) 16px
-            ),
-            linear-gradient(to bottom, #6BB6E0, #87CEEB)
-          `,
-          position: 'relative',
-          paddingTop: 4,
-          paddingBottom: 6,
-          marginBottom: 0,
+            )`,
+            '--sky': 'linear-gradient(to bottom, #6BB6E0, #87CEEB)',
+            backgroundImage: 'var(--stripe), var(--sky)',
+            backgroundRepeat: 'repeat, no-repeat',
+            backgroundSize: 'auto, 100% 100%',
+            backgroundPosition: 'left top, left top',
+
+            position: 'relative',
+            paddingTop: 4,
+            // add the visual depth back under your content
+            paddingBottom: `calc(${theme.spacing(6)} + ${depth}px)`,
+            marginBottom: 0,
+
+            clipPath: zigzagPolygon, // ✅ no self-intersection → no “X”
+          };
         }}
       >
         <Section>
@@ -105,32 +136,8 @@ export default function ApplicationsPage() {
             />
           </Typography>
         </Section>
-        
-        {/* Zigzag bottom border */}
-        <Box
-          sx={{
-            position: 'absolute',
-            bottom: '-10px',
-            left: 0,
-            right: 0,
-            height: '10px',
-            overflow: 'visible',
-          }}
-        >
-          <svg
-            width="100%"
-            height="20"
-            viewBox="0 0 120 20"
-            preserveAspectRatio="none"
-            style={{ display: 'block' }}
-          >
-            <polygon
-              points="0,0 1,10 2,0 3,10 4,0 5,10 6,0 7,10 8,0 9,10 10,0 11,10 12,0 13,10 14,0 15,10 16,0 17,10 18,0 19,10 20,0 21,10 22,0 23,10 24,0 25,10 26,0 27,10 28,0 29,10 30,0 31,10 32,0 33,10 34,0 35,10 36,0 37,10 38,0 39,10 40,0 41,10 42,0 43,10 44,0 45,10 46,0 47,10 48,0 49,10 50,0 51,10 52,0 53,10 54,0 55,10 56,0 57,10 58,0 59,10 60,0 61,10 62,0 63,10 64,0 65,10 66,0 67,10 68,0 69,10 70,0 71,10 72,0 73,10 74,0 75,10 76,0 77,10 78,0 79,10 80,0 81,10 82,0 83,10 84,0 85,10 86,0 87,10 88,0 89,10 90,0 91,10 92,0 93,10 94,0 95,10 96,0 97,10 98,0 99,10 100,0 101,10 102,0 103,10 104,0 105,10 106,0 107,10 108,0 109,10 110,0 111,10 112,0 113,10 114,0 115,10 116,0 117,10 118,0 119,10 120,0 120,0 0,0"
-              fill="#87CEEB"
-            />
-          </svg>
-        </Box>
       </Box>
+
 
       {/* Content sections with background */}
       {data.sections.map((s, i) => (
