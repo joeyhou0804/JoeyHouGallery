@@ -13,6 +13,7 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { useTranslation } from '@/hooks/useTranslation';
+import { GlowPillButton } from './GlowPillButton';
 
 function Intro({ section }: { section: Extract<SectionType, { type: 'intro' }> }) {
   const { t, language } = useTranslation();
@@ -23,7 +24,7 @@ function Intro({ section }: { section: Extract<SectionType, { type: 'intro' }> }
   const bodyContent = isChineseLang 
     ? t('pages.applications.stickyarDescription') 
     : section.body || [];
-  const linkLabel = isChineseLang ? t('pages.applications.githubLabel') : (section.links?.[0]?.label || 'GitHub');
+  const linkLabel = isChineseLang ? t('pages.applications.githubLabel') : (section.links?.[0]?.label || 'Go to my GitHub');
 
   return (
     <Stack spacing={3}>
@@ -122,15 +123,16 @@ function Intro({ section }: { section: Extract<SectionType, { type: 'intro' }> }
 
       {/* Description text below the zigzag banner */}
       <Box sx={{ px: '30px' }}>
-        <Stack spacing={2}>
+        <Stack spacing={1}>
           {Array.isArray(bodyContent) ? bodyContent.map((p, i) => (
             <Typography 
               key={i}
               sx={{ 
-                color: '#BB8F43',
+                color: '#432F2F',
                 fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
                 lineHeight: 1.6,
-                textAlign: 'left'
+                textAlign: 'center',
+                fontWeight: 500,
               }}
             >
               {p}
@@ -138,10 +140,11 @@ function Intro({ section }: { section: Extract<SectionType, { type: 'intro' }> }
           )) : (
             <Typography
               sx={{ 
-                color: '#BB8F43',
+                color: '#432F2F',
                 fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
                 lineHeight: 1.6,
-                textAlign: 'left'
+                textAlign: 'center',
+                fontWeight: 500,
               }}
             >
               {bodyContent}
@@ -150,16 +153,16 @@ function Intro({ section }: { section: Extract<SectionType, { type: 'intro' }> }
         </Stack>
       </Box>
 
-      {/* GitHub button in a separate card */}
-      <Card>
-        <CardContent>
-          {section.links?.map((l) => (
-            <Button key={l.href} href={l.href} target="_blank" rel="noreferrer" variant="contained">
-              {linkLabel}
-            </Button>
-          ))}
-        </CardContent>
-      </Card>
+      {section.links?.map((l) => (
+        <GlowPillButton
+          key={l.href}
+          href={l.href}
+          sx={{ alignSelf: 'center', width: 'fit-content' }}
+        >
+          {linkLabel}
+        </GlowPillButton>
+      ))}
+
     </Stack>
   );
 }
