@@ -11,10 +11,10 @@ export default function PageBackground({ children }: PageBackgroundProps) {
   return (
     <Box sx={{
       minHeight: 'calc(100vh - 120px)',
-      backgroundImage: `url(/page_background.webp)`,
-      backgroundSize: 'auto',
-      backgroundRepeat: 'repeat',
-      backgroundPosition: 'top left',
+      backgroundImage: `url(/page_background_old.jpg)`,
+      backgroundSize: 'cover',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center',
       backgroundAttachment: 'fixed'
     }}>
       {children}
