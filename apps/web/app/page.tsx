@@ -41,7 +41,11 @@ export default function HomePage() {
           </Typography>
           
           {/* Second row: Gallery title */}
-          <Typography variant="h2" gutterBottom sx={{ mb: 3, textAlign: 'center' }}>
+          <Typography variant="h1" gutterBottom sx={{ 
+            mb: 3, 
+            textAlign: 'center',
+            fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem', lg: '5.5rem' }
+          }}>
             <ColorizedMarioText
               text={t('galleryTitle')}
               fontFamily={language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif'}

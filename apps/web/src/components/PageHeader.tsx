@@ -69,13 +69,14 @@ export default function PageHeader({ pageKey, children }: PageHeaderProps) {
       >
         <Section>
           <Typography 
-            variant="h3" 
+            variant="h1" 
             gutterBottom 
             sx={{ 
               textAlign: 'center',
               color: 'white',
               fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
-              textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3), 0px 0px 1px rgba(0, 0, 0, 0.5)'
+              textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3), 0px 0px 1px rgba(0, 0, 0, 0.5)',
+              fontSize: { xs: '3rem', sm: '4rem', md: '5rem', lg: '6rem' }
             }}
           >
             {t(`pages.${pageKey}.title`)}
