@@ -11,7 +11,7 @@ export default function PageBackground({ children }: PageBackgroundProps) {
   return (
     <Box sx={{
       minHeight: 'calc(100vh - 120px)',
-      backgroundImage: `url(/page_background_old.jpg)`,
+      backgroundImage: `url(/page_background.png)`,
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center',
