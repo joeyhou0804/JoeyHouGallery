@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+import { Provider as JotaiProvider } from 'jotai';
 import { ThemeModeContext } from '@/themeMode';
 
 export default function Providers({ children }: { children: React.ReactNode }) {
@@ -33,11 +34,13 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <ThemeModeContext.Provider value={{ toggle }}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        {children}
-      </ThemeProvider>
-    </ThemeModeContext.Provider>
+    <JotaiProvider>
+      <ThemeModeContext.Provider value={{ toggle }}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          {children}
+        </ThemeProvider>
+      </ThemeModeContext.Provider>
+    </JotaiProvider>
   );
 }

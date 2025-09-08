@@ -33,8 +33,8 @@ export default function ColorizedMarioText({
           fontWeight,
           display: 'inline-block',
           lineHeight: 1.2,
-          background: 'linear-gradient(to bottom, #FEEC1C 0%, #FEEC1C 40%, #FD9B52 100%)',
-          backgroundSize: '100% 100%', // Normal size to show more orange in regular characters
+          background: 'linear-gradient(to bottom, #FEEC1C 0%, #FEEC1C 20%, #FD9B52 70%, #FD9B52 100%)',
+          backgroundSize: `calc(100% + ${gradientBorderWidth} * 2) calc(100% + ${gradientBorderWidth} * 2)`, // Compensate for stroke reducing fill area
           backgroundPosition: 'center center',
           WebkitBackgroundClip: 'text',
           backgroundClip: 'text',
@@ -75,6 +75,7 @@ export default function ColorizedMarioText({
               color: char === ' ' ? 'transparent' : MARIO_COLORS[colorKey || 'red'],
               WebkitTextStroke: char === ' ' ? 'none' : `${borderWidth} black`,
               textStroke: char === ' ' ? 'none' : `${borderWidth} black`,
+              filter: char === ' ' ? 'none' : `drop-shadow(0 0 0 black) drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black) drop-shadow(1px -1px 0 black) drop-shadow(-1px 1px 0 black)`,
               display: 'inline-block',
               position: 'relative'
             }}
