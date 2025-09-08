@@ -78,14 +78,16 @@ export default function ApplicationsPage() {
       {/* Light blue section with title and zigzag bottom */}
       <Box
         sx={{
-          backgroundColor: '#87CEEB', // Light blue
-          backgroundImage: `repeating-linear-gradient(
-            -45deg,
-            transparent,
-            transparent 8px,
-            rgba(255, 255, 255, 0.3) 8px,
-            rgba(255, 255, 255, 0.3) 16px
-          )`,
+          backgroundImage: `
+            repeating-linear-gradient(
+              -45deg,
+              transparent,
+              transparent 8px,
+              rgba(255, 255, 255, 0.3) 8px,
+              rgba(255, 255, 255, 0.3) 16px
+            ),
+            linear-gradient(to bottom, #6BB6E0, #87CEEB)
+          `,
           position: 'relative',
           paddingTop: 4,
           paddingBottom: 6,
