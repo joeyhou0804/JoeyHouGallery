@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 
 export default function Footer() {
   return (
-    <Box component="footer" sx={{ mt: 8, py: 4, borderTop: 1, borderColor: 'divider' }}>
+    <Box component="footer" sx={{ mt: 0, py: 4, borderTop: 1, borderColor: 'divider' }}>
       <Container>
         <Typography variant="body2" color="text.secondary">
           © {new Date().getFullYear()} Joey Hou. Built with Next.js & MUI.

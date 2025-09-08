@@ -7,17 +7,18 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useTranslation } from '@/hooks/useTranslation';
 import ColorizedMarioText from '@/components/ColorizedMarioText';
 
 const sections = [
-  { href: '/applications', labelKey: 'sectionsLabels.applications' },
-  { href: '/arts', labelKey: 'sectionsLabels.arts' },
-  { href: '/handbooks', labelKey: 'sectionsLabels.handbooks' },
-  { href: '/posters', labelKey: 'sectionsLabels.posters' },
-  { href: '/reports', labelKey: 'sectionsLabels.reports' },
-  { href: '/videos', labelKey: 'sectionsLabels.videos' },
-  { href: '/websites', labelKey: 'sectionsLabels.websites' }
+  { href: '/applications', labelKey: 'sectionsLabels.applications', buttonIndex: 1 },
+  { href: '/arts', labelKey: 'sectionsLabels.arts', buttonIndex: 2 },
+  { href: '/handbooks', labelKey: 'sectionsLabels.handbooks', buttonIndex: 3 },
+  { href: '/posters', labelKey: 'sectionsLabels.posters', buttonIndex: 4 },
+  { href: '/reports', labelKey: 'sectionsLabels.reports', buttonIndex: 5 },
+  { href: '/videos', labelKey: 'sectionsLabels.videos', buttonIndex: 6 },
+  { href: '/websites', labelKey: 'sectionsLabels.websites', buttonIndex: 7 }
 ];
 
 export default function HomePage() {
@@ -58,39 +59,49 @@ export default function HomePage() {
           
           {/* Fourth row: Navigation buttons */}
           <Box sx={{ mt: 4 }}>
-            <Stack 
-              direction="row" 
-              spacing={2} 
-              justifyContent="center" 
-              flexWrap="wrap" 
-              sx={{ gap: 2 }}
+            <Box 
+              sx={{ 
+                display: 'grid',
+                gridTemplateColumns: 'repeat(7, 1fr)',
+                gap: 2,
+                justifyItems: 'center',
+                alignItems: 'center',
+                maxWidth: '1200px',
+                margin: '0 auto'
+              }}
             >
-              {sections.map((s) => (
-                <Button 
-                  key={s.href} 
-                  component={Link} 
-                  href={s.href}
-                  variant="outlined"
-                  sx={{
-                    borderRadius: '50px',
-                    border: '2px solid white',
-                    backgroundColor: 'transparent',
-                    color: 'white',
-                    px: 3,
-                    py: 1,
-                    fontSize: '0.9rem',
-                    fontWeight: '500',
-                    textTransform: 'none',
-                    '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                      border: '2px solid white',
-                    }
-                  }}
-                >
-                  {t(s.labelKey)}
-                </Button>
-              ))}
-            </Stack>
+              {sections.map((s) => {
+                const buttonImage = language === 'zh-CN' 
+                  ? `/buttons/button_cn_${s.buttonIndex}.png`
+                  : `/buttons/button_en_${s.buttonIndex}.png`;
+                
+                return (
+                  <Link key={s.href} href={s.href}>
+                    <Image
+                      src={buttonImage}
+                      alt={t(s.labelKey)}
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      style={{
+                        width: 'auto',
+                        height: '120px',
+                        maxWidth: '360px',
+                        cursor: 'pointer',
+                        transition: 'transform 0.2s ease, opacity 0.2s ease',
+                        flexShrink: 1,
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.05)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                      }}
+                    />
+                  </Link>
+                );
+              })}
+            </Box>
           </Box>
         </Box>
       </Container>
