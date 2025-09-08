@@ -28,7 +28,32 @@ function Intro({ section }: { section: Extract<SectionType, { type: 'intro' }> }
   return (
     <Stack spacing={3}>
       {/* Rectangle with zigzag borders for the title */}
-      <Box
+      <Box sx={{ position: 'relative' }}>
+        {/* Capsule with date at the top */}
+        <Box
+          sx={{
+            position: 'absolute',
+            top: -6,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            backgroundColor: 'white',
+            border: '2px solid #BB8F43',
+            borderRadius: '20px',
+            padding: '4px 16px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1,
+            zIndex: 1,
+          }}
+        >
+          <Typography sx={{ color: '#BB8F43', fontSize: '0.9rem', pt: '2px' }}>★</Typography>
+          <Typography sx={{ color: '#BB8F43', fontWeight: 'bold', fontSize: '1.2rem', pt: '2px' }}>
+            2022.04
+          </Typography>
+          <Typography sx={{ color: '#BB8F43', fontSize: '0.9rem', pt: '2px' }}>★</Typography>
+        </Box>
+        
+        <Box
         sx={(theme) => {
           const depth = 30; // increased depth for taller zigzags
 
@@ -92,18 +117,42 @@ function Intro({ section }: { section: Extract<SectionType, { type: 'intro' }> }
         >
           {title}
         </Typography>
+        </Box>
       </Box>
 
-      {/* Body content and buttons outside the rectangle */}
+      {/* Description text below the zigzag banner */}
+      <Box sx={{ px: '30px' }}>
+        <Stack spacing={2}>
+          {Array.isArray(bodyContent) ? bodyContent.map((p, i) => (
+            <Typography 
+              key={i}
+              sx={{ 
+                color: '#BB8F43',
+                fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
+                lineHeight: 1.6,
+                textAlign: 'left'
+              }}
+            >
+              {p}
+            </Typography>
+          )) : (
+            <Typography
+              sx={{ 
+                color: '#BB8F43',
+                fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
+                lineHeight: 1.6,
+                textAlign: 'left'
+              }}
+            >
+              {bodyContent}
+            </Typography>
+          )}
+        </Stack>
+      </Box>
+
+      {/* GitHub button in a separate card */}
       <Card>
         <CardContent>
-          <Stack spacing={1} sx={{ mb: 2 }}>
-            {Array.isArray(bodyContent) ? bodyContent.map((p, i) => (
-              <Typography key={i}>{p}</Typography>
-            )) : (
-              <Typography>{bodyContent}</Typography>
-            )}
-          </Stack>
           {section.links?.map((l) => (
             <Button key={l.href} href={l.href} target="_blank" rel="noreferrer" variant="contained">
               {linkLabel}

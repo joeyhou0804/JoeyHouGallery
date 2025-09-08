@@ -38,7 +38,8 @@ export const translations = {
         title: 'Applications',
         stickyarTitle: 'StickyAR - An iOS AR App',
         stickyarDescription: [
-          'This is an iOS application integrated with AR techniques. It is a group project I did as a group of 4 in Columbia University.',
+          'This is an iOS application integrated with AR techniques.',
+          'It is a group project I did as a group of 4 in Columbia University.',
           'This application is posted on my GitHub page.'
         ],
         applicationIdeaTitle: 'Application Idea',
@@ -98,7 +99,8 @@ export const translations = {
         title: '应用',
         stickyarTitle: 'StickyAR - iOS AR应用',
         stickyarDescription: [
-          '这是一个集成了AR技术的iOS应用程序。这是我在哥伦比亚大学与其他3名同学合作完成的小组项目。',
+          '这是一个集成了AR技术的iOS应用程序。',
+          '这是我在哥伦比亚大学与其他3名同学合作完成的小组项目。',
           '这个应用程序已发布在我的GitHub页面上。'
         ],
         applicationIdeaTitle: '应用理念',
