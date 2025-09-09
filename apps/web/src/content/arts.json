@@ -3,15 +3,12 @@
   "sections": [
     {
       "type": "intro",
-      "title": "School Projects",
-      "body": [
-        "These arts are related to my school projects and they were shown to my instructors and classmates."
-      ]
+      "title": "Chinese Characters & Western Art",
+      "body": "Columbia Art Humanities Individual Creative Project",
+      "time": "2020.08"
     },
     {
       "type": "gallery",
-      "title": "Chinese Characters & Western Art",
-      "body": "Columbia Art Humanities Individual Creative Project",
       "images": [
         "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638399168/joeyhougallery/arts/1597601129319_obvqqm.jpg",
         "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638399153/joeyhougallery/arts/1597601129623_xu5gy3.jpg",

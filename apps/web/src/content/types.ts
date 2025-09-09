@@ -3,7 +3,8 @@ export type Link = { label: string; href: string };
 export type SectionIntro = {
   type: 'intro';
   title: string;
-  body?: string[];
+  body?: string[] | string;
+  time?: string;
   links?: Link[];
 };
 
