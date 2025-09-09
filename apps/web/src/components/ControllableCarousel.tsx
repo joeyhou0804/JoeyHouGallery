@@ -210,12 +210,22 @@ export default function ControllableCarousel({
               top: "50%",
               transform: "translateY(-50%)",
               zIndex: 4,
-              backgroundColor: "rgba(255, 255, 255, 0.9)",
-              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)",
-              "&:hover": { backgroundColor: "rgba(255, 255, 255, 1)" },
+              backgroundColor: "transparent",
+              padding: 2,
+              "&:hover": { 
+                backgroundColor: "rgba(241, 252, 135, 0.1)",
+              },
             }}
           >
-            <ArrowBackIosIcon />
+            <ArrowBackIosIcon 
+              sx={{ 
+                fontSize: "3.5rem",
+                color: "#F1FC87",
+                strokeWidth: 1,
+                stroke: "#2D1619",
+                filter: "drop-shadow(0.5px 0px 0px #2D1619) drop-shadow(-0.5px 0px 0px #2D1619) drop-shadow(0px 0.5px 0px #2D1619) drop-shadow(0px -0.5px 0px #2D1619)",
+              }} 
+            />
           </IconButton>
         )}
 
@@ -229,12 +239,22 @@ export default function ControllableCarousel({
               top: "50%",
               transform: "translateY(-50%)",
               zIndex: 4,
-              backgroundColor: "rgba(255, 255, 255, 0.9)",
-              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)",
-              "&:hover": { backgroundColor: "rgba(255, 255, 255, 1)" },
+              backgroundColor: "transparent",
+              padding: 2,
+              "&:hover": { 
+                backgroundColor: "rgba(241, 252, 135, 0.1)",
+              },
             }}
           >
-            <ArrowForwardIosIcon />
+            <ArrowForwardIosIcon 
+              sx={{ 
+                fontSize: "3.5rem",
+                color: "#F1FC87",
+                strokeWidth: 1,
+                stroke: "#2D1619",
+                filter: "drop-shadow(0.5px 0px 0px #2D1619) drop-shadow(-0.5px 0px 0px #2D1619) drop-shadow(0px 0.5px 0px #2D1619) drop-shadow(0px -0.5px 0px #2D1619)",
+              }} 
+            />
           </IconButton>
         )}
       </Box>
