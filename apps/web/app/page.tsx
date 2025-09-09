@@ -36,7 +36,7 @@ export default function HomePage() {
       <Container>
         <Box sx={{ textAlign: 'center', py: 4 }}>
           {/* First row: "This is" / "这里是" */}
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" gutterBottom sx={{ fontWeight: 900 }}>
             {t('thisIs')}
           </Typography>
           
@@ -57,7 +57,7 @@ export default function HomePage() {
           </Typography>
           
           {/* Third row: Welcome message */}
-          <Typography variant="h6" sx={{ py: 3, maxWidth: 600, mx: 'auto' }}>
+          <Typography variant="h5" sx={{ py: 3, maxWidth: 600, mx: 'auto', fontWeight: 900 }}>
             {t('welcomeMessage')}
           </Typography>
           

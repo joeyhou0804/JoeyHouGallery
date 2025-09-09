@@ -58,9 +58,10 @@ export default function PageHeader({ pageKey, children }: PageHeaderProps) {
             backgroundPosition: 'left top, left top',
 
             position: 'relative',
-            paddingTop: 4,
+            zIndex: 10, // Ensure title section appears above white section
+            paddingTop: 2,
             // add the visual depth back under your content
-            paddingBottom: `calc(${theme.spacing(6)} + ${depth}px)`,
+            paddingBottom: `calc(${theme.spacing(3)} + ${depth}px)`,
             marginBottom: 0,
 
             clipPath: zigzagPolygon, // ✅ no self-intersection → no "X"

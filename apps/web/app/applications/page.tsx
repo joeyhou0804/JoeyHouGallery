@@ -14,6 +14,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { useTranslation } from '@/hooks/useTranslation';
 import { GlowPillButton } from './GlowPillButton';
+import { keyframes } from '@mui/system';
 
 function Intro({ section }: { section: Extract<SectionType, { type: 'intro' }> }) {
   const { t, language } = useTranslation();
@@ -113,7 +114,7 @@ function Intro({ section }: { section: Extract<SectionType, { type: 'intro' }> }
             color: 'white',
             fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
             textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3), 0px 0px 1px rgba(0, 0, 0, 0.5)',
-            fontSize: { xs: '1.8rem', sm: '2.2rem', md: '2.5rem' }
+            fontSize: { xs: '2.5rem', sm: '3rem', md: '3.5rem' }
           }}
         >
           {title}
@@ -192,6 +193,7 @@ function Gallery({ section, index }: { section: Extract<SectionType, { type: 'ga
         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
         overflow: 'hidden',
         mx: 2,
+        mt: index === 0 ? 6 : 2, // Extra margin top for the first gallery section (Application Idea)
       }}
     >
       {/* Yellow striped header section */}
@@ -279,14 +281,223 @@ function Gallery({ section, index }: { section: Extract<SectionType, { type: 'ga
   );
 }
 
+function ManipulationCarousels({ images }: { images: string[] }) {
+  // Split images into two groups (roughly half each)
+  const midpoint = Math.ceil(images.length / 2);
+  const firstHalf = images.slice(0, midpoint);
+  const secondHalf = images.slice(midpoint);
+
+  // Animation for right to left scrolling
+  const scrollRightToLeft = keyframes`
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  `;
+
+  // Animation for left to right scrolling  
+  const scrollLeftToRight = keyframes`
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  `;
+
+  const CarouselRow = ({ images, direction }: { images: string[], direction: 'rtl' | 'ltr' }) => (
+    <Box
+      sx={{
+        overflow: 'hidden',
+        width: '100vw',
+        position: 'relative',
+        left: '50%',
+        right: '50%',
+        marginLeft: '-50vw',
+        marginRight: '-50vw',
+        mb: 2,
+        zIndex: 2, // Above yellow background
+      }}
+    >
+      <Box
+        sx={{
+          display: 'flex',
+          gap: 2,
+          animation: direction === 'rtl' 
+            ? `${scrollRightToLeft} 25s linear infinite`
+            : `${scrollLeftToRight} 25s linear infinite`,
+          width: 'fit-content',
+        }}
+      >
+        {/* Double the images for seamless infinite scroll */}
+        {[...images, ...images].map((img, index) => (
+          <Box
+            key={index}
+            sx={{
+              minWidth: '280px',
+              height: '180px',
+              flexShrink: 0,
+            }}
+          >
+            <img
+              src={img}
+              alt={`Manipulation ${index + 1}`}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                borderRadius: '8px',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+              }}
+            />
+          </Box>
+        ))}
+      </Box>
+    </Box>
+  );
+
+  return (
+    <Box sx={{ position: 'relative', mt: 8, mb: 4 }}>
+      {/* Background section with zigzag top */}
+      <Box
+        sx={(theme) => {
+          const depth = 10;
+          const steps = 120;
+
+          // Create zigzag polygon with both top and bottom edges
+          const zigzagPolygon = (() => {
+            const pts: string[] = [];
+            
+            // Start from top left, go clockwise
+            pts.push('0% 0%');
+            
+            // Create zigzag teeth along top (L → R)
+            for (let i = 0; i <= steps; i++) {
+              const x = (i / steps) * 100;
+              const isPeak = i % 2 === 0; // peak = extends upward
+              const y = isPeak ? '0%' : `${depth}px`;
+              pts.push(`${x.toFixed(2)}% ${y}`);
+            }
+            
+            // Right edge
+            pts.push('100% 0%', `100% calc(100% - ${depth}px)`);
+            
+            // Create zigzag teeth along bottom (R → L)
+            for (let i = steps; i >= 0; i--) {
+              const x = (i / steps) * 100;
+              const isPeak = i % 2 === 0; // peak = extends downward
+              const y = isPeak ? '100%' : `calc(100% - ${depth}px)`;
+              pts.push(`${x.toFixed(2)}% ${y}`);
+            }
+            
+            // Left edge
+            pts.push(`0% calc(100% - ${depth}px)`, '0% 0%');
+            
+            return `polygon(${pts.join(', ')})`;
+          })();
+
+          return {
+            position: 'absolute',
+            top: '90px', // Start at vertical middle of first carousel (180px / 2)
+            left: '50%',
+            right: '50%',
+            marginLeft: '-50vw',
+            marginRight: '-50vw',
+            width: '100vw', // Full screen width
+            height: 'calc(100% - 90px + 50px)', // Extend beyond carousels but stop before footer
+            zIndex: 1, // Above blue background, behind carousels
+            
+            // Yellow gradient with stripes (matches StickyAR section title)
+            '--stripe': `repeating-linear-gradient(
+              -45deg,
+              transparent,
+              transparent 8px,
+              rgba(255, 255, 255, 0.3) 8px,
+              rgba(255, 255, 255, 0.3) 16px
+            )`,
+            '--yellow': 'linear-gradient(to bottom, #BB8F43, #DFBF23)',
+            backgroundImage: 'var(--stripe), var(--yellow)',
+            backgroundRepeat: 'repeat, no-repeat',
+            backgroundSize: 'auto, 100% 100%',
+            backgroundPosition: 'left top, left top',
+            
+            clipPath: zigzagPolygon,
+            paddingTop: `${depth}px`, // Account for zigzag depth
+          };
+        }}
+      />
+      
+      {/* Carousels on top */}
+      <CarouselRow images={firstHalf} direction="rtl" />
+      <CarouselRow images={secondHalf} direction="ltr" />
+    </Box>
+  );
+}
+
 export default function ApplicationsPage() {
   const data = content as PageContent;
+  const introSection = data.sections.find(s => s.type === 'intro') as Extract<SectionType, { type: 'intro' }>;
+  const gallerySections = data.sections.filter(s => s.type === 'gallery') as Extract<SectionType, { type: 'gallery' }>[];
   
   return (
     <PageHeader pageKey="applications">
-      {data.sections.map((s, i) => (
+      {/* White section with StickyAR intro and zigzag bottom */}
+      <Box
+        sx={(theme) => {
+          const depth = 10;      // zigzag tip depth in px
+          const steps = 120;     // number of teeth * 2
+
+          // Build a NON-intersecting polygon: clockwise around the shape.
+          const zigzagPolygon = (() => {
+            const pts: string[] = [];
+            // top edge (L → R)
+            pts.push('0% 0%', '100% 0%');
+            // drop to the inner bottom line at right
+            pts.push(`100% calc(100% - ${depth}px)`);
+            // walk left creating the teeth (R → L)
+            for (let i = steps; i >= 0; i--) {
+              const x = (i / steps) * 100;
+              const isPeak = i % 2 === 0; // peak = outer bottom edge
+              const y = isPeak ? '100%' : `calc(100% - ${depth}px)`;
+              pts.push(`${x.toFixed(2)}% ${y}`);
+            }
+            // close up the left inner corner
+            pts.push(`0% calc(100% - ${depth}px)`);
+            return `polygon(${pts.join(', ')})`;
+          })();
+
+          return {
+            backgroundImage: `url(/section_background.png)`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            position: 'relative',
+            zIndex: 5, // Lower z-index than title section
+            paddingTop: theme.spacing(4),
+            paddingBottom: `calc(${theme.spacing(6)} + ${depth}px)`,
+            marginTop: `-${depth}px`, // Move up to overlap with title section
+            marginBottom: 0,
+            clipPath: zigzagPolygon,
+          };
+        }}
+      >
+        <Section>
+          <Intro section={introSection} />
+        </Section>
+      </Box>
+
+      {gallerySections.map((s, i) => (
         <Section key={i}>
-          {s.type === 'intro' ? <Intro section={s} /> : <Gallery section={s} index={i - 1} />}
+          {s.title === 'Manipulation' ? (
+            <>
+              <Gallery section={{ ...s, images: [] }} index={i} />
+              <ManipulationCarousels images={s.images || []} />
+            </>
+          ) : (
+            <Gallery section={s} index={i} />
+          )}
         </Section>
       ))}
     </PageHeader>

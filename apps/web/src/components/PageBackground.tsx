@@ -11,7 +11,7 @@ export default function PageBackground({ children }: PageBackgroundProps) {
   return (
     <Box sx={{
       minHeight: 'calc(100vh - 120px)',
-      backgroundColor: 'white'
+      backgroundColor: '#2B91E1'
       // Previous background (saved for future use):
       // backgroundImage: `url(/page_background.png)`,
       // backgroundSize: 'cover',
