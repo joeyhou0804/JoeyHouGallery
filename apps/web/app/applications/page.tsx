@@ -193,7 +193,7 @@ function Gallery({ section, index }: { section: Extract<SectionType, { type: 'ga
         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
         overflow: 'hidden',
         mx: 2,
-        mt: index === 0 ? 6 : 2, // Extra margin top for the first gallery section (Application Idea)
+        mt: index === 0 ? 6 : 1, // Extra margin top for the first gallery section (Application Idea)
       }}
     >
       {/* Yellow striped header section */}
@@ -363,40 +363,12 @@ function ManipulationCarousels({ images }: { images: string[] }) {
       {/* Background section with zigzag top */}
       <Box
         sx={(theme) => {
-          const depth = 10;
+          const depth = {
+            xs: 6,   // smaller depth on mobile
+            sm: 8,   // medium depth on small screens
+            md: 10,  // original depth on medium+ screens
+          };
           const steps = 120;
-
-          // Create zigzag polygon with both top and bottom edges
-          const zigzagPolygon = (() => {
-            const pts: string[] = [];
-            
-            // Start from top left, go clockwise
-            pts.push('0% 0%');
-            
-            // Create zigzag teeth along top (L → R)
-            for (let i = 0; i <= steps; i++) {
-              const x = (i / steps) * 100;
-              const isPeak = i % 2 === 0; // peak = extends upward
-              const y = isPeak ? '0%' : `${depth}px`;
-              pts.push(`${x.toFixed(2)}% ${y}`);
-            }
-            
-            // Right edge
-            pts.push('100% 0%', `100% calc(100% - ${depth}px)`);
-            
-            // Create zigzag teeth along bottom (R → L)
-            for (let i = steps; i >= 0; i--) {
-              const x = (i / steps) * 100;
-              const isPeak = i % 2 === 0; // peak = extends downward
-              const y = isPeak ? '100%' : `calc(100% - ${depth}px)`;
-              pts.push(`${x.toFixed(2)}% ${y}`);
-            }
-            
-            // Left edge
-            pts.push(`0% calc(100% - ${depth}px)`, '0% 0%');
-            
-            return `polygon(${pts.join(', ')})`;
-          })();
 
           return {
             position: 'absolute',
@@ -422,9 +394,68 @@ function ManipulationCarousels({ images }: { images: string[] }) {
             backgroundRepeat: 'repeat, no-repeat',
             backgroundSize: 'auto, 100% 100%',
             backgroundPosition: 'left top, left top',
-            
-            clipPath: zigzagPolygon,
-            paddingTop: `${depth}px`, // Account for zigzag depth
+
+            // Responsive zigzag top and bottom
+            [theme.breakpoints.up('xs')]: {
+              paddingTop: `${depth.xs}px`,
+              clipPath: `polygon(
+                0% 0%,
+                ${Array.from({ length: steps + 1 }, (_, i) => {
+                  const x = (i / steps) * 100;
+                  const isPeak = i % 2 === 0;
+                  const y = isPeak ? '0%' : `${depth.xs}px`;
+                  return `${x.toFixed(2)}% ${y}`;
+                }).join(', ')},
+                100% 0%, 100% calc(100% - ${depth.xs}px),
+                ${Array.from({ length: steps + 1 }, (_, i) => {
+                  const x = ((steps - i) / steps) * 100;
+                  const isPeak = i % 2 === 0;
+                  const y = isPeak ? '100%' : `calc(100% - ${depth.xs}px)`;
+                  return `${x.toFixed(2)}% ${y}`;
+                }).join(', ')},
+                0% calc(100% - ${depth.xs}px), 0% 0%
+              )`,
+            },
+            [theme.breakpoints.up('sm')]: {
+              paddingTop: `${depth.sm}px`,
+              clipPath: `polygon(
+                0% 0%,
+                ${Array.from({ length: steps + 1 }, (_, i) => {
+                  const x = (i / steps) * 100;
+                  const isPeak = i % 2 === 0;
+                  const y = isPeak ? '0%' : `${depth.sm}px`;
+                  return `${x.toFixed(2)}% ${y}`;
+                }).join(', ')},
+                100% 0%, 100% calc(100% - ${depth.sm}px),
+                ${Array.from({ length: steps + 1 }, (_, i) => {
+                  const x = ((steps - i) / steps) * 100;
+                  const isPeak = i % 2 === 0;
+                  const y = isPeak ? '100%' : `calc(100% - ${depth.sm}px)`;
+                  return `${x.toFixed(2)}% ${y}`;
+                }).join(', ')},
+                0% calc(100% - ${depth.sm}px), 0% 0%
+              )`,
+            },
+            [theme.breakpoints.up('md')]: {
+              paddingTop: `${depth.md}px`,
+              clipPath: `polygon(
+                0% 0%,
+                ${Array.from({ length: steps + 1 }, (_, i) => {
+                  const x = (i / steps) * 100;
+                  const isPeak = i % 2 === 0;
+                  const y = isPeak ? '0%' : `${depth.md}px`;
+                  return `${x.toFixed(2)}% ${y}`;
+                }).join(', ')},
+                100% 0%, 100% calc(100% - ${depth.md}px),
+                ${Array.from({ length: steps + 1 }, (_, i) => {
+                  const x = ((steps - i) / steps) * 100;
+                  const isPeak = i % 2 === 0;
+                  const y = isPeak ? '100%' : `calc(100% - ${depth.md}px)`;
+                  return `${x.toFixed(2)}% ${y}`;
+                }).join(', ')},
+                0% calc(100% - ${depth.md}px), 0% 0%
+              )`,
+            },
           };
         }}
       />
@@ -446,27 +477,12 @@ export default function ApplicationsPage() {
       {/* White section with StickyAR intro and zigzag bottom */}
       <Box
         sx={(theme) => {
-          const depth = 10;      // zigzag tip depth in px
+          const depth = {
+            xs: 6,   // smaller depth on mobile
+            sm: 8,   // medium depth on small screens
+            md: 10,  // original depth on medium+ screens
+          };
           const steps = 120;     // number of teeth * 2
-
-          // Build a NON-intersecting polygon: clockwise around the shape.
-          const zigzagPolygon = (() => {
-            const pts: string[] = [];
-            // top edge (L → R)
-            pts.push('0% 0%', '100% 0%');
-            // drop to the inner bottom line at right
-            pts.push(`100% calc(100% - ${depth}px)`);
-            // walk left creating the teeth (R → L)
-            for (let i = steps; i >= 0; i--) {
-              const x = (i / steps) * 100;
-              const isPeak = i % 2 === 0; // peak = outer bottom edge
-              const y = isPeak ? '100%' : `calc(100% - ${depth}px)`;
-              pts.push(`${x.toFixed(2)}% ${y}`);
-            }
-            // close up the left inner corner
-            pts.push(`0% calc(100% - ${depth}px)`);
-            return `polygon(${pts.join(', ')})`;
-          })();
 
           return {
             backgroundImage: `url(/section_background.png)`,
@@ -476,10 +492,54 @@ export default function ApplicationsPage() {
             position: 'relative',
             zIndex: 5, // Lower z-index than title section
             paddingTop: theme.spacing(4),
-            paddingBottom: `calc(${theme.spacing(6)} + ${depth}px)`,
-            marginTop: `-${depth}px`, // Move up to overlap with title section
             marginBottom: 0,
-            clipPath: zigzagPolygon,
+
+            // Responsive zigzag bottom
+            [theme.breakpoints.up('xs')]: {
+              paddingBottom: `calc(${theme.spacing(6)} + ${depth.xs}px)`,
+              marginTop: `-${depth.xs}px`,
+              clipPath: `polygon(
+                0% 0%, 100% 0%, 
+                100% calc(100% - ${depth.xs}px),
+                ${Array.from({ length: steps + 1 }, (_, i) => {
+                  const x = ((steps - i) / steps) * 100;
+                  const isPeak = i % 2 === 0;
+                  const y = isPeak ? '100%' : `calc(100% - ${depth.xs}px)`;
+                  return `${x.toFixed(2)}% ${y}`;
+                }).join(', ')},
+                0% calc(100% - ${depth.xs}px)
+              )`,
+            },
+            [theme.breakpoints.up('sm')]: {
+              paddingBottom: `calc(${theme.spacing(6)} + ${depth.sm}px)`,
+              marginTop: `-${depth.sm}px`,
+              clipPath: `polygon(
+                0% 0%, 100% 0%, 
+                100% calc(100% - ${depth.sm}px),
+                ${Array.from({ length: steps + 1 }, (_, i) => {
+                  const x = ((steps - i) / steps) * 100;
+                  const isPeak = i % 2 === 0;
+                  const y = isPeak ? '100%' : `calc(100% - ${depth.sm}px)`;
+                  return `${x.toFixed(2)}% ${y}`;
+                }).join(', ')},
+                0% calc(100% - ${depth.sm}px)
+              )`,
+            },
+            [theme.breakpoints.up('md')]: {
+              paddingBottom: `calc(${theme.spacing(6)} + ${depth.md}px)`,
+              marginTop: `-${depth.md}px`,
+              clipPath: `polygon(
+                0% 0%, 100% 0%, 
+                100% calc(100% - ${depth.md}px),
+                ${Array.from({ length: steps + 1 }, (_, i) => {
+                  const x = ((steps - i) / steps) * 100;
+                  const isPeak = i % 2 === 0;
+                  const y = isPeak ? '100%' : `calc(100% - ${depth.md}px)`;
+                  return `${x.toFixed(2)}% ${y}`;
+                }).join(', ')},
+                0% calc(100% - ${depth.md}px)
+              )`,
+            },
           };
         }}
       >

@@ -20,27 +20,12 @@ export default function PageHeader({ pageKey, children }: PageHeaderProps) {
       {/* Light blue section with title and zigzag bottom */}
       <Box
         sx={(theme) => {
-          const depth = 10;      // zigzag tip depth in px
+          const depth = {
+            xs: 6,   // smaller depth on mobile
+            sm: 8,   // medium depth on small screens
+            md: 10,  // original depth on medium+ screens
+          };
           const steps = 120;     // number of teeth * 2  (keep your ~0.83% spacing)
-
-          // Build a NON-intersecting polygon: clockwise around the shape.
-          const zigzagPolygon = (() => {
-            const pts: string[] = [];
-            // top edge (L → R)
-            pts.push('0% 0%', '100% 0%');
-            // drop to the inner bottom line at right
-            pts.push(`100% calc(100% - ${depth}px)`);
-            // walk left creating the teeth (R → L)
-            for (let i = steps; i >= 0; i--) {
-              const x = (i / steps) * 100;
-              const isPeak = i % 2 === 0; // peak = outer bottom edge
-              const y = isPeak ? '100%' : `calc(100% - ${depth}px)`;
-              pts.push(`${x.toFixed(2)}% ${y}`);
-            }
-            // close up the left inner corner
-            pts.push(`0% calc(100% - ${depth}px)`);
-            return `polygon(${pts.join(', ')})`;
-          })();
 
           return {
             // one background, so no phase/mismatch issues
@@ -60,11 +45,54 @@ export default function PageHeader({ pageKey, children }: PageHeaderProps) {
             position: 'relative',
             zIndex: 10, // Ensure title section appears above white section
             paddingTop: 2,
-            // add the visual depth back under your content
-            paddingBottom: `calc(${theme.spacing(3)} + ${depth}px)`,
             marginBottom: 0,
 
-            clipPath: zigzagPolygon, // ✅ no self-intersection → no "X"
+            // Responsive zigzag bottom
+            [theme.breakpoints.up('xs')]: {
+              '--depth': `${depth.xs}px`,
+              paddingBottom: `calc(${theme.spacing(3)} + ${depth.xs}px)`,
+              clipPath: `polygon(
+                0% 0%, 100% 0%, 
+                100% calc(100% - ${depth.xs}px),
+                ${Array.from({ length: steps + 1 }, (_, i) => {
+                  const x = ((steps - i) / steps) * 100;
+                  const isPeak = i % 2 === 0;
+                  const y = isPeak ? '100%' : `calc(100% - ${depth.xs}px)`;
+                  return `${x.toFixed(2)}% ${y}`;
+                }).join(', ')},
+                0% calc(100% - ${depth.xs}px)
+              )`,
+            },
+            [theme.breakpoints.up('sm')]: {
+              '--depth': `${depth.sm}px`,
+              paddingBottom: `calc(${theme.spacing(3)} + ${depth.sm}px)`,
+              clipPath: `polygon(
+                0% 0%, 100% 0%, 
+                100% calc(100% - ${depth.sm}px),
+                ${Array.from({ length: steps + 1 }, (_, i) => {
+                  const x = ((steps - i) / steps) * 100;
+                  const isPeak = i % 2 === 0;
+                  const y = isPeak ? '100%' : `calc(100% - ${depth.sm}px)`;
+                  return `${x.toFixed(2)}% ${y}`;
+                }).join(', ')},
+                0% calc(100% - ${depth.sm}px)
+              )`,
+            },
+            [theme.breakpoints.up('md')]: {
+              '--depth': `${depth.md}px`,
+              paddingBottom: `calc(${theme.spacing(3)} + ${depth.md}px)`,
+              clipPath: `polygon(
+                0% 0%, 100% 0%, 
+                100% calc(100% - ${depth.md}px),
+                ${Array.from({ length: steps + 1 }, (_, i) => {
+                  const x = ((steps - i) / steps) * 100;
+                  const isPeak = i % 2 === 0;
+                  const y = isPeak ? '100%' : `calc(100% - ${depth.md}px)`;
+                  return `${x.toFixed(2)}% ${y}`;
+                }).join(', ')},
+                0% calc(100% - ${depth.md}px)
+              )`,
+            },
           };
         }}
       >
