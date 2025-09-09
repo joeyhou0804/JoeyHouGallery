@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import { useTranslation } from '@/hooks/useTranslation';
 import type { Section as SectionType } from '@/content/types';
 import { GlowPillButton } from '../../app/applications/GlowPillButton';
+import ControllableCarousel from './ControllableCarousel';
 
 // MainSection Component: Contains section title, text content, and buttons with background
 export default function MainSection({ section, time }: { section: Extract<SectionType, { type: 'intro' }>, time?: string }) {
@@ -185,6 +186,11 @@ export default function MainSection({ section, time }: { section: Extract<Sectio
           {linkLabel}
         </GlowPillButton>
       ))}
+
+      {/* Display carousel if images are provided */}
+      {(section as any).images && (section as any).images.length > 0 && (
+        <ControllableCarousel images={(section as any).images} />
+      )}
 
     </Stack>
   );

@@ -18,8 +18,10 @@
     }
     ,
     {
-      "type": "gallery",
-      "title": "Travel Journals — Italy 2017",
+      "type": "intro",
+      "title": "Travel Journals — Italy",
+      "body": "I drew these during a summer trip to Italy with my mom.",
+      "time": "2017.08",
       "images": [
         "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638406455/joeyhougallery/arts/Trip%202017/IMG_0660_vtjmfn.jpg",
         "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638406455/joeyhougallery/arts/Trip%202017/IMG_0661_dizzso.jpg",

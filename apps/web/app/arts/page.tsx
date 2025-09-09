@@ -14,7 +14,7 @@ import { useTranslation } from '@/hooks/useTranslation';
 
 
 // SectionBackground Component: Section background with responsive zigzag
-function SectionBackground({ children }: { children: React.ReactNode }) {
+function SectionBackground({ children, isFirst = false }: { children: React.ReactNode; isFirst?: boolean }) {
   return (
     <Box
       sx={(theme) => {
@@ -35,50 +35,71 @@ function SectionBackground({ children }: { children: React.ReactNode }) {
           paddingTop: theme.spacing(4),
           marginBottom: 0,
 
-          // Responsive zigzag bottom
+          // Responsive zigzag top and bottom
           [theme.breakpoints.up('xs')]: {
+            paddingTop: isFirst ? `calc(${theme.spacing(4)} + ${depth.xs + 40}px)` : `calc(${theme.spacing(4)} + ${depth.xs}px)`,
             paddingBottom: `calc(${theme.spacing(6)} + ${depth.xs}px)`,
-            marginTop: `-${depth.xs}px`,
+            marginTop: isFirst ? `-${depth.xs + 40}px` : `-${depth.xs}px`,
             clipPath: `polygon(
-              0% 0%, 100% 0%, 
-              100% calc(100% - ${depth.xs}px),
+              0% 0%,
+              ${Array.from({ length: steps + 1 }, (_, i) => {
+                const x = (i / steps) * 100;
+                const isPeak = i % 2 === 0;
+                const y = isPeak ? '0%' : `${depth.xs}px`;
+                return `${x.toFixed(2)}% ${y}`;
+              }).join(', ')},
+              100% 0%, 100% calc(100% - ${depth.xs}px),
               ${Array.from({ length: steps + 1 }, (_, i) => {
                 const x = ((steps - i) / steps) * 100;
                 const isPeak = i % 2 === 0;
                 const y = isPeak ? '100%' : `calc(100% - ${depth.xs}px)`;
                 return `${x.toFixed(2)}% ${y}`;
               }).join(', ')},
-              0% calc(100% - ${depth.xs}px)
+              0% calc(100% - ${depth.xs}px), 0% 0%
             )`,
           },
           [theme.breakpoints.up('sm')]: {
+            paddingTop: isFirst ? `calc(${theme.spacing(4)} + ${depth.sm + 40}px)` : `calc(${theme.spacing(4)} + ${depth.sm}px)`,
             paddingBottom: `calc(${theme.spacing(6)} + ${depth.sm}px)`,
-            marginTop: `-${depth.sm}px`,
+            marginTop: isFirst ? `-${depth.sm + 40}px` : `-${depth.sm}px`,
             clipPath: `polygon(
-              0% 0%, 100% 0%, 
-              100% calc(100% - ${depth.sm}px),
+              0% 0%,
+              ${Array.from({ length: steps + 1 }, (_, i) => {
+                const x = (i / steps) * 100;
+                const isPeak = i % 2 === 0;
+                const y = isPeak ? '0%' : `${depth.sm}px`;
+                return `${x.toFixed(2)}% ${y}`;
+              }).join(', ')},
+              100% 0%, 100% calc(100% - ${depth.sm}px),
               ${Array.from({ length: steps + 1 }, (_, i) => {
                 const x = ((steps - i) / steps) * 100;
                 const isPeak = i % 2 === 0;
                 const y = isPeak ? '100%' : `calc(100% - ${depth.sm}px)`;
                 return `${x.toFixed(2)}% ${y}`;
               }).join(', ')},
-              0% calc(100% - ${depth.sm}px)
+              0% calc(100% - ${depth.sm}px), 0% 0%
             )`,
           },
           [theme.breakpoints.up('md')]: {
+            paddingTop: isFirst ? `calc(${theme.spacing(4)} + ${depth.md + 40}px)` : `calc(${theme.spacing(4)} + ${depth.md}px)`,
             paddingBottom: `calc(${theme.spacing(6)} + ${depth.md}px)`,
-            marginTop: `-${depth.md}px`,
+            marginTop: isFirst ? `-${depth.md + 40}px` : `-${depth.md}px`,
             clipPath: `polygon(
-              0% 0%, 100% 0%, 
-              100% calc(100% - ${depth.md}px),
+              0% 0%,
+              ${Array.from({ length: steps + 1 }, (_, i) => {
+                const x = (i / steps) * 100;
+                const isPeak = i % 2 === 0;
+                const y = isPeak ? '0%' : `${depth.md}px`;
+                return `${x.toFixed(2)}% ${y}`;
+              }).join(', ')},
+              100% 0%, 100% calc(100% - ${depth.md}px),
               ${Array.from({ length: steps + 1 }, (_, i) => {
                 const x = ((steps - i) / steps) * 100;
                 const isPeak = i % 2 === 0;
                 const y = isPeak ? '100%' : `calc(100% - ${depth.md}px)`;
                 return `${x.toFixed(2)}% ${y}`;
               }).join(', ')},
-              0% calc(100% - ${depth.md}px)
+              0% calc(100% - ${depth.md}px), 0% 0%
             )`,
           },
         };
@@ -97,7 +118,7 @@ export default function ArtsPage() {
     <PageHeader pageKey="arts">
       {data.sections.map((s, i) => (
         s.type === 'intro' ? (
-          <SectionBackground key={i}>
+          <SectionBackground key={i} isFirst={i === 0}>
             <Section>
               <MainSection section={s} time={s.time} />
             </Section>
