@@ -4,6 +4,7 @@ import Section from '@/components/Section';
 import ImageGrid from '@/components/ImageGrid';
 import PageHeader from '@/components/PageHeader';
 import MainSection from '@/components/MainSection';
+import ArtCardGrid from '@/components/ArtCardGrid';
 import type { PageContent } from '@/content/types';
 import content from '@/content/arts.json';
 import Typography from '@mui/material/Typography';
@@ -122,7 +123,11 @@ export default function ArtsPage() {
                 <ImageGrid images={(s as any).images} />
               </>
             ) : (
-              <ImageGrid images={(s as any).images} />
+              // Chinese Characters images using ArtCardGrid component
+              <ArtCardGrid 
+                images={(s as any).images} 
+                titles={["Renaissance", "Cubism", "Moderism", "Impressionism"]} 
+              />
             )}
           </Section>
         )
