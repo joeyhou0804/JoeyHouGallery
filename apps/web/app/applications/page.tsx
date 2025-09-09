@@ -14,9 +14,134 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { useTranslation } from '@/hooks/useTranslation';
 import { GlowPillButton } from './GlowPillButton';
-import { keyframes } from '@mui/system';
+import { keyframes } from '@emotion/react';
 
-function Intro({ section }: { section: Extract<SectionType, { type: 'intro' }> }) {
+// Title Component: Blue striped background with page title
+function Title({ pageKey }: { pageKey: string }) {
+  return <PageHeader pageKey={pageKey as any} />;
+}
+
+// SectionTitle Component: Yellow striped background for section titles
+function SectionTitle({ title, language }: { title: string; language: string }) {
+  return (
+    <Box
+      sx={(theme) => {
+        const depth = 30; // increased depth for taller zigzags
+
+        // Create zigzag polygon with 2 zigzags on each side (90-degree angles)
+        const zigzagPolygon = (() => {
+          const pts: string[] = [];
+          // Top edge (left to right)
+          pts.push('0% 0%', '100% 0%');
+          
+          // Right edge with 2 zigzags (90-degree angles)
+          pts.push('100% 0%');        // start at top-right
+          pts.push(`calc(100% - ${depth}px) 25%`);  // in to first zigzag
+          pts.push('100% 50%');       // out to middle peak
+          pts.push(`calc(100% - ${depth}px) 75%`);  // in to second zigzag
+          pts.push('100% 100%');      // out to bottom-right
+          
+          // Bottom edge (right to left)
+          pts.push('100% 100%', '0% 100%');
+          
+          // Left edge with 2 zigzags (90-degree angles, bottom to top)
+          pts.push('0% 100%');        // start at bottom-left
+          pts.push(`${depth}px 75%`); // in to first zigzag
+          pts.push('0% 50%');         // out to middle peak
+          pts.push(`${depth}px 25%`); // in to second zigzag
+          pts.push('0% 0%');          // out to top-left
+          
+          return `polygon(${pts.join(', ')})`;
+        })();
+
+        return {
+          // Yellow gradient background with stripes
+          '--stripe': `repeating-linear-gradient(
+            -45deg,
+            transparent,
+            transparent 8px,
+            rgba(255, 255, 255, 0.3) 8px,
+            rgba(255, 255, 255, 0.3) 16px
+          )`,
+          '--yellow': 'linear-gradient(to bottom, #BB8F43, #DFBF23)',
+          backgroundImage: 'var(--stripe), var(--yellow)',
+          backgroundRepeat: 'repeat, no-repeat',
+          backgroundSize: 'auto, 100% 100%',
+          backgroundPosition: 'left top, left top',
+          
+          position: 'relative',
+          padding: 4,
+          clipPath: zigzagPolygon,
+          margin: 2,
+        };
+      }}
+    >
+      <Typography 
+        variant="h4" 
+        sx={{ 
+          textAlign: 'center',
+          color: 'white',
+          fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
+          textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3), 0px 0px 1px rgba(0, 0, 0, 0.5)',
+          fontSize: { xs: '2.5rem', sm: '3rem', md: '3.5rem' }
+        }}
+      >
+        {title}
+      </Typography>
+    </Box>
+  );
+}
+
+// SubsectionTitle Component: Colored gradient backgrounds for subsection titles  
+function SubsectionTitle({ title, language, colorIndex }: { title: string; language: string; colorIndex: number }) {
+  // Color gradients for different sections (left to right)
+  const gradients = [
+    'linear-gradient(to right, #75C5EB, #297BC8)', // Blue gradient
+    'linear-gradient(to right, #FF8E65, #FF4582)', // Red/Pink gradient  
+    'linear-gradient(to right, #39DE88, #17CACB)', // Green/Teal gradient
+  ];
+  
+  const backgroundGradient = gradients[colorIndex] || gradients[0];
+
+  return (
+    <Box
+      sx={{
+        backgroundImage: `
+          repeating-linear-gradient(
+            -45deg,
+            transparent,
+            transparent 8px,
+            rgba(255, 255, 255, 0.3) 8px,
+            rgba(255, 255, 255, 0.3) 16px
+          ),
+          ${backgroundGradient}
+        `,
+        backgroundRepeat: 'repeat, no-repeat',
+        backgroundSize: 'auto, 100% 100%',
+        backgroundPosition: 'left top, left top',
+        padding: 2,
+        margin: '32px 32px 0 32px',
+        clipPath: 'polygon(0% 0%, 100% 0%, calc(100% - 30px) 25%, 100% 50%, calc(100% - 30px) 75%, 100% 100%, 0% 100%)',
+      }}
+    >
+      <Typography 
+        variant="h4" 
+        sx={{ 
+          textAlign: 'center',
+          color: 'white',
+          fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
+          textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3), 0px 0px 1px rgba(0, 0, 0, 0.5)',
+          fontSize: { xs: '1.8rem', sm: '2.2rem', md: '2.5rem' }
+        }}
+      >
+        {title}
+      </Typography>
+    </Box>
+  );
+}
+
+// Section Component: Contains section title, text content, and buttons with background
+function SectionComponent({ section }: { section: Extract<SectionType, { type: 'intro' }> }) {
   const { t, language } = useTranslation();
   
   // Use translated content for Chinese, original content for English
@@ -281,7 +406,157 @@ function Gallery({ section, index }: { section: Extract<SectionType, { type: 'ga
   );
 }
 
-function ManipulationCarousels({ images }: { images: string[] }) {
+// Subsection Component: White box container with title, text and images
+function Subsection({ section, index }: { section: Extract<SectionType, { type: 'gallery' }>, index: number }) {
+  const { t, language } = useTranslation();
+  
+  // Use translated content for Chinese, original content for English
+  const isChineseLang = language === 'zh-CN';
+  const title = isChineseLang ? t('pages.applications.applicationIdeaTitle') : section.title;
+  const body = isChineseLang ? t('pages.applications.applicationIdeaDescription') : section.body;
+
+  return (
+    <Box
+      sx={{
+        backgroundColor: 'white',
+        borderRadius: 2,
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+        overflow: 'hidden',
+        mx: 2,
+        mt: index === 0 ? 6 : 1, // Extra margin top for the first gallery section (Application Idea)
+      }}
+    >
+      {/* SubsectionTitle */}
+      <SubsectionTitle title={title} language={language} colorIndex={index} />
+
+      {/* Body text section */}
+      <Box sx={{ p: 3 }}>
+        {body && (
+          <Typography
+            sx={{ 
+              color: '#432F2F',
+              fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
+              lineHeight: 1.6,
+              textAlign: 'center',
+              fontWeight: 500,
+              mb: 3,
+            }}
+          >
+            {body}
+          </Typography>
+        )}
+        
+        {/* Centered image */}
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          {section.images && section.images.length === 1 && (index === 0 || index === 1) ? (
+            // Single image centered and larger for Application Idea and High Level Overview
+            <Box
+              sx={{
+                maxWidth: '70%',
+                width: 'fit-content',
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              <img
+                src={section.images[0]}
+                alt={title}
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  borderRadius: '8px',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                }}
+              />
+            </Box>
+          ) : (
+            // Regular ImageGrid for other sections
+            <ImageGrid images={section.images} />
+          )}
+        </Box>
+      </Box>
+    </Box>
+  );
+}
+
+// Section Component: Contains section content with background
+function SectionBackground({ children }: { children: React.ReactNode }) {
+  return (
+    <Box
+      sx={(theme) => {
+        const depth = {
+          xs: 6,   // smaller depth on mobile
+          sm: 8,   // medium depth on small screens
+          md: 10,  // original depth on medium+ screens
+        };
+        const steps = 120;     // number of teeth * 2
+
+        return {
+          backgroundImage: `url(/section_background.png)`,
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+          position: 'relative',
+          zIndex: 5, // Lower z-index than title section
+          paddingTop: theme.spacing(4),
+          marginBottom: 0,
+
+          // Responsive zigzag bottom
+          [theme.breakpoints.up('xs')]: {
+            paddingBottom: `calc(${theme.spacing(6)} + ${depth.xs}px)`,
+            marginTop: `-${depth.xs}px`,
+            clipPath: `polygon(
+              0% 0%, 100% 0%, 
+              100% calc(100% - ${depth.xs}px),
+              ${Array.from({ length: steps + 1 }, (_, i) => {
+                const x = ((steps - i) / steps) * 100;
+                const isPeak = i % 2 === 0;
+                const y = isPeak ? '100%' : `calc(100% - ${depth.xs}px)`;
+                return `${x.toFixed(2)}% ${y}`;
+              }).join(', ')},
+              0% calc(100% - ${depth.xs}px)
+            )`,
+          },
+          [theme.breakpoints.up('sm')]: {
+            paddingBottom: `calc(${theme.spacing(6)} + ${depth.sm}px)`,
+            marginTop: `-${depth.sm}px`,
+            clipPath: `polygon(
+              0% 0%, 100% 0%, 
+              100% calc(100% - ${depth.sm}px),
+              ${Array.from({ length: steps + 1 }, (_, i) => {
+                const x = ((steps - i) / steps) * 100;
+                const isPeak = i % 2 === 0;
+                const y = isPeak ? '100%' : `calc(100% - ${depth.sm}px)`;
+                return `${x.toFixed(2)}% ${y}`;
+              }).join(', ')},
+              0% calc(100% - ${depth.sm}px)
+            )`,
+          },
+          [theme.breakpoints.up('md')]: {
+            paddingBottom: `calc(${theme.spacing(6)} + ${depth.md}px)`,
+            marginTop: `-${depth.md}px`,
+            clipPath: `polygon(
+              0% 0%, 100% 0%, 
+              100% calc(100% - ${depth.md}px),
+              ${Array.from({ length: steps + 1 }, (_, i) => {
+                const x = ((steps - i) / steps) * 100;
+                const isPeak = i % 2 === 0;
+                const y = isPeak ? '100%' : `calc(100% - ${depth.md}px)`;
+                return `${x.toFixed(2)}% ${y}`;
+              }).join(', ')},
+              0% calc(100% - ${depth.md}px)
+            )`,
+          },
+        };
+      }}
+    >
+      {children}
+    </Box>
+  );
+}
+
+// Carousel Component: Infinite carousels with yellow background
+function Carousel({ images }: { images: string[] }) {
   // Split images into two groups (roughly half each)
   const midpoint = Math.ceil(images.length / 2);
   const firstHalf = images.slice(0, midpoint);
@@ -349,6 +624,7 @@ function ManipulationCarousels({ images }: { images: string[] }) {
                 height: '100%',
                 objectFit: 'cover',
                 borderRadius: '8px',
+                border: '6px solid white',
                 boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
               }}
             />
@@ -544,7 +820,7 @@ export default function ApplicationsPage() {
         }}
       >
         <Section>
-          <Intro section={introSection} />
+          <SectionComponent section={introSection} />
         </Section>
       </Box>
 
@@ -552,11 +828,11 @@ export default function ApplicationsPage() {
         <Section key={i}>
           {s.title === 'Manipulation' ? (
             <>
-              <Gallery section={{ ...s, images: [] }} index={i} />
-              <ManipulationCarousels images={s.images || []} />
+              <Subsection section={{ ...s, images: [] }} index={i} />
+              <Carousel images={s.images || []} />
             </>
           ) : (
-            <Gallery section={s} index={i} />
+            <Subsection section={s} index={i} />
           )}
         </Section>
       ))}
