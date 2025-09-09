@@ -23,11 +23,17 @@ export default function VideosPage() {
                 <Typography variant="h4" gutterBottom>
                   {section.title}
                 </Typography>
-                {section.body?.map((p, idx) => (
-                  <Typography key={idx} paragraph>
-                    {p}
+                {Array.isArray(section.body) ? (
+                  section.body.map((p, idx) => (
+                    <Typography key={idx} paragraph>
+                      {p}
+                    </Typography>
+                  ))
+                ) : section.body ? (
+                  <Typography paragraph>
+                    {section.body}
                   </Typography>
-                ))}
+                ) : null}
               </CardContent>
             </Card>
           ) : (

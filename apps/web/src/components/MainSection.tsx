@@ -134,9 +134,9 @@ export default function MainSection({ section, time }: { section: Extract<Sectio
         >
           {title.includes('&') ? (
             <>
-              {title.split('&')[0].trim()}
+              {title.split('&')[0]?.trim()}
               <br />
-              & {title.split('&')[1].trim()}
+              & {title.split('&')[1]?.trim()}
             </>
           ) : (
             title
