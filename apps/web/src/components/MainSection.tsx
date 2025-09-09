@@ -4,11 +4,11 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import { useTranslation } from '@/hooks/useTranslation';
-import { GlowPillButton } from '../app/applications/GlowPillButton';
 import type { Section as SectionType } from '@/content/types';
+import { GlowPillButton } from '../../app/applications/GlowPillButton';
 
 // MainSection Component: Contains section title, text content, and buttons with background
-export default function MainSection({ section }: { section: Extract<SectionType, { type: 'intro' }> }) {
+export default function MainSection({ section, time }: { section: Extract<SectionType, { type: 'intro' }>, time?: string }) {
   const { t, language } = useTranslation();
   
   // Use translated content for Chinese, original content for English
@@ -42,7 +42,7 @@ export default function MainSection({ section }: { section: Extract<SectionType,
         >
           <Typography sx={{ color: '#BB8F43', fontSize: '0.9rem', pt: '2px' }}>★</Typography>
           <Typography sx={{ color: '#BB8F43', fontWeight: 'bold', fontSize: '1.2rem', pt: '2px' }}>
-            2022.04
+            {time || '2022.04'}
           </Typography>
           <Typography sx={{ color: '#BB8F43', fontSize: '0.9rem', pt: '2px' }}>★</Typography>
         </Box>
@@ -50,29 +50,51 @@ export default function MainSection({ section }: { section: Extract<SectionType,
         <Box
         sx={(theme) => {
           const depth = 30; // increased depth for taller zigzags
+          const hasMultipleLines = title.includes('&');
+          const zigzagCount = hasMultipleLines ? 3 : 2; // 3 zigzags for multi-line, 2 for single line
 
-          // Create zigzag polygon with 2 zigzags on each side (90-degree angles)
+          // Create zigzag polygon with dynamic zigzag count (90-degree angles)
           const zigzagPolygon = (() => {
             const pts: string[] = [];
             // Top edge (left to right)
             pts.push('0% 0%', '100% 0%');
             
-            // Right edge with 2 zigzags (90-degree angles)
+            // Right edge with dynamic zigzags (90-degree angles)
             pts.push('100% 0%');        // start at top-right
-            pts.push(`calc(100% - ${depth}px) 25%`);  // in to first zigzag
-            pts.push('100% 50%');       // out to middle peak
-            pts.push(`calc(100% - ${depth}px) 75%`);  // in to second zigzag
-            pts.push('100% 100%');      // out to bottom-right
+            if (zigzagCount === 2) {
+              // 2 zigzags: 25%, 50%, 75%
+              pts.push(`calc(100% - ${depth}px) 25%`);  // in to first zigzag
+              pts.push('100% 50%');       // out to middle peak
+              pts.push(`calc(100% - ${depth}px) 75%`);  // in to second zigzag
+            } else if (zigzagCount === 3) {
+              // 3 zigzags evenly distributed: 16.67%, 33.33%, 50%, 66.67%, 83.33%
+              pts.push(`calc(100% - ${depth}px) 16.67%`);  // in to first zigzag
+              pts.push('100% 33.33%');       // out to first peak
+              pts.push(`calc(100% - ${depth}px) 50%`);  // in to second zigzag
+              pts.push('100% 66.67%');       // out to second peak
+              pts.push(`calc(100% - ${depth}px) 83.33%`);  // in to third zigzag
+            }
+            pts.push('100% 100%');      // end at bottom-right
             
             // Bottom edge (right to left)
             pts.push('100% 100%', '0% 100%');
             
-            // Left edge with 2 zigzags (90-degree angles, bottom to top)
+            // Left edge with dynamic zigzags (90-degree angles, bottom to top)
             pts.push('0% 100%');        // start at bottom-left
-            pts.push(`${depth}px 75%`); // in to first zigzag
-            pts.push('0% 50%');         // out to middle peak
-            pts.push(`${depth}px 25%`); // in to second zigzag
-            pts.push('0% 0%');          // out to top-left
+            if (zigzagCount === 2) {
+              // 2 zigzags: 75%, 50%, 25%
+              pts.push(`${depth}px 75%`); // in to first zigzag
+              pts.push('0% 50%');         // out to middle peak
+              pts.push(`${depth}px 25%`); // in to second zigzag
+            } else if (zigzagCount === 3) {
+              // 3 zigzags evenly distributed: 83.33%, 66.67%, 50%, 33.33%, 16.67%
+              pts.push(`${depth}px 83.33%`); // in to third zigzag
+              pts.push('0% 66.67%');         // out to second peak
+              pts.push(`${depth}px 50%`); // in to second zigzag
+              pts.push('0% 33.33%');         // out to first peak
+              pts.push(`${depth}px 16.67%`); // in to first zigzag
+            }
+            pts.push('0% 0%');          // end at top-left
             
             return `polygon(${pts.join(', ')})`;
           })();
@@ -109,7 +131,15 @@ export default function MainSection({ section }: { section: Extract<SectionType,
             fontSize: { xs: '2.5rem', sm: '3rem', md: '3.5rem' }
           }}
         >
-          {title}
+          {title.includes('&') ? (
+            <>
+              {title.split('&')[0].trim()}
+              <br />
+              & {title.split('&')[1].trim()}
+            </>
+          ) : (
+            title
+          )}
         </Typography>
         </Box>
       </Box>
