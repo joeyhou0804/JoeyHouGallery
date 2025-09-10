@@ -6,8 +6,20 @@ import ImageGrid from '@/components/ImageGrid';
 import { useTranslation } from '@/hooks/useTranslation';
 import type { Section as SectionType } from '@/content/types';
 
-// SubsectionTitle Component: Colored gradient backgrounds for subsection titles  
-function SubsectionTitle({ title, language, colorIndex }: { title: string; language: string; colorIndex: number }) {
+// SubsectionTitle Component: Colored gradient backgrounds for subsection titles with optional year capsule
+function SubsectionTitle({ 
+  title, 
+  language, 
+  colorIndex, 
+  year,
+  customGradient 
+}: { 
+  title: string; 
+  language: string; 
+  colorIndex: number;
+  year?: string;
+  customGradient?: string;
+}) {
   // Color gradients for different sections (left to right)
   const gradients = [
     'linear-gradient(to right, #75C5EB, #297BC8)', // Blue gradient
@@ -15,52 +27,101 @@ function SubsectionTitle({ title, language, colorIndex }: { title: string; langu
     'linear-gradient(to right, #39DE88, #17CACB)', // Green/Teal gradient
   ];
   
-  const backgroundGradient = gradients[colorIndex] || gradients[0];
+  const backgroundGradient = customGradient || gradients[colorIndex] || gradients[0];
+  
+  // Extract right side color from gradient for capsule border
+  const rightColor = (() => {
+    const match = backgroundGradient.match(/#[A-Fa-f0-9]{6}(?![A-Fa-f0-9])/g);
+    return match ? match[match.length - 1] : '#297BC8'; // fallback to blue
+  })();
 
   return (
-    <Box
-      sx={{
-        backgroundImage: `
-          repeating-linear-gradient(
-            -45deg,
-            transparent,
-            transparent 8px,
-            rgba(255, 255, 255, 0.3) 8px,
-            rgba(255, 255, 255, 0.3) 16px
-          ),
-          ${backgroundGradient}
-        `,
-        backgroundRepeat: 'repeat, no-repeat',
-        backgroundSize: 'auto, 100% 100%',
-        backgroundPosition: 'left top, left top',
-        padding: 2,
-        margin: '32px 32px 0 32px',
-        clipPath: 'polygon(0% 0%, 100% 0%, calc(100% - 30px) 25%, 100% 50%, calc(100% - 30px) 75%, 100% 100%, 0% 100%)',
-      }}
-    >
-      <Typography 
-        variant="h4" 
-        sx={{ 
-          textAlign: 'center',
-          color: 'white',
-          fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
-          textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3), 0px 0px 1px rgba(0, 0, 0, 0.5)',
-          fontSize: { xs: '1.8rem', sm: '2.2rem', md: '2.5rem' }
+    <Box sx={{ position: 'relative' }}>
+      {/* Year capsule */}
+      {year && (
+        <Box
+          sx={{
+            position: 'absolute',
+            top: -18,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            backgroundColor: 'white',
+            border: `2px solid ${rightColor}`,
+            borderRadius: '20px',
+            padding: '4px 16px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1,
+            zIndex: 1,
+          }}
+        >
+          <Typography sx={{ color: rightColor, fontSize: '0.9rem', pt: '2px' }}>★</Typography>
+          <Typography sx={{ color: rightColor, fontWeight: 'bold', fontSize: '1.2rem', pt: '2px' }}>
+            {year}
+          </Typography>
+          <Typography sx={{ color: rightColor, fontSize: '0.9rem', pt: '2px' }}>★</Typography>
+        </Box>
+      )}
+
+      {/* Title background */}
+      <Box
+        sx={{
+          backgroundImage: `
+            repeating-linear-gradient(
+              -45deg,
+              transparent,
+              transparent 8px,
+              rgba(255, 255, 255, 0.3) 8px,
+              rgba(255, 255, 255, 0.3) 16px
+            ),
+            ${backgroundGradient}
+          `,
+          backgroundRepeat: 'repeat, no-repeat',
+          backgroundSize: 'auto, 100% 100%',
+          backgroundPosition: 'left top, left top',
+          padding: 2,
+          margin: '32px 32px 0 32px',
+          clipPath: 'polygon(0% 0%, 100% 0%, calc(100% - 30px) 25%, 100% 50%, calc(100% - 30px) 75%, 100% 100%, 0% 100%)',
         }}
       >
-        {title}
-      </Typography>
+        <Typography 
+          variant="h4" 
+          sx={{ 
+            textAlign: 'center',
+            color: 'white',
+            fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
+            textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3), 0px 0px 1px rgba(0, 0, 0, 0.5)',
+            fontSize: { xs: '1.8rem', sm: '2.2rem', md: '2.5rem' }
+          }}
+        >
+          {title}
+        </Typography>
+      </Box>
     </Box>
   );
 }
 
 // Subsection Component: White box container with title, text and images
-export default function Subsection({ section, index }: { section: Extract<SectionType, { type: 'gallery' }>, index: number }) {
+export default function Subsection({ 
+  section, 
+  index, 
+  year,
+  customGradient,
+  children,
+  title: customTitle 
+}: { 
+  section: Extract<SectionType, { type: 'gallery' }> | any, 
+  index: number,
+  year?: string,
+  customGradient?: string,
+  children?: React.ReactNode,
+  title?: string
+}) {
   const { t, language } = useTranslation();
   
   // Use translated content for Chinese, original content for English
   const isChineseLang = language === 'zh-CN';
-  const title = isChineseLang ? t('pages.applications.applicationIdeaTitle') : section.title;
+  const title = customTitle || (isChineseLang ? t('pages.applications.applicationIdeaTitle') : section.title);
   const body = isChineseLang ? t('pages.applications.applicationIdeaDescription') : section.body;
 
   return (
@@ -75,11 +136,25 @@ export default function Subsection({ section, index }: { section: Extract<Sectio
       }}
     >
       {/* SubsectionTitle */}
-      <SubsectionTitle title={title} language={language} colorIndex={index} />
+      <SubsectionTitle 
+        title={title} 
+        language={language} 
+        colorIndex={index} 
+        year={year}
+        customGradient={customGradient}
+      />
 
-      {/* Body text section */}
+      {/* Body content section */}
       <Box sx={{ p: 3 }}>
-        {body && (
+        {/* Custom children content (like buttons) */}
+        {children && (
+          <Box sx={{ textAlign: 'center' }}>
+            {children}
+          </Box>
+        )}
+        
+        {/* Default body text */}
+        {body && !children && (
           <Typography
             sx={{ 
               color: '#432F2F',
@@ -94,34 +169,36 @@ export default function Subsection({ section, index }: { section: Extract<Sectio
           </Typography>
         )}
         
-        {/* Centered image */}
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          {section.images && section.images.length === 1 && (index === 0 || index === 1) ? (
-            // Single image centered and larger for Application Idea and High Level Overview
-            <Box
-              sx={{
-                maxWidth: '70%',
-                width: 'fit-content',
-                display: 'flex',
-                justifyContent: 'center',
-              }}
-            >
-              <img
-                src={section.images[0]}
-                alt={title}
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  borderRadius: '8px',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+        {/* Images */}
+        {section.images && !children && (
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            {section.images.length === 1 && (index === 0 || index === 1) ? (
+              // Single image centered and larger for Application Idea and High Level Overview
+              <Box
+                sx={{
+                  maxWidth: '70%',
+                  width: 'fit-content',
+                  display: 'flex',
+                  justifyContent: 'center',
                 }}
-              />
-            </Box>
-          ) : (
-            // Regular ImageGrid for other sections
-            <ImageGrid images={section.images} />
-          )}
-        </Box>
+              >
+                <img
+                  src={section.images[0]}
+                  alt={title}
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    borderRadius: '8px',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                  }}
+                />
+              </Box>
+            ) : (
+              // Regular ImageGrid for other sections
+              <ImageGrid images={section.images} />
+            )}
+          </Box>
+        )}
       </Box>
     </Box>
   );
