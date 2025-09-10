@@ -44,138 +44,95 @@ export default function HandbooksPage() {
         s.type === 'intro' && i === 0 ? (
           <MainSection key={i} section={s} time="2019‑2025" isFirst={i === 0} />
         ) : s.type === 'intro' && s.title === 'Simplified Chinese Version' ? (
-          <Section key={i}>
-            <Subsection 
-              section={s} 
-              index={0} 
-              year="2019"
-              title={s.title}
-            >
-              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ justifyContent: 'center' }}>
-                {s.links?.map((l: any) => (
-                  <GlowPillButton
-                    key={l.href}
-                    href={l.href}
-                    rel="noreferrer"
-                  >
-                    {l.label}
-                  </GlowPillButton>
-                ))}
-              </Stack>
-            </Subsection>
-            
-            {simplifiedExampleImages.length > 0 && (
-              <Box sx={{ position: 'relative', mt: 4, mb: 4 }}>
-                {/* Yellow striped background with zigzag borders */}
-                <Box
-                  sx={(theme) => {
-                    const depth = {
-                      xs: 6,   // smaller depth on mobile
-                      sm: 8,   // medium depth on small screens
-                      md: 10,  // original depth on medium+ screens
-                    };
-                    const steps = 120;
+          <Box 
+            sx={(theme) => {
+              const depth = {
+                xs: 6,   // smaller depth on mobile
+                sm: 8,   // medium depth on small screens
+                md: 10,  // original depth on medium+ screens
+              };
+              const steps = 120;
 
-                    return {
-                      position: 'absolute',
-                      top: '70%', // Start lower, at middle of the carousel images
-                      left: '50%',
-                      right: '50%',
-                      marginLeft: '-50vw',
-                      marginRight: '-50vw',
-                      width: '100vw', // Full screen width
-                      height: '40%', // Shorter height, end higher
-                      zIndex: 1, // Behind carousel content
-                      
-                      // Yellow gradient with stripes (matches MainSection styling)
-                      '--stripe': `repeating-linear-gradient(
-                        -45deg,
-                        transparent,
-                        transparent 8px,
-                        rgba(255, 255, 255, 0.3) 8px,
-                        rgba(255, 255, 255, 0.3) 16px
-                      )`,
-                      '--yellow': 'linear-gradient(to bottom, #BB8F43, #DFBF23)',
-                      backgroundImage: 'var(--stripe), var(--yellow)',
-                      backgroundRepeat: 'repeat, no-repeat',
-                      backgroundSize: 'auto, 100% 100%',
-                      backgroundPosition: 'left top, left top',
-
-                      // Responsive zigzag top and bottom
-                      [theme.breakpoints.up('xs')]: {
-                        paddingTop: `${depth.xs}px`,
-                        paddingBottom: `${depth.xs}px`,
-                        clipPath: `polygon(
-                          0% 0%,
-                          ${Array.from({ length: steps + 1 }, (_, i) => {
-                            const x = (i / steps) * 100;
-                            const isPeak = i % 2 === 0;
-                            const y = isPeak ? '0%' : `${depth.xs}px`;
-                            return `${x.toFixed(2)}% ${y}`;
-                          }).join(', ')},
-                          100% 0%, 100% calc(100% - ${depth.xs}px),
-                          ${Array.from({ length: steps + 1 }, (_, i) => {
-                            const x = ((steps - i) / steps) * 100;
-                            const isPeak = i % 2 === 0;
-                            const y = isPeak ? '100%' : `calc(100% - ${depth.xs}px)`;
-                            return `${x.toFixed(2)}% ${y}`;
-                          }).join(', ')},
-                          0% calc(100% - ${depth.xs}px), 0% 0%
-                        )`,
-                      },
-                      [theme.breakpoints.up('sm')]: {
-                        paddingTop: `${depth.sm}px`,
-                        paddingBottom: `${depth.sm}px`,
-                        clipPath: `polygon(
-                          0% 0%,
-                          ${Array.from({ length: steps + 1 }, (_, i) => {
-                            const x = (i / steps) * 100;
-                            const isPeak = i % 2 === 0;
-                            const y = isPeak ? '0%' : `${depth.sm}px`;
-                            return `${x.toFixed(2)}% ${y}`;
-                          }).join(', ')},
-                          100% 0%, 100% calc(100% - ${depth.sm}px),
-                          ${Array.from({ length: steps + 1 }, (_, i) => {
-                            const x = ((steps - i) / steps) * 100;
-                            const isPeak = i % 2 === 0;
-                            const y = isPeak ? '100%' : `calc(100% - ${depth.sm}px)`;
-                            return `${x.toFixed(2)}% ${y}`;
-                          }).join(', ')},
-                          0% calc(100% - ${depth.sm}px), 0% 0%
-                        )`,
-                      },
-                      [theme.breakpoints.up('md')]: {
-                        paddingTop: `${depth.md}px`,
-                        paddingBottom: `${depth.md}px`,
-                        clipPath: `polygon(
-                          0% 0%,
-                          ${Array.from({ length: steps + 1 }, (_, i) => {
-                            const x = (i / steps) * 100;
-                            const isPeak = i % 2 === 0;
-                            const y = isPeak ? '0%' : `${depth.md}px`;
-                            return `${x.toFixed(2)}% ${y}`;
-                          }).join(', ')},
-                          100% 0%, 100% calc(100% - ${depth.md}px),
-                          ${Array.from({ length: steps + 1 }, (_, i) => {
-                            const x = ((steps - i) / steps) * 100;
-                            const isPeak = i % 2 === 0;
-                            const y = isPeak ? '100%' : `calc(100% - ${depth.md}px)`;
-                            return `${x.toFixed(2)}% ${y}`;
-                          }).join(', ')},
-                          0% calc(100% - ${depth.md}px), 0% 0%
-                        )`,
-                      },
-                    };
-                  }}
-                />
+              return {
+                backgroundImage: 'url(/subsection_background_1.png)',
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+                position: 'relative',
+                marginTop: '-40px', // Move whole part up 40px to overlap MainSection zigzags
+                paddingTop: '40px', // Add padding to compensate for content position
                 
-                {/* ControllableCarousel on top of background */}
-                <Box sx={{ position: 'relative', zIndex: 2 }}>
-                  <ControllableCarousel images={simplifiedExampleImages} />
-                </Box>
-              </Box>
-            )}
-          </Section>
+                // Responsive zigzag bottom (matching MainSection pattern)
+                [theme.breakpoints.up('xs')]: {
+                  paddingBottom: `calc(${theme.spacing(6)} + ${depth.xs}px)`,
+                  clipPath: `polygon(
+                    0% 0%, 100% 0%, 
+                    100% calc(100% - ${depth.xs}px),
+                    ${Array.from({ length: steps + 1 }, (_, i) => {
+                      const x = ((steps - i) / steps) * 100;
+                      const isPeak = i % 2 === 0;
+                      const y = isPeak ? '100%' : `calc(100% - ${depth.xs}px)`;
+                      return `${x.toFixed(2)}% ${y}`;
+                    }).join(', ')},
+                    0% calc(100% - ${depth.xs}px)
+                  )`,
+                },
+                [theme.breakpoints.up('sm')]: {
+                  paddingBottom: `calc(${theme.spacing(6)} + ${depth.sm}px)`,
+                  clipPath: `polygon(
+                    0% 0%, 100% 0%, 
+                    100% calc(100% - ${depth.sm}px),
+                    ${Array.from({ length: steps + 1 }, (_, i) => {
+                      const x = ((steps - i) / steps) * 100;
+                      const isPeak = i % 2 === 0;
+                      const y = isPeak ? '100%' : `calc(100% - ${depth.sm}px)`;
+                      return `${x.toFixed(2)}% ${y}`;
+                    }).join(', ')},
+                    0% calc(100% - ${depth.sm}px)
+                  )`,
+                },
+                [theme.breakpoints.up('md')]: {
+                  paddingBottom: `calc(${theme.spacing(6)} + ${depth.md}px)`,
+                  clipPath: `polygon(
+                    0% 0%, 100% 0%, 
+                    100% calc(100% - ${depth.md}px),
+                    ${Array.from({ length: steps + 1 }, (_, i) => {
+                      const x = ((steps - i) / steps) * 100;
+                      const isPeak = i % 2 === 0;
+                      const y = isPeak ? '100%' : `calc(100% - ${depth.md}px)`;
+                      return `${x.toFixed(2)}% ${y}`;
+                    }).join(', ')},
+                    0% calc(100% - ${depth.md}px)
+                  )`,
+                },
+              };
+            }}
+          >
+            <Section key={i} sx={{ mt: 5 }}> {/* Move content down 40px */}
+              <Subsection 
+                section={s} 
+                index={0} 
+                year="2019"
+                title={s.title}
+              >
+                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ justifyContent: 'center' }}>
+                  {s.links?.map((l: any) => (
+                    <GlowPillButton
+                      key={l.href}
+                      href={l.href}
+                      rel="noreferrer"
+                    >
+                      {l.label}
+                    </GlowPillButton>
+                  ))}
+                </Stack>
+              </Subsection>
+              
+              {simplifiedExampleImages.length > 0 && (
+                <ControllableCarousel images={simplifiedExampleImages} />
+              )}
+            </Section>
+          </Box>
         ) : (
           <Section key={i}>
             {s.type === 'intro' ? (
