@@ -102,7 +102,7 @@ export default function Carousel({ images }: { images: string[] }) {
             marginLeft: '-50vw',
             marginRight: '-50vw',
             width: '100vw', // Full screen width
-            height: 'calc(100% - 90px + 50px)', // Extend beyond carousels but stop before footer
+            height: 'calc(100% - 90px + 200px)', // Extend beyond carousels with much more space
             zIndex: 1, // Above blue background, behind carousels
             
             // Yellow gradient with stripes (matches StickyAR section title)

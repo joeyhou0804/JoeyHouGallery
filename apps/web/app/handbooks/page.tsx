@@ -187,6 +187,7 @@ export default function HandbooksPage() {
           time="2018.06" 
           isFirst={false} 
           extraTopPadding={40}
+          extendBackground={true}
         />
       </Box>
       

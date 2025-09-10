@@ -28,7 +28,7 @@ export default function PageFooter() {
   ];
 
   return (
-    <Box sx={{ position: 'relative', mt: '-120px', zIndex: 10 }}>
+    <Box sx={{ position: 'relative', mt: '-20px', zIndex: 10 }}>
       {/* Yellow striped section with zigzag patterns */}
       <Box
         sx={(theme) => {
