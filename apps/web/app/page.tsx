@@ -2,14 +2,11 @@
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslation } from '@/hooks/useTranslation';
-import ColorizedMarioText from '@/components/ColorizedMarioText';
+import { useAtom } from 'jotai';
+import { languageAtom, Language } from '@joey/atoms';
 
 const sections = [
   { href: '/apps', labelKey: 'sectionsLabels.applications', buttonIndex: 1 },
@@ -23,90 +20,170 @@ const sections = [
 
 export default function HomePage() {
   const { t, language } = useTranslation();
+  const [currentLanguage, setLanguage] = useAtom(languageAtom);
+  
+  const handleLanguageSwitch = () => {
+    const newLanguage: Language = currentLanguage === 'en' ? 'zh-CN' : 'en';
+    setLanguage(newLanguage);
+  };
   return (
     <Box sx={{
       minHeight: 'calc(100vh - 120px)',
       display: 'flex',
       alignItems: 'center',
-      backgroundImage: `url(/title_background.jpg)`,
+      justifyContent: 'center',
+      backgroundImage: `url(/backgrounds/homepage_background.png)`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       color: '#fff'
     }}>
-      <Container>
-        <Box sx={{ textAlign: 'center', py: 4 }}>
-          {/* First row: "This is" / "这里是" */}
-          <Typography variant="h5" gutterBottom sx={{ fontWeight: 900 }}>
-            {t('thisIs')}
-          </Typography>
+      <Container sx={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Box sx={{ 
+          textAlign: 'center', 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center',
+          minHeight: 'calc(100vh - 200px)',
+          gap: 3
+        }}>
           
-          {/* Second row: Gallery title */}
-          <Typography variant="h1" gutterBottom sx={{ 
-            mb: 3, 
-            textAlign: 'center',
-            fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem', lg: '5.5rem' }
+          {/* Left cluster: 2x2 buttons */}
+          <Box sx={{ 
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 140px)',
+            gridTemplateRows: 'repeat(2, 120px)',
+            gap: 2,
+            justifyItems: 'center',
+            alignItems: 'center',
+            width: '296px',
+            height: '256px'
           }}>
-            <ColorizedMarioText
-              text={t('galleryTitle')}
-              fontFamily={language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif'}
-              fontSize="inherit"
-              fontWeight={language === 'zh-CN' ? 'normal' : 'bold'}
-              language={language}
-              variant="gradient"
-            />
-          </Typography>
+            {sections.slice(0, 4).map((s) => {
+              const buttonImage = language === 'zh-CN' 
+                ? `/buttons/button_cn_${s.buttonIndex}.png`
+                : `/buttons/button_en_${s.buttonIndex}.png`;
+              
+              return (
+                <Link key={s.href} href={s.href}>
+                  <Image
+                    src={buttonImage}
+                    alt={t(s.labelKey)}
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                    style={{
+                      width: 'auto',
+                      height: '120px',
+                      maxWidth: '360px',
+                      cursor: 'pointer',
+                      transition: 'transform 0.2s ease, opacity 0.2s ease',
+                      flexShrink: 1,
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.05)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)';
+                    }}
+                  />
+                </Link>
+              );
+            })}
+          </Box>
           
-          {/* Third row: Welcome message */}
-          <Typography variant="h5" sx={{ py: 3, maxWidth: 600, mx: 'auto', fontWeight: 900 }}>
-            {t('welcomeMessage')}
-          </Typography>
-          
-          {/* Fourth row: Navigation buttons */}
-          <Box sx={{ mt: 4 }}>
-            <Box 
-              sx={{ 
-                display: 'grid',
-                gridTemplateColumns: 'repeat(7, 1fr)',
-                gap: 2,
-                justifyItems: 'center',
-                alignItems: 'center',
-                maxWidth: '1200px',
-                margin: '0 auto'
+          {/* Center logo */}
+          <Box sx={{ 
+            mx: 2,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '600px',
+            height: '500px'
+          }}>
+            <Image
+              src={language === 'zh-CN' ? '/logos/logo_cn.png' : '/logos/logo_en.png'}
+              alt={language === 'zh-CN' ? '小猴同学作品集' : "Joey Hou's Gallery"}
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{
+                width: 'auto',
+                height: '500px',
+                maxWidth: '600px',
+                objectFit: 'contain',
               }}
-            >
-              {sections.map((s) => {
-                const buttonImage = language === 'zh-CN' 
-                  ? `/buttons/button_cn_${s.buttonIndex}.png`
-                  : `/buttons/button_en_${s.buttonIndex}.png`;
-                
-                return (
-                  <Link key={s.href} href={s.href}>
-                    <Image
-                      src={buttonImage}
-                      alt={t(s.labelKey)}
-                      width={0}
-                      height={0}
-                      sizes="100vw"
-                      style={{
-                        width: 'auto',
-                        height: '120px',
-                        maxWidth: '360px',
-                        cursor: 'pointer',
-                        transition: 'transform 0.2s ease, opacity 0.2s ease',
-                        flexShrink: 1,
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'scale(1.05)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'scale(1)';
-                      }}
-                    />
-                  </Link>
-                );
-              })}
+            />
+          </Box>
+          
+          {/* Right cluster: 2x2 buttons */}
+          <Box sx={{ 
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 140px)',
+            gridTemplateRows: 'repeat(2, 120px)',
+            gap: 2,
+            justifyItems: 'center',
+            alignItems: 'center',
+            width: '296px',
+            height: '256px'
+          }}>
+            {sections.slice(4, 7).map((s) => {
+              const buttonImage = language === 'zh-CN' 
+                ? `/buttons/button_cn_${s.buttonIndex}.png`
+                : `/buttons/button_en_${s.buttonIndex}.png`;
+              
+              return (
+                <Link key={s.href} href={s.href}>
+                  <Image
+                    src={buttonImage}
+                    alt={t(s.labelKey)}
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                    style={{
+                      width: 'auto',
+                      height: '120px',
+                      maxWidth: '360px',
+                      cursor: 'pointer',
+                      transition: 'transform 0.2s ease, opacity 0.2s ease',
+                      flexShrink: 1,
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.05)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)';
+                    }}
+                  />
+                </Link>
+              );
+            })}
+            
+            {/* Language switching button */}
+            <Box onClick={handleLanguageSwitch}>
+              <Image
+                src={language === 'zh-CN' ? '/buttons/button_cn_8.png' : '/buttons/button_en_8.png'}
+                alt={language === 'zh-CN' ? '切换到英文' : 'Switch to Chinese'}
+                width={0}
+                height={0}
+                sizes="100vw"
+                style={{
+                  width: 'auto',
+                  height: '120px',
+                  maxWidth: '360px',
+                  cursor: 'pointer',
+                  transition: 'transform 0.2s ease, opacity 0.2s ease',
+                  flexShrink: 1,
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'scale(1.05)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'scale(1)';
+                }}
+              />
             </Box>
           </Box>
+          
         </Box>
       </Container>
     </Box>
