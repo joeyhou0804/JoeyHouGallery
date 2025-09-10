@@ -14,12 +14,14 @@ export default function MainSection({
   section, 
   time, 
   isFirst = true, 
-  backgroundType = 'full' 
+  backgroundType = 'full',
+  extraTopPadding = 0
 }: { 
   section: Extract<SectionType, { type: 'intro' }>, 
   time?: string, 
   isFirst?: boolean,
-  backgroundType?: 'full' | 'bottom-only'
+  backgroundType?: 'full' | 'bottom-only',
+  extraTopPadding?: number
 }) {
   const { t, language } = useTranslation();
   
@@ -48,7 +50,7 @@ export default function MainSection({
           backgroundPosition: 'center',
           position: 'relative',
           zIndex: 5, // Lower z-index than title section
-          paddingTop: theme.spacing(4),
+          paddingTop: `calc(${theme.spacing(4)} + ${extraTopPadding}px)`,
           marginBottom: 0,
 
           // Responsive zigzag configuration
@@ -67,7 +69,7 @@ export default function MainSection({
               0% calc(100% - ${depth.xs}px)
             )`,
           } : {
-            paddingTop: isFirst ? `calc(${theme.spacing(4)} + ${depth.xs + 40}px)` : `calc(${theme.spacing(4)} + ${depth.xs}px)`,
+            paddingTop: isFirst ? `calc(${theme.spacing(4)} + ${depth.xs + 40 + extraTopPadding}px)` : `calc(${theme.spacing(4)} + ${depth.xs + extraTopPadding}px)`,
             paddingBottom: `calc(${theme.spacing(6)} + ${depth.xs}px)`,
             marginTop: isFirst ? `-${depth.xs + 40}px` : `-${depth.xs}px`,
             clipPath: `polygon(
@@ -103,7 +105,7 @@ export default function MainSection({
               0% calc(100% - ${depth.sm}px)
             )`,
           } : {
-            paddingTop: isFirst ? `calc(${theme.spacing(4)} + ${depth.sm + 40}px)` : `calc(${theme.spacing(4)} + ${depth.sm}px)`,
+            paddingTop: isFirst ? `calc(${theme.spacing(4)} + ${depth.sm + 40 + extraTopPadding}px)` : `calc(${theme.spacing(4)} + ${depth.sm + extraTopPadding}px)`,
             paddingBottom: `calc(${theme.spacing(6)} + ${depth.sm}px)`,
             marginTop: isFirst ? `-${depth.sm + 40}px` : `-${depth.sm}px`,
             clipPath: `polygon(
@@ -139,7 +141,7 @@ export default function MainSection({
               0% calc(100% - ${depth.md}px)
             )`,
           } : {
-            paddingTop: isFirst ? `calc(${theme.spacing(4)} + ${depth.md + 40}px)` : `calc(${theme.spacing(4)} + ${depth.md}px)`,
+            paddingTop: isFirst ? `calc(${theme.spacing(4)} + ${depth.md + 40 + extraTopPadding}px)` : `calc(${theme.spacing(4)} + ${depth.md + extraTopPadding}px)`,
             paddingBottom: `calc(${theme.spacing(6)} + ${depth.md}px)`,
             marginTop: isFirst ? `-${depth.md + 40}px` : `-${depth.md}px`,
             clipPath: `polygon(

@@ -16,7 +16,9 @@ export default function Subsection({
   title,
   backgroundImage = '/subsection_background_1.png',
   carouselImages,
-  carouselSpacing = 6
+  carouselSpacing = 6,
+  zIndex = 1,
+  customColor
 }: { 
   section: Extract<SectionType, { type: 'gallery' }> | any, 
   index: number,
@@ -26,8 +28,19 @@ export default function Subsection({
   title?: string,
   backgroundImage?: string,
   carouselImages?: string[],
-  carouselSpacing?: number
+  carouselSpacing?: number,
+  zIndex?: number,
+  customColor?: 'red' | 'blue' | 'green'
 }) {
+  // Convert customColor to gradient
+  const colorGradients = {
+    red: 'linear-gradient(to right, #FF8E65, #FF4582)',
+    blue: 'linear-gradient(to right, #75C5EB, #297BC8)', 
+    green: 'linear-gradient(to right, #39DE88, #17CACB)'
+  };
+  
+  const finalGradient = customColor ? colorGradients[customColor] : customGradient;
+  
   return (
     <Box 
       sx={(theme) => {
@@ -44,6 +57,7 @@ export default function Subsection({
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center',
           position: 'relative',
+          zIndex: zIndex,
           marginTop: '-40px', // Move whole part up 40px to overlap MainSection zigzags
           paddingTop: '40px', // Add padding to compensate for content position
           
@@ -99,7 +113,7 @@ export default function Subsection({
           index={index} 
           year={year}
           title={title}
-          customGradient={customGradient}
+          customGradient={finalGradient}
         >
           {children}
         </SubsectionBox>

@@ -55,12 +55,14 @@ export default function HandbooksPage() {
     '/zh_cn_4.png',
     '/zh_cn_5.png'
   ];
+
   
   // Get typed sections for proper TypeScript support
   const simplifiedSection = data.sections.find(s => s.title === 'Simplified Chinese Version' && s.type === 'intro') as Extract<typeof data.sections[0], { type: 'intro' }>;
   const englishSection = data.sections.find(s => s.title === 'English Version' && s.type === 'intro') as Extract<typeof data.sections[0], { type: 'intro' }>;
   const traditionalSection = data.sections.find(s => s.title === 'Traditional Chinese Version' && s.type === 'intro') as Extract<typeof data.sections[0], { type: 'intro' }>;
   const admissionSection = data.sections.find(s => s.type === 'intro' && s.title === 'Admission‑pedia') as Extract<typeof data.sections[0], { type: 'intro' }>;
+  const musicSection = data.sections.find(s => s.type === 'intro' && s.title === 'Music Tutorial Textbook') as Extract<typeof data.sections[0], { type: 'intro' }>;
 
   // Custom order array for Subsection components
   const customOrder = [
@@ -73,6 +75,8 @@ export default function HandbooksPage() {
       title="Simplified Chinese Version"
       carouselImages={firstSimplifiedImages}
       carouselSpacing={6}
+      zIndex={4}
+      customColor="red"
     >
       <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ justifyContent: 'center' }}>
         {simplifiedSection?.links?.slice(1).map((l: any) => (
@@ -97,6 +101,8 @@ export default function HandbooksPage() {
       backgroundImage="/subsection_background_3.png"
       carouselImages={englishExampleImages}
       carouselSpacing={6}
+      zIndex={3}
+      customColor="blue"
     >
       <Box sx={{ textAlign: 'center' }}>
         {englishSection?.links?.[0] && (
@@ -120,6 +126,8 @@ export default function HandbooksPage() {
       backgroundImage="/subsection_background_2.png"
       carouselImages={traditionalExampleImages}
       carouselSpacing={6}
+      zIndex={2}
+      customColor="green"
     >
       <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ justifyContent: 'center' }}>
         {traditionalSection?.links?.map((l: any) => (
@@ -143,6 +151,8 @@ export default function HandbooksPage() {
       title="Simplified Chinese Version"
       carouselImages={simplifiedExampleImages}
       carouselSpacing={6}
+      zIndex={1}
+      customColor="red"
     >
       <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ justifyContent: 'center' }}>
         {simplifiedSection?.links?.map((l: any) => (
@@ -170,16 +180,28 @@ export default function HandbooksPage() {
       {/* Custom ordered Subsection components */}
       {customOrder}
       
-      {/* Remaining sections (Music Tutorial, etc.) */}
+      {/* Music Tutorial Textbook MainSection */}
+      <Box sx={{ marginTop: '-40px' }}>
+        <MainSection 
+          section={musicSection} 
+          time="2018.06" 
+          isFirst={false} 
+          extraTopPadding={40}
+        />
+      </Box>
+      
+      {/* Remaining sections */}
       {data.sections
         .filter(s => 
           s.title !== 'Admission‑pedia' && 
           s.title !== 'Simplified Chinese Version' && 
           s.title !== 'Traditional Chinese Version' && 
           s.title !== 'English Version' &&
+          s.title !== 'Music Tutorial Textbook' &&
           s.title !== 'Page Examples — Simplified' && 
           s.title !== 'Page Examples — Traditional' && 
-          s.title !== 'Page Examples — English'
+          s.title !== 'Page Examples — English' &&
+          s.title !== 'Page Examples — Music'
         )
         .map((s, i) => (
           <Section key={i}>

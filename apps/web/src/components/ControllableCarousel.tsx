@@ -207,7 +207,7 @@ export default function ControllableCarousel({
             sx={{
               position: "absolute",
               right: `calc(50% + ${arrowOffsetPx}px)`,
-              top: "50%",
+              top: "30%",
               transform: "translateY(-50%)",
               zIndex: 4,
               backgroundColor: "transparent",
@@ -236,7 +236,7 @@ export default function ControllableCarousel({
             sx={{
               position: "absolute",
               left: `calc(50% + ${arrowOffsetPx}px)`,
-              top: "50%",
+              top: "30%",
               transform: "translateY(-50%)",
               zIndex: 4,
               backgroundColor: "transparent",
