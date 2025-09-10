@@ -15,7 +15,7 @@ export default function ApplicationsPage() {
   const gallerySections = data.sections.filter(s => s.type === 'gallery') as Extract<SectionType, { type: 'gallery' }>[];
   
   return (
-    <PageHeader pageKey="applications">
+    <PageHeader pageKey="apps">
       <MainSection section={introSection} backgroundType="bottom-only" />
 
       {gallerySections.map((s, i) => (

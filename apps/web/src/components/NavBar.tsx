@@ -20,7 +20,7 @@ import { useTranslation } from '@/hooks/useTranslation';
 
 const links = [
   { href: '/', labelKey: 'home' },
-  { href: '/applications', labelKey: 'applications' },
+  { href: '/apps', labelKey: 'applications' },
   { href: '/arts', labelKey: 'arts' },
   { href: '/handbooks', labelKey: 'handbooks' },
   { href: '/posters', labelKey: 'posters' },

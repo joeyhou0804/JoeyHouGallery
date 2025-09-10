@@ -8,7 +8,7 @@ import { useTranslation } from '@/hooks/useTranslation';
 import ColorizedMarioText from './ColorizedMarioText';
 
 interface PageHeaderProps {
-  pageKey: 'applications' | 'arts' | 'handbooks' | 'posters' | 'reports' | 'videos' | 'websites';
+  pageKey: 'applications' | 'apps' | 'arts' | 'handbooks' | 'posters' | 'reports' | 'videos' | 'websites';
   children?: React.ReactNode;
 }
 

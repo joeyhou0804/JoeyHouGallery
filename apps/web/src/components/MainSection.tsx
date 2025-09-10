@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import { useTranslation } from '@/hooks/useTranslation';
 import type { Section as SectionType } from '@/content/types';
-import { GlowPillButton } from '../../app/applications/GlowPillButton';
+import { GlowPillButton } from '../../app/apps/GlowPillButton';
 import ControllableCarousel from './ControllableCarousel';
 import Section from './Section';
 

@@ -12,7 +12,7 @@ import { useTranslation } from '@/hooks/useTranslation';
 import ColorizedMarioText from '@/components/ColorizedMarioText';
 
 const sections = [
-  { href: '/applications', labelKey: 'sectionsLabels.applications', buttonIndex: 1 },
+  { href: '/apps', labelKey: 'sectionsLabels.applications', buttonIndex: 1 },
   { href: '/arts', labelKey: 'sectionsLabels.arts', buttonIndex: 2 },
   { href: '/handbooks', labelKey: 'sectionsLabels.handbooks', buttonIndex: 3 },
   { href: '/posters', labelKey: 'sectionsLabels.posters', buttonIndex: 4 },

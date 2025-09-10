@@ -8,7 +8,7 @@ export const translations = {
   en: {
     // Navigation
     home: 'Home',
-    applications: 'Applications',
+    applications: 'Apps',
     arts: 'Arts',
     handbooks: 'Handbooks',
     posters: 'Posters',
@@ -23,7 +23,7 @@ export const translations = {
     
     // Section labels for buttons
     sectionsLabels: {
-      applications: 'Applications',
+      applications: 'Apps',
       arts: 'Arts',
       handbooks: 'Handbooks',
       posters: 'Posters',
@@ -35,7 +35,10 @@ export const translations = {
     // Page content translations
     pages: {
       applications: {
-        title: 'Applications',
+        title: 'Apps',
+      },
+      apps: {
+        title: 'Apps',
         stickyarTitle: 'StickyAR - An iOS AR App',
         stickyarDescription: [
           'This is an iOS application integrated with AR techniques.',
@@ -96,6 +99,18 @@ export const translations = {
     // Page content translations
     pages: {
       applications: {
+        title: '应用',
+        stickyarTitle: 'StickyAR - iOS AR应用',
+        stickyarDescription: [
+          '这是一个集成了AR技术的iOS应用程序。',
+          '这是我在哥伦比亚大学与其他3名同学合作完成的小组项目。',
+          '这个应用程序已发布在我的GitHub页面上。'
+        ],
+        applicationIdeaTitle: '应用理念',
+        applicationIdeaDescription: '我们的iOS AR应用的理念是在智能手机上重现便利贴的功能。',
+        githubLabel: 'GitHub'
+      },
+      apps: {
         title: '应用',
         stickyarTitle: 'StickyAR - iOS AR应用',
         stickyarDescription: [
