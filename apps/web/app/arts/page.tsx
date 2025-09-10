@@ -20,7 +20,13 @@ export default function ArtsPage() {
     <PageHeader pageKey="arts">
       {data.sections.map((s, i) => (
         s.type === 'intro' ? (
-          <MainSection key={i} section={s} time={s.time} isFirst={i === 0} />
+          <MainSection 
+            key={i} 
+            section={s} 
+            time={s.time} 
+            isFirst={i === 0} 
+            extendBackground={s.title === 'Travel Journals — Italy'} 
+          />
         ) : (
           <Section key={i}>
             {s.title ? (

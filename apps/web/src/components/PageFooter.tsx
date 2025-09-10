@@ -28,7 +28,7 @@ export default function PageFooter() {
   ];
 
   return (
-    <>
+    <Box sx={{ position: 'relative', mt: '-120px', zIndex: 10 }}>
       {/* Yellow striped section with zigzag patterns */}
       <Box
         sx={(theme) => {
@@ -238,6 +238,6 @@ export default function PageFooter() {
           Made by Joey Hou in 2025.
         </Box>
       </Box>
-    </>
+    </Box>
   );
 }

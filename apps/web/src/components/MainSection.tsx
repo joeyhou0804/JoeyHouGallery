@@ -15,13 +15,15 @@ export default function MainSection({
   time, 
   isFirst = true, 
   backgroundType = 'full',
-  extraTopPadding = 0
+  extraTopPadding = 0,
+  extendBackground = false
 }: { 
   section: Extract<SectionType, { type: 'intro' }>, 
   time?: string, 
   isFirst?: boolean,
   backgroundType?: 'full' | 'bottom-only',
-  extraTopPadding?: number
+  extraTopPadding?: number,
+  extendBackground?: boolean
 }) {
   const { t, language } = useTranslation();
   
@@ -51,7 +53,7 @@ export default function MainSection({
           position: 'relative',
           zIndex: 5, // Lower z-index than title section
           paddingTop: `calc(${theme.spacing(4)} + ${extraTopPadding}px)`,
-          marginBottom: 0,
+          marginBottom: extendBackground ? '-120px' : 0,
 
           // Responsive zigzag configuration
           [theme.breakpoints.up('xs')]: backgroundType === 'bottom-only' ? {
@@ -67,6 +69,20 @@ export default function MainSection({
                 return `${x.toFixed(2)}% ${y}`;
               }).join(', ')},
               0% calc(100% - ${depth.xs}px)
+            )`,
+          } : extendBackground ? {
+            paddingTop: isFirst ? `calc(${theme.spacing(4)} + ${depth.xs + 40 + extraTopPadding}px)` : `calc(${theme.spacing(4)} + ${depth.xs + extraTopPadding}px)`,
+            paddingBottom: `calc(${theme.spacing(6)} + 120px)`,
+            marginTop: isFirst ? `-${depth.xs + 40}px` : `-${depth.xs}px`,
+            clipPath: `polygon(
+              0% 0%,
+              ${Array.from({ length: steps + 1 }, (_, i) => {
+                const x = (i / steps) * 100;
+                const isPeak = i % 2 === 0;
+                const y = isPeak ? '0%' : `${depth.xs}px`;
+                return `${x.toFixed(2)}% ${y}`;
+              }).join(', ')},
+              100% 0%, 100% 100%, 0% 100%, 0% 0%
             )`,
           } : {
             paddingTop: isFirst ? `calc(${theme.spacing(4)} + ${depth.xs + 40 + extraTopPadding}px)` : `calc(${theme.spacing(4)} + ${depth.xs + extraTopPadding}px)`,
@@ -104,6 +120,20 @@ export default function MainSection({
               }).join(', ')},
               0% calc(100% - ${depth.sm}px)
             )`,
+          } : extendBackground ? {
+            paddingTop: isFirst ? `calc(${theme.spacing(4)} + ${depth.sm + 40 + extraTopPadding}px)` : `calc(${theme.spacing(4)} + ${depth.sm + extraTopPadding}px)`,
+            paddingBottom: `calc(${theme.spacing(6)} + 120px)`,
+            marginTop: isFirst ? `-${depth.sm + 40}px` : `-${depth.sm}px`,
+            clipPath: `polygon(
+              0% 0%,
+              ${Array.from({ length: steps + 1 }, (_, i) => {
+                const x = (i / steps) * 100;
+                const isPeak = i % 2 === 0;
+                const y = isPeak ? '0%' : `${depth.sm}px`;
+                return `${x.toFixed(2)}% ${y}`;
+              }).join(', ')},
+              100% 0%, 100% 100%, 0% 100%, 0% 0%
+            )`,
           } : {
             paddingTop: isFirst ? `calc(${theme.spacing(4)} + ${depth.sm + 40 + extraTopPadding}px)` : `calc(${theme.spacing(4)} + ${depth.sm + extraTopPadding}px)`,
             paddingBottom: `calc(${theme.spacing(6)} + ${depth.sm}px)`,
@@ -139,6 +169,20 @@ export default function MainSection({
                 return `${x.toFixed(2)}% ${y}`;
               }).join(', ')},
               0% calc(100% - ${depth.md}px)
+            )`,
+          } : extendBackground ? {
+            paddingTop: isFirst ? `calc(${theme.spacing(4)} + ${depth.md + 40 + extraTopPadding}px)` : `calc(${theme.spacing(4)} + ${depth.md + extraTopPadding}px)`,
+            paddingBottom: `calc(${theme.spacing(6)} + 120px)`,
+            marginTop: isFirst ? `-${depth.md + 40}px` : `-${depth.md}px`,
+            clipPath: `polygon(
+              0% 0%,
+              ${Array.from({ length: steps + 1 }, (_, i) => {
+                const x = (i / steps) * 100;
+                const isPeak = i % 2 === 0;
+                const y = isPeak ? '0%' : `${depth.md}px`;
+                return `${x.toFixed(2)}% ${y}`;
+              }).join(', ')},
+              100% 0%, 100% 100%, 0% 100%, 0% 0%
             )`,
           } : {
             paddingTop: isFirst ? `calc(${theme.spacing(4)} + ${depth.md + 40 + extraTopPadding}px)` : `calc(${theme.spacing(4)} + ${depth.md + extraTopPadding}px)`,
