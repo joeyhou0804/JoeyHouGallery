@@ -68,7 +68,33 @@ export default function HomePage() {
           my: { xs: 3, md: 0 },
         }}
       >
-        {sections.slice(0, 4).map((s) => {
+        {/* Language switching button - first position */}
+        <Box onClick={handleLanguageSwitch} sx={{ cursor: 'pointer' }}>
+          <Image
+            src={language === 'zh-CN' ? '/buttons/button_cn_8.png' : '/buttons/button_en_8.png'}
+            alt={language === 'zh-CN' ? '切换到英文' : 'Switch to Chinese'}
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{
+              width: 'auto',
+              height: '120px',
+              maxWidth: '360px',
+              cursor: 'pointer',
+              transition: 'transform 0.2s ease, opacity 0.2s ease',
+              flexShrink: 1,
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'scale(1.05)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'scale(1)';
+            }}
+          />
+        </Box>
+
+        {/* Apps, Arts, Handbooks buttons */}
+        {sections.slice(0, 3).map((s) => {
           const buttonImage =
             language === 'zh-CN'
               ? `/buttons/button_cn_${s.buttonIndex}.png`
@@ -147,7 +173,8 @@ export default function HomePage() {
           my: { xs: 3, md: 0 },
         }}
       >
-        {sections.slice(4, 7).map((s) => {
+        {/* Posters, Reports, Videos, Websites buttons */}
+        {sections.slice(3, 7).map((s) => {
           const buttonImage =
             language === 'zh-CN'
               ? `/buttons/button_cn_${s.buttonIndex}.png`
@@ -178,31 +205,6 @@ export default function HomePage() {
             </Link>
           );
         })}
-
-        {/* Language switching button */}
-        <Box onClick={handleLanguageSwitch} sx={{ cursor: 'pointer' }}>
-          <Image
-            src={language === 'zh-CN' ? '/buttons/button_cn_8.png' : '/buttons/button_en_8.png'}
-            alt={language === 'zh-CN' ? '切换到英文' : 'Switch to Chinese'}
-            width={0}
-            height={0}
-            sizes="100vw"
-            style={{
-              width: 'auto',
-              height: '120px',
-              maxWidth: '360px',
-              cursor: 'pointer',
-              transition: 'transform 0.2s ease, opacity 0.2s ease',
-              flexShrink: 1,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'scale(1.05)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'scale(1)';
-            }}
-          />
-        </Box>
       </Box>
     </Box>
   );
