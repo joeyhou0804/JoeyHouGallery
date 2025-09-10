@@ -28,7 +28,7 @@ export default function HomePage() {
   };
   return (
     <Box sx={{
-      minHeight: 'calc(100vh - 120px)',
+      minHeight: '100vh',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -43,7 +43,7 @@ export default function HomePage() {
           display: 'flex', 
           alignItems: 'center', 
           justifyContent: 'center',
-          minHeight: 'calc(100vh - 200px)',
+          minHeight: '100vh',
           gap: 3
         }}>
           

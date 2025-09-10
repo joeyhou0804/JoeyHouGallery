@@ -14,7 +14,7 @@ export default function Subsection({
   customGradient,
   children,
   title,
-  backgroundImage = '/subsection_background_1.png',
+  backgroundImage = '/backgrounds/subsection_background_1.png',
   carouselImages,
   carouselSpacing = 6,
   zIndex = 1,

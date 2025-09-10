@@ -44,7 +44,7 @@ export default function MainSection({
         const steps = 120;     // number of teeth * 2
 
         return {
-          backgroundImage: `url(/section_background.png)`,
+          backgroundImage: `url(/backgrounds/section_background.png)`,
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center',

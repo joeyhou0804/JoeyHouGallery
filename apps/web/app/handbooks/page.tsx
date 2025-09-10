@@ -98,7 +98,7 @@ export default function HandbooksPage() {
       index={2} 
       year="2019"
       title="English Version"
-      backgroundImage="/subsection_background_3.png"
+      backgroundImage="/backgrounds/subsection_background_3.png"
       carouselImages={englishExampleImages}
       carouselSpacing={6}
       zIndex={3}
@@ -123,7 +123,7 @@ export default function HandbooksPage() {
       index={1} 
       year="2019"
       title="Traditional Chinese Version"
-      backgroundImage="/subsection_background_2.png"
+      backgroundImage="/backgrounds/subsection_background_2.png"
       carouselImages={traditionalExampleImages}
       carouselSpacing={6}
       zIndex={2}
