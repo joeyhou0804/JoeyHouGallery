@@ -21,119 +21,158 @@ export default function HandbooksPage() {
   const data = content as PageContent;
   
   // Get images from "Page Examples — Simplified" section and reorder to: 0, 2, 3, 4, 5, 1, 6
-  const originalImages = data.sections
-    .find(s => s.title === 'Page Examples — Simplified')?.images || [];
+  const simplifiedGallerySection = data.sections
+    .find(s => s.title === 'Page Examples — Simplified' && s.type === 'gallery') as Extract<typeof data.sections[0], { type: 'gallery' }>;
+  const simplifiedOriginalImages = simplifiedGallerySection?.images || [];
   
-  const simplifiedExampleImages = originalImages.length >= 7 
+  const simplifiedExampleImages = simplifiedOriginalImages.length >= 7 
     ? [
-        originalImages[0], // 0
-        originalImages[2], // 2
-        originalImages[3], // 3
-        originalImages[4], // 4
-        originalImages[5], // 5
-        originalImages[1], // 1 (moved to second-to-last)
-        originalImages[6]  // 6
-      ]
-    : [...originalImages]; // fallback to original order if less than 7 images
+        simplifiedOriginalImages[0], // 0
+        simplifiedOriginalImages[2], // 2
+        simplifiedOriginalImages[3], // 3
+        simplifiedOriginalImages[4], // 4
+        simplifiedOriginalImages[5], // 5
+        simplifiedOriginalImages[1], // 1 (moved to second-to-last)
+        simplifiedOriginalImages[6]  // 6
+      ].filter(Boolean) as string[] // Remove any undefined values
+    : [...simplifiedOriginalImages]; // fallback to original order if less than 7 images
+
+  // Get images from "Page Examples — Traditional" section for carousel
+  const traditionalGallerySection = data.sections
+    .find(s => s.title === 'Page Examples — Traditional' && s.type === 'gallery') as Extract<typeof data.sections[0], { type: 'gallery' }>;
+  const traditionalExampleImages = traditionalGallerySection?.images || [];
+
+  // Get images from "Page Examples — English" section for carousel
+  const englishGallerySection = data.sections
+    .find(s => s.title === 'Page Examples — English' && s.type === 'gallery') as Extract<typeof data.sections[0], { type: 'gallery' }>;
+  const englishExampleImages = englishGallerySection?.images || [];
   
+  // Get typed sections for proper TypeScript support
+  const simplifiedSection = data.sections.find(s => s.title === 'Simplified Chinese Version' && s.type === 'intro') as Extract<typeof data.sections[0], { type: 'intro' }>;
+  const englishSection = data.sections.find(s => s.title === 'English Version' && s.type === 'intro') as Extract<typeof data.sections[0], { type: 'intro' }>;
+  const traditionalSection = data.sections.find(s => s.title === 'Traditional Chinese Version' && s.type === 'intro') as Extract<typeof data.sections[0], { type: 'intro' }>;
+  const admissionSection = data.sections.find(s => s.type === 'intro' && s.title === 'Admission‑pedia') as Extract<typeof data.sections[0], { type: 'intro' }>;
+
+  // Custom order array for Subsection components
+  const customOrder = [
+    // 1. Simplified Chinese Version (first)
+    <Subsection 
+      key="simplified-1"
+      section={simplifiedSection} 
+      index={0} 
+      year="2019"
+      title="Simplified Chinese Version"
+      carouselImages={simplifiedExampleImages}
+      carouselSpacing={6}
+    >
+      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ justifyContent: 'center' }}>
+        {simplifiedSection?.links?.map((l: any) => (
+          <GlowPillButton
+            key={l.href}
+            href={l.href}
+            rel="noreferrer"
+          >
+            {l.label}
+          </GlowPillButton>
+        ))}
+      </Stack>
+    </Subsection>,
+
+    // 2. English Version
+    <Subsection 
+      key="english"
+      section={englishSection} 
+      index={2} 
+      year="2019"
+      title="English Version"
+      backgroundImage="/subsection_background_3.png"
+      carouselImages={englishExampleImages}
+      carouselSpacing={6}
+    >
+      <Box sx={{ textAlign: 'center' }}>
+        {englishSection?.links?.[0] && (
+          <GlowPillButton
+            href={englishSection.links[0].href}
+            rel="noreferrer"
+          >
+            Download Volume of CityU
+          </GlowPillButton>
+        )}
+      </Box>
+    </Subsection>,
+
+    // 3. Traditional Chinese Version
+    <Subsection 
+      key="traditional"
+      section={traditionalSection} 
+      index={1} 
+      year="2019"
+      title="Traditional Chinese Version"
+      backgroundImage="/subsection_background_2.png"
+      carouselImages={traditionalExampleImages}
+      carouselSpacing={6}
+    >
+      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ justifyContent: 'center' }}>
+        {traditionalSection?.links?.map((l: any) => (
+          <GlowPillButton
+            key={l.href}
+            href={l.href}
+            rel="noreferrer"
+          >
+            {l.label}
+          </GlowPillButton>
+        ))}
+      </Stack>
+    </Subsection>,
+
+    // 4. Simplified Chinese Version (second copy)
+    <Subsection 
+      key="simplified-2"
+      section={simplifiedSection} 
+      index={0} 
+      year="2019"
+      title="Simplified Chinese Version"
+      carouselImages={simplifiedExampleImages}
+      carouselSpacing={6}
+    >
+      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ justifyContent: 'center' }}>
+        {simplifiedSection?.links?.map((l: any) => (
+          <GlowPillButton
+            key={l.href}
+            href={l.href}
+            rel="noreferrer"
+          >
+            {l.label}
+          </GlowPillButton>
+        ))}
+      </Stack>
+    </Subsection>
+  ];
+
   return (
     <PageHeader pageKey="handbooks">
+      {/* MainSection for Admission-pedia */}
+      <MainSection 
+        section={admissionSection} 
+        time="2019‑2025" 
+        isFirst={true} 
+      />
+      
+      {/* Custom ordered Subsection components */}
+      {customOrder}
+      
+      {/* Remaining sections (Music Tutorial, etc.) */}
       {data.sections
-        .filter(s => s.title !== 'Page Examples — Simplified') // Exclude this section as images are now in Subsection
+        .filter(s => 
+          s.title !== 'Admission‑pedia' && 
+          s.title !== 'Simplified Chinese Version' && 
+          s.title !== 'Traditional Chinese Version' && 
+          s.title !== 'English Version' &&
+          s.title !== 'Page Examples — Simplified' && 
+          s.title !== 'Page Examples — Traditional' && 
+          s.title !== 'Page Examples — English'
+        )
         .map((s, i) => (
-        s.type === 'intro' && i === 0 ? (
-          <MainSection key={i} section={s} time="2019‑2025" isFirst={i === 0} />
-        ) : s.type === 'intro' && s.title === 'Simplified Chinese Version' ? (
-          <Box 
-            sx={(theme) => {
-              const depth = {
-                xs: 6,   // smaller depth on mobile
-                sm: 8,   // medium depth on small screens
-                md: 10,  // original depth on medium+ screens
-              };
-              const steps = 120;
-
-              return {
-                backgroundImage: 'url(/subsection_background_1.png)',
-                backgroundSize: 'cover',
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center',
-                position: 'relative',
-                marginTop: '-40px', // Move whole part up 40px to overlap MainSection zigzags
-                paddingTop: '40px', // Add padding to compensate for content position
-                
-                // Responsive zigzag bottom (matching MainSection pattern)
-                [theme.breakpoints.up('xs')]: {
-                  paddingBottom: `calc(${theme.spacing(6)} + ${depth.xs}px)`,
-                  clipPath: `polygon(
-                    0% 0%, 100% 0%, 
-                    100% calc(100% - ${depth.xs}px),
-                    ${Array.from({ length: steps + 1 }, (_, i) => {
-                      const x = ((steps - i) / steps) * 100;
-                      const isPeak = i % 2 === 0;
-                      const y = isPeak ? '100%' : `calc(100% - ${depth.xs}px)`;
-                      return `${x.toFixed(2)}% ${y}`;
-                    }).join(', ')},
-                    0% calc(100% - ${depth.xs}px)
-                  )`,
-                },
-                [theme.breakpoints.up('sm')]: {
-                  paddingBottom: `calc(${theme.spacing(6)} + ${depth.sm}px)`,
-                  clipPath: `polygon(
-                    0% 0%, 100% 0%, 
-                    100% calc(100% - ${depth.sm}px),
-                    ${Array.from({ length: steps + 1 }, (_, i) => {
-                      const x = ((steps - i) / steps) * 100;
-                      const isPeak = i % 2 === 0;
-                      const y = isPeak ? '100%' : `calc(100% - ${depth.sm}px)`;
-                      return `${x.toFixed(2)}% ${y}`;
-                    }).join(', ')},
-                    0% calc(100% - ${depth.sm}px)
-                  )`,
-                },
-                [theme.breakpoints.up('md')]: {
-                  paddingBottom: `calc(${theme.spacing(6)} + ${depth.md}px)`,
-                  clipPath: `polygon(
-                    0% 0%, 100% 0%, 
-                    100% calc(100% - ${depth.md}px),
-                    ${Array.from({ length: steps + 1 }, (_, i) => {
-                      const x = ((steps - i) / steps) * 100;
-                      const isPeak = i % 2 === 0;
-                      const y = isPeak ? '100%' : `calc(100% - ${depth.md}px)`;
-                      return `${x.toFixed(2)}% ${y}`;
-                    }).join(', ')},
-                    0% calc(100% - ${depth.md}px)
-                  )`,
-                },
-              };
-            }}
-          >
-            <Section key={i} sx={{ mt: 5 }}> {/* Move content down 40px */}
-              <Subsection 
-                section={s} 
-                index={0} 
-                year="2019"
-                title={s.title}
-              >
-                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ justifyContent: 'center' }}>
-                  {s.links?.map((l: any) => (
-                    <GlowPillButton
-                      key={l.href}
-                      href={l.href}
-                      rel="noreferrer"
-                    >
-                      {l.label}
-                    </GlowPillButton>
-                  ))}
-                </Stack>
-              </Subsection>
-              
-              {simplifiedExampleImages.length > 0 && (
-                <ControllableCarousel images={simplifiedExampleImages} />
-              )}
-            </Section>
-          </Box>
-        ) : (
           <Section key={i}>
             {s.type === 'intro' ? (
               <Card>
@@ -171,8 +210,7 @@ export default function HandbooksPage() {
               </>
             )}
           </Section>
-        )
-      ))}
+        ))}
     </PageHeader>
   );
 }

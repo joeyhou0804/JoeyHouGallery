@@ -3,7 +3,7 @@
 import Section from '@/components/Section';
 import PageHeader from '@/components/PageHeader';
 import MainSection from '@/components/MainSection';
-import Subsection from '@/components/Subsection';
+import SubsectionBox from '@/components/SubsectionBox';
 import Carousel from '@/components/Carousel';
 import type { PageContent, Section as SectionType } from '@/content/types';
 import content from '@/content/applications.json';
@@ -22,11 +22,11 @@ export default function ApplicationsPage() {
         <Section key={i}>
           {s.title === 'Manipulation' ? (
             <>
-              <Subsection section={{ ...s, images: [] }} index={i} />
+              <SubsectionBox section={{ ...s, images: [] }} index={i} />
               <Carousel images={s.images || []} />
             </>
           ) : (
-            <Subsection section={s} index={i} />
+            <SubsectionBox section={s} index={i} />
           )}
         </Section>
       ))}

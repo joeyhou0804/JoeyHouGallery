@@ -41,7 +41,7 @@
     },
     {
       "type": "intro",
-      "title": "Traditional Chinese Version (2019)",
+      "title": "Traditional Chinese Version",
       "links": [
         {
           "label": "Download Volume of CityU",
@@ -64,6 +64,16 @@
         "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409685/joeyhougallery/handbooks/Admission-pedia/%E7%B9%81%E4%BD%93/IMG_7706.PNG_enwuh6.png",
         "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409687/joeyhougallery/handbooks/Admission-pedia/%E7%B9%81%E4%BD%93/IMG_7707.PNG_h7udmw.png",
         "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409684/joeyhougallery/handbooks/Admission-pedia/%E7%B9%81%E4%BD%93/IMG_7708.PNG_jhxa1t.png"
+      ]
+    },
+    {
+      "type": "intro",
+      "title": "English Version",
+      "links": [
+        {
+          "label": "Download Volume of CityU",
+          "href": "https://40a431a6-5c85-45f3-b955-58c8e40d7db4.filesusr.com/ugd/6a9383_7eb71bbd629145ffbe84c3c0754bb7bc.pdf"
+        }
       ]
     },
     {
