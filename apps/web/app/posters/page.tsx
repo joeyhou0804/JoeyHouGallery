@@ -1,51 +1,39 @@
 import Section from '@/components/Section';
 import PageHeader from '@/components/PageHeader';
-import TextBlock from '@/components/TextBlock';
-import ImageGrid from '@/components/ImageGrid';
-import type { PageContent } from '@/content/types';
+import MainSection from '@/components/MainSection';
+import SubsectionBox from '@/components/SubsectionBox';
+import PageFooter from '@/components/PageFooter';
+import type { PageContent, Section as SectionType } from '@/content/types';
 import content from '@/content/posters.json';
-import Typography from '@mui/material/Typography';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 
 export const metadata = { title: 'Posters · Joey Hou Gallery' };
 
 export default function PostersPage() {
   const data = content as PageContent;
+  const introSection = data.sections.find(s => s.type === 'intro') as Extract<SectionType, { type: 'intro' }>;
+  const gallerySections = data.sections.filter(s => s.type === 'gallery') as Extract<SectionType, { type: 'gallery' }>[];
+  
   return (
     <PageHeader pageKey="posters">
-      {data.sections.map((s, i) => (
-        <Section key={i}>
-          {s.type === 'intro' ? (
-            <Card>
-              <CardContent>
-                <Typography variant="h4" gutterBottom>
-                  {s.title}
-                </Typography>
-                {Array.isArray(s.body) && s.body.map((p, idx) => (
-                  <Typography key={idx} paragraph>
-                    {p}
-                  </Typography>
-                ))}
-              </CardContent>
-            </Card>
-          ) : (
-            <>
-              <TextBlock centered>
-                <Typography variant="h5" gutterBottom>
-                  {s.title}
-                </Typography>
-                {'body' in s && s.body && (
-                  <Typography variant="body1" color="text.secondary">
-                    {s.body as any}
-                  </Typography>
-                )}
-              </TextBlock>
-              <ImageGrid images={(s as any).images} />
-            </>
-          )}
-        </Section>
-      ))}
+      <MainSection section={introSection} time={introSection.time} isFirst={true} />
+
+      {gallerySections.map((s, i) => {
+        // Determine the image layout based on the subsection index
+        let imageLayout: 'default' | 'centered-single' | 'centered-stacked' = 'default';
+        if (i === 0) {
+          imageLayout = 'centered-stacked'; // High School 1 - Two images stacked
+        } else if (i === 1 || i === 2) {
+          imageLayout = 'centered-single'; // High School 2 & 3 - Single image centered
+        }
+
+        return (
+          <Section key={i}>
+            <SubsectionBox section={s} index={i} imageLayout={imageLayout} />
+          </Section>
+        );
+      })}
+
+      <PageFooter />
     </PageHeader>
   );
 }

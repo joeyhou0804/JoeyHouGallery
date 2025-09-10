@@ -2,7 +2,9 @@
 
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
 import ImageGrid from '@/components/ImageGrid';
+import CloudImage from '@/components/CloudImage';
 import { useTranslation } from '@/hooks/useTranslation';
 import type { Section as SectionType } from '@/content/types';
 
@@ -108,14 +110,16 @@ export default function SubsectionBox({
   year,
   customGradient,
   children,
-  title: customTitle 
+  title: customTitle,
+  imageLayout = 'default'
 }: { 
   section: Extract<SectionType, { type: 'gallery' }> | any, 
   index: number,
   year?: string,
   customGradient?: string,
   children?: React.ReactNode,
-  title?: string
+  title?: string,
+  imageLayout?: 'default' | 'centered-single' | 'centered-stacked'
 }) {
   const { t, language } = useTranslation();
   
@@ -153,8 +157,8 @@ export default function SubsectionBox({
           </Box>
         )}
         
-        {/* Default body text */}
-        {body && !children && (
+        {/* Default body text only if no images */}
+        {body && !children && !section.images && (
           <Typography
             sx={{ 
               color: '#432F2F',
@@ -171,33 +175,74 @@ export default function SubsectionBox({
         
         {/* Images */}
         {section.images && !children && (
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            {section.images.length === 1 && (index === 0 || index === 1) ? (
-              // Single image centered and larger for Application Idea and High Level Overview
-              <Box
-                sx={{
-                  maxWidth: '70%',
-                  width: 'fit-content',
-                  display: 'flex',
-                  justifyContent: 'center',
-                }}
-              >
-                <img
-                  src={section.images[0]}
-                  alt={title}
-                  style={{
-                    width: '100%',
-                    height: 'auto',
-                    borderRadius: '8px',
-                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-                  }}
-                />
+          <>
+            {imageLayout === 'centered-stacked' ? (
+              // Two images stacked vertically, centered
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+                {section.images.map((src: string, imgIndex: number) => (
+                  <Box key={imgIndex} sx={{ width: { xs: '100%', sm: '80%', md: '60%' } }}>
+                    <Card>
+                      <CloudImage src={src} alt={`${title} - ${imgIndex + 1}`} />
+                    </Card>
+                  </Box>
+                ))}
+              </Box>
+            ) : imageLayout === 'centered-single' ? (
+              // Single image centered
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Box sx={{ width: { xs: '100%', sm: '80%', md: '60%' } }}>
+                  <Card>
+                    <CloudImage src={section.images[0]} alt={title} />
+                  </Card>
+                </Box>
               </Box>
             ) : (
-              // Regular ImageGrid for other sections
-              <ImageGrid images={section.images} />
+              // Default layout
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                {section.images.length === 1 && (index === 0 || index === 1) ? (
+                  // Single image centered and larger for Application Idea and High Level Overview
+                  <Box
+                    sx={{
+                      maxWidth: '70%',
+                      width: 'fit-content',
+                      display: 'flex',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <img
+                      src={section.images[0]}
+                      alt={title}
+                      style={{
+                        width: '100%',
+                        height: 'auto',
+                        borderRadius: '8px',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                      }}
+                    />
+                  </Box>
+                ) : (
+                  // Regular ImageGrid for other sections
+                  <ImageGrid images={section.images} />
+                )}
+              </Box>
             )}
-          </Box>
+            
+            {/* Body text below images if it exists */}
+            {body && (
+              <Typography
+                sx={{ 
+                  color: '#432F2F',
+                  fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
+                  lineHeight: 1.6,
+                  textAlign: 'center',
+                  fontWeight: 500,
+                  mt: 3,
+                }}
+              >
+                {body}
+              </Typography>
+            )}
+          </>
         )}
       </Box>
     </Box>
