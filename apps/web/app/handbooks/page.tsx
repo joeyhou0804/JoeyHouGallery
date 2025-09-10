@@ -46,6 +46,15 @@ export default function HandbooksPage() {
   const englishGallerySection = data.sections
     .find(s => s.title === 'Page Examples — English' && s.type === 'gallery') as Extract<typeof data.sections[0], { type: 'gallery' }>;
   const englishExampleImages = englishGallerySection?.images || [];
+
+  // Custom images for first Simplified Chinese section (zh_cn_1 to zh_cn_5)
+  const firstSimplifiedImages = [
+    '/zh_cn_1.png',
+    '/zh_cn_2.png', 
+    '/zh_cn_3.png',
+    '/zh_cn_4.png',
+    '/zh_cn_5.png'
+  ];
   
   // Get typed sections for proper TypeScript support
   const simplifiedSection = data.sections.find(s => s.title === 'Simplified Chinese Version' && s.type === 'intro') as Extract<typeof data.sections[0], { type: 'intro' }>;
@@ -60,13 +69,13 @@ export default function HandbooksPage() {
       key="simplified-1"
       section={simplifiedSection} 
       index={0} 
-      year="2019"
+      year="2025"
       title="Simplified Chinese Version"
-      carouselImages={simplifiedExampleImages}
+      carouselImages={firstSimplifiedImages}
       carouselSpacing={6}
     >
       <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ justifyContent: 'center' }}>
-        {simplifiedSection?.links?.map((l: any) => (
+        {simplifiedSection?.links?.slice(1).map((l: any) => (
           <GlowPillButton
             key={l.href}
             href={l.href}
