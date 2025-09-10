@@ -15,7 +15,7 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { GlowPillButton } from '../apps/GlowPillButton';
-import ControllableCarousel from '@/components/ControllableCarousel';
+import PageFooter from '@/components/PageFooter';
 
 export default function HandbooksPage() {
   const data = content as PageContent;
@@ -242,6 +242,7 @@ export default function HandbooksPage() {
             )}
           </Section>
         ))}
+      <PageFooter />
     </PageHeader>
   );
 }

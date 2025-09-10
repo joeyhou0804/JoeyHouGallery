@@ -9,10 +9,8 @@ import type { PageContent } from '@/content/types';
 import content from '@/content/arts.json';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
+import PageFooter from '@/components/PageFooter';
 import { useTranslation } from '@/hooks/useTranslation';
-
-
 
 export default function ArtsPage() {
   const data = content as PageContent;
@@ -53,6 +51,8 @@ export default function ArtsPage() {
           </Section>
         )
       ))}
+
+      <PageFooter />
     </PageHeader>
   );
 }
