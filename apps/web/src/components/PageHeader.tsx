@@ -2,6 +2,9 @@
 
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Link from 'next/link';
+import Image from 'next/image';
+import Container from '@mui/material/Container';
 import Section from './Section';
 import PageBackground from './PageBackground';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -14,6 +17,21 @@ interface PageHeaderProps {
 
 export default function PageHeader({ pageKey, children }: PageHeaderProps) {
   const { t, language } = useTranslation();
+  
+  // Map pageKey to character image filename
+  const getCharacterImage = (key: string) => {
+    const mapping: Record<string, string> = {
+      'applications': 'character_app.png',
+      'apps': 'character_app.png',
+      'arts': 'character_art.png',
+      'handbooks': 'character_handbook.png',
+      'posters': 'character_poster.png',
+      'reports': 'character_report.png',
+      'videos': 'character_video.png',
+      'websites': 'character_website.png'
+    };
+    return mapping[key] || 'character_app.png'; // fallback
+  };
   
   return (
     <PageBackground>
@@ -96,21 +114,55 @@ export default function PageHeader({ pageKey, children }: PageHeaderProps) {
           };
         }}
       >
-        <Section>
-          <Typography 
-            variant="h1" 
-            gutterBottom 
+        <Container maxWidth="xl" sx={{ position: 'relative', height: '300px' }}>
+          {/* Centered container for character and title */}
+          <Box 
             sx={{ 
-              textAlign: 'center',
-              color: 'white',
-              fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
-              textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3), 0px 0px 1px rgba(0, 0, 0, 0.5)',
-              fontSize: { xs: '3rem', sm: '4rem', md: '5rem', lg: '6rem' }
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4,
+              zIndex: 2
             }}
           >
-            {t(`pages.${pageKey}.title`)}
-          </Typography>
-        </Section>
+            {/* Character image on the left - bigger */}
+            <Box>
+              <Image
+                src={`/titles/${getCharacterImage(pageKey)}`}
+                alt={`${pageKey} character`}
+                width={0}
+                height={0}
+                sizes="100vw"
+                style={{
+                  width: 'auto',
+                  height: '240px',
+                  maxWidth: '400px',
+                  objectFit: 'contain',
+                }}
+              />
+            </Box>
+
+            {/* Title on the right - center aligned */}
+            <Box>
+              <Typography 
+                variant="h1" 
+                sx={{ 
+                  color: 'white',
+                  fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
+                  textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3), 0px 0px 1px rgba(0, 0, 0, 0.5)',
+                  fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem', lg: '5.5rem' },
+                  textAlign: 'left',
+                  lineHeight: 1
+                }}
+              >
+                {t(`pages.${pageKey}.title`)}
+              </Typography>
+            </Box>
+          </Box>
+        </Container>
       </Box>
 
       {children}
