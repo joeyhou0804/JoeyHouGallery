@@ -121,7 +121,7 @@ export default function PageFooter() {
                   transition: 'transform 0.2s ease',
                   position: 'absolute',
                   bottom: 0,
-                  left: 0,
+                  left: language === 'zh-CN' ? 40 : 0,
                   '&:hover': { transform: 'scale(1.05)' },
                 }}
               >
