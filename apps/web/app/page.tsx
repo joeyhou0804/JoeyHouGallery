@@ -26,43 +26,51 @@ export default function HomePage() {
     setLanguage(newLanguage);
   };
 
-  // Tweak these if you want a different ratio:
-  // edge tracks (bigger) vs inner gap tracks (smaller)
-  const EDGE_FR = 2;     // bigger "edge" gutters
-  const INNER_FR = 1;    // smaller gaps between clusters and logo
+  // Tunables
+  const CLUSTER_W = 296;                     // cluster width (matches your grid)
+  const LOGO_MIN = 320;
+  const LOGO_MAX = 600;
+  const EDGE_MIN = 80;                       // min outer gutter
+  const INNER_MAX = 'clamp(24px, 5vw, 96px)'; // inner gap max; collapses to 0 first
 
   return (
     <Box
       sx={{
         minHeight: '100vh',
         display: 'grid',
-        // 7 tracks on md+: edge | left cluster | inner gap | logo | inner gap | right cluster | edge
+        // [edge][cluster][inner gap][logo][inner gap][cluster][edge]
         gridTemplateColumns: {
-          xs: '1fr', // stack on mobile
-          md: `${EDGE_FR}fr auto ${INNER_FR}fr minmax(320px, 600px) ${INNER_FR}fr auto ${EDGE_FR}fr`,
+          xs: '1fr',
+          md: `
+            minmax(${EDGE_MIN}px, 1fr)
+            ${CLUSTER_W}px
+            minmax(0, ${INNER_MAX})
+            minmax(${LOGO_MIN}px, ${LOGO_MAX}px)
+            minmax(0, ${INNER_MAX})
+            ${CLUSTER_W}px
+            minmax(${EDGE_MIN}px, 1fr)
+          `,
         },
         alignItems: 'center',
-        // no uniform grid gap—gaps are modeled as dedicated FR tracks
         backgroundImage: `url(/backgrounds/homepage_background.png)`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         color: '#fff',
-        // full viewport height centering
         minWidth: 0,
       }}
     >
-      {/* Left cluster (md+: column 2). On mobile, row 1 */}
+      {/* Left cluster */}
       <Box
         sx={{
           gridColumn: { xs: '1', md: '2' },
-          justifySelf: { xs: 'center', md: 'center' },
+          justifySelf: 'center',
           display: 'grid',
           gridTemplateColumns: 'repeat(2, 140px)',
           gridTemplateRows: 'repeat(2, 120px)',
           gap: 2,
           justifyItems: 'center',
           alignItems: 'center',
-          width: 296,
+          width: CLUSTER_W,
           height: 256,
           transform: { xs: 'scale(0.9)', sm: 'scale(1)' },
           my: { xs: 3, md: 0 },
@@ -84,16 +92,12 @@ export default function HomePage() {
               transition: 'transform 0.2s ease, opacity 0.2s ease',
               flexShrink: 1,
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'scale(1.05)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'scale(1)';
-            }}
+            onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
+            onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
           />
         </Box>
 
-        {/* Apps, Arts, Handbooks buttons */}
+        {/* Apps, Arts, Handbooks */}
         {sections.slice(0, 3).map((s) => {
           const buttonImage =
             language === 'zh-CN'
@@ -115,30 +119,29 @@ export default function HomePage() {
                   transition: 'transform 0.2s ease, opacity 0.2s ease',
                   flexShrink: 1,
                 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'scale(1.05)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'scale(1)';
-                }}
+                onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
+                onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
               />
             </Link>
           );
         })}
       </Box>
 
-      {/* Center logo (md+: column 4). On mobile, row 2 */}
+      {/* Center logo */}
       <Box
         sx={{
           gridColumn: { xs: '1', md: '4' },
           justifySelf: 'center',
           alignSelf: 'center',
-          width: { xs: '100%', md: 600 },
+          // IMPORTANT: let the track size the box; don't fix width to LOGO_MAX
+          width: { xs: '100%', md: '100%' },
+          maxWidth: { xs: LOGO_MAX, md: LOGO_MAX },
           height: { xs: 300, md: 500 },
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           my: { xs: 1, md: 0 },
+          minWidth: 0, // prevent overflow due to flex content
         }}
       >
         <Image
@@ -148,32 +151,32 @@ export default function HomePage() {
           height={0}
           sizes="100vw"
           style={{
-            width: 'auto',
+            width: '100%',
             height: '100%',
-            maxWidth: '600px',
+            maxWidth: '100%',   // <= ensures it never exceeds the track
             objectFit: 'contain',
           }}
         />
       </Box>
 
-      {/* Right cluster (md+: column 6). On mobile, row 3 */}
+      {/* Right cluster */}
       <Box
         sx={{
           gridColumn: { xs: '1', md: '6' },
-          justifySelf: { xs: 'center', md: 'center' },
+          justifySelf: 'center',
           display: 'grid',
           gridTemplateColumns: 'repeat(2, 140px)',
           gridTemplateRows: 'repeat(2, 120px)',
           gap: 2,
           justifyItems: 'center',
           alignItems: 'center',
-          width: 296,
+          width: CLUSTER_W,
           height: 256,
           transform: { xs: 'scale(0.9)', sm: 'scale(1)' },
           my: { xs: 3, md: 0 },
         }}
       >
-        {/* Posters, Reports, Videos, Websites buttons */}
+        {/* Posters, Reports, Videos, Websites */}
         {sections.slice(3, 7).map((s) => {
           const buttonImage =
             language === 'zh-CN'
@@ -195,12 +198,8 @@ export default function HomePage() {
                   transition: 'transform 0.2s ease, opacity 0.2s ease',
                   flexShrink: 1,
                 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'scale(1.05)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'scale(1)';
-                }}
+                onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
+                onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
               />
             </Link>
           );
