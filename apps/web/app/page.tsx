@@ -65,13 +65,13 @@ export default function HomePage() {
           gridColumn: { xs: '1', md: '2' },
           justifySelf: 'center',
           display: 'grid',
-          gridTemplateColumns: 'repeat(2, 140px)',
-          gridTemplateRows: 'repeat(2, 120px)',
+          gridTemplateColumns: 'repeat(2, 160px)',
+          gridTemplateRows: 'repeat(2, 160px)',
+          width: 336,   // ~2*160 + gaps
+          height: 336,
           gap: 2,
           justifyItems: 'center',
           alignItems: 'center',
-          width: CLUSTER_W,
-          height: 256,
           transform: { xs: 'scale(0.9)', sm: 'scale(1)' },
           my: { xs: 3, md: 0 },
         }}
@@ -79,15 +79,15 @@ export default function HomePage() {
         {/* Language switching button - first position */}
         <Box onClick={handleLanguageSwitch} sx={{ cursor: 'pointer' }}>
           <Image
-            src={language === 'zh-CN' ? '/buttons/button_cn_8.png' : '/buttons/button_en_8.png'}
+            src={language === 'zh-CN' ? '/buttons/button_homepage_cn_8.png' : '/buttons/button_homepage_en_8.png'}
             alt={language === 'zh-CN' ? '切换到英文' : 'Switch to Chinese'}
             width={0}
             height={0}
             sizes="100vw"
             style={{
               width: 'auto',
-              height: '120px',
-              maxWidth: '360px',
+              height: '160px',    // bigger
+              maxWidth: '480px',  // optional, let wide assets scale
               cursor: 'pointer',
               transition: 'transform 0.2s ease, opacity 0.2s ease',
               flexShrink: 1,
@@ -101,8 +101,8 @@ export default function HomePage() {
         {sections.slice(0, 3).map((s) => {
           const buttonImage =
             language === 'zh-CN'
-              ? `/buttons/button_cn_${s.buttonIndex}.png`
-              : `/buttons/button_en_${s.buttonIndex}.png`;
+              ? `/buttons/button_homepage_cn_${s.buttonIndex}.png`
+              : `/buttons/button_homepage_en_${s.buttonIndex}.png`;
           return (
             <Link key={s.href} href={s.href}>
               <Image
@@ -113,8 +113,8 @@ export default function HomePage() {
                 sizes="100vw"
                 style={{
                   width: 'auto',
-                  height: '120px',
-                  maxWidth: '360px',
+                  height: '160px',    // bigger
+                  maxWidth: '480px',  // optional, let wide assets scale
                   cursor: 'pointer',
                   transition: 'transform 0.2s ease, opacity 0.2s ease',
                   flexShrink: 1,
@@ -165,13 +165,13 @@ export default function HomePage() {
           gridColumn: { xs: '1', md: '6' },
           justifySelf: 'center',
           display: 'grid',
-          gridTemplateColumns: 'repeat(2, 140px)',
-          gridTemplateRows: 'repeat(2, 120px)',
+          gridTemplateColumns: 'repeat(2, 160px)',
+          gridTemplateRows: 'repeat(2, 160px)',
+          width: 336,   // ~2*160 + gaps
+          height: 336,
           gap: 2,
           justifyItems: 'center',
           alignItems: 'center',
-          width: CLUSTER_W,
-          height: 256,
           transform: { xs: 'scale(0.9)', sm: 'scale(1)' },
           my: { xs: 3, md: 0 },
         }}
@@ -180,8 +180,8 @@ export default function HomePage() {
         {sections.slice(3, 7).map((s) => {
           const buttonImage =
             language === 'zh-CN'
-              ? `/buttons/button_cn_${s.buttonIndex}.png`
-              : `/buttons/button_en_${s.buttonIndex}.png`;
+              ? `/buttons/button_homepage_cn_${s.buttonIndex}.png`
+              : `/buttons/button_homepage_en_${s.buttonIndex}.png`;
           return (
             <Link key={s.href} href={s.href}>
               <Image
@@ -192,8 +192,8 @@ export default function HomePage() {
                 sizes="100vw"
                 style={{
                   width: 'auto',
-                  height: '120px',
-                  maxWidth: '360px',
+                  height: '160px',    // bigger
+                  maxWidth: '480px',  // optional, let wide assets scale
                   cursor: 'pointer',
                   transition: 'transform 0.2s ease, opacity 0.2s ease',
                   flexShrink: 1,
