@@ -18,7 +18,8 @@ export default function Subsection({
   carouselImages,
   carouselSpacing = 6,
   zIndex = 1,
-  customColor
+  customColor,
+  extendBackground = false
 }: { 
   section: Extract<SectionType, { type: 'gallery' }> | any, 
   index: number,
@@ -30,7 +31,8 @@ export default function Subsection({
   carouselImages?: string[],
   carouselSpacing?: number,
   zIndex?: number,
-  customColor?: 'red' | 'blue' | 'green'
+  customColor?: 'red' | 'blue' | 'green',
+  extendBackground?: boolean
 }) {
   // Convert customColor to gradient
   const colorGradients = {
@@ -60,9 +62,15 @@ export default function Subsection({
           zIndex: zIndex,
           marginTop: '-40px', // Move whole part up 40px to overlap MainSection zigzags
           paddingTop: '40px', // Add padding to compensate for content position
+          marginBottom: extendBackground ? '-120px' : 0,
           
           // Responsive zigzag bottom (matching MainSection pattern)
-          [theme.breakpoints.up('xs')]: {
+          [theme.breakpoints.up('xs')]: extendBackground ? {
+            paddingBottom: `calc(${theme.spacing(6)} + 120px)`,
+            clipPath: `polygon(
+              0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%
+            )`,
+          } : {
             paddingBottom: `calc(${theme.spacing(6)} + ${depth.xs}px)`,
             clipPath: `polygon(
               0% 0%, 100% 0%, 
@@ -76,7 +84,12 @@ export default function Subsection({
               0% calc(100% - ${depth.xs}px)
             )`,
           },
-          [theme.breakpoints.up('sm')]: {
+          [theme.breakpoints.up('sm')]: extendBackground ? {
+            paddingBottom: `calc(${theme.spacing(6)} + 120px)`,
+            clipPath: `polygon(
+              0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%
+            )`,
+          } : {
             paddingBottom: `calc(${theme.spacing(6)} + ${depth.sm}px)`,
             clipPath: `polygon(
               0% 0%, 100% 0%, 
@@ -90,7 +103,12 @@ export default function Subsection({
               0% calc(100% - ${depth.sm}px)
             )`,
           },
-          [theme.breakpoints.up('md')]: {
+          [theme.breakpoints.up('md')]: extendBackground ? {
+            paddingBottom: `calc(${theme.spacing(6)} + 120px)`,
+            clipPath: `polygon(
+              0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%
+            )`,
+          } : {
             paddingBottom: `calc(${theme.spacing(6)} + ${depth.md}px)`,
             clipPath: `polygon(
               0% 0%, 100% 0%, 
