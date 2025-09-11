@@ -31,7 +31,7 @@ export default function HomePage() {
   const LOGO_MIN = 320;
   const LOGO_MAX = 600;
   const EDGE_MIN = 80;                       // min outer gutter
-  const INNER_MAX = 'clamp(24px, 5vw, 96px)'; // inner gap max; collapses to 0 first
+  const INNER_MAX = 'clamp(8px, 2vw, 40px)'; // inner gap max; collapses to 0 first
 
   return (
     <Box
