@@ -1,51 +1,51 @@
-import Section from '@/components/Section';
 import PageHeader from '@/components/PageHeader';
-import TextBlock from '@/components/TextBlock';
-import ImageGrid from '@/components/ImageGrid';
-import type { PageContent } from '@/content/types';
+import MainSection from '@/components/MainSection';
+import Subsection from '@/components/Subsection';
+import PageFooter from '@/components/PageFooter';
+import type { PageContent, Section as SectionType } from '@/content/types';
 import content from '@/content/reports.json';
-import Typography from '@mui/material/Typography';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 
 export const metadata = { title: 'Reports · Joey Hou Gallery' };
 
 export default function ReportsPage() {
   const data = content as PageContent;
+  const introSection = data.sections.find(s => s.type === 'intro') as Extract<SectionType, { type: 'intro' }>;
+  const gallerySections = data.sections.filter(s => s.type === 'gallery') as Extract<SectionType, { type: 'gallery' }>[];
+  
+  // Background images for each subsection
+  const backgroundImages = [
+    '/backgrounds/subsection_background_1.png',
+    '/backgrounds/subsection_background_2.png', 
+    '/backgrounds/subsection_background_3.png',
+    '/backgrounds/subsection_background_1.png' // Cycle back for 4th section
+  ];
+
+  // Custom colors for each subsection
+  const customColors: ('red' | 'blue' | 'green')[] = ['blue', 'red', 'green', 'blue'];
+  
+  // Years for each subsection
+  const years = ['2020-2022', 'Course 1 - 2020', 'Course 2 - 2020', 'Course 3 - 2020'];
+  
   return (
     <PageHeader pageKey="reports">
-      {data.sections.map((s, i) => (
-        <Section key={i}>
-          {s.type === 'intro' ? (
-            <Card>
-              <CardContent>
-                <Typography variant="h4" gutterBottom>
-                  {s.title}
-                </Typography>
-                {Array.isArray(s.body) && s.body.map((p, idx) => (
-                  <Typography key={idx} paragraph>
-                    {p}
-                  </Typography>
-                ))}
-              </CardContent>
-            </Card>
-          ) : (
-            <>
-              <TextBlock centered>
-                <Typography variant="h5" gutterBottom>
-                  {s.title}
-                </Typography>
-                {'body' in s && s.body && (
-                  <Typography variant="body1" color="text.secondary">
-                    {s.body as any}
-                  </Typography>
-                )}
-              </TextBlock>
-              <ImageGrid images={(s as any).images} />
-            </>
-          )}
-        </Section>
+      <MainSection section={introSection} time={introSection.time} isFirst={true} />
+
+      {gallerySections.map((s, i) => (
+        <Subsection 
+          key={i}
+          section={s} 
+          index={i}
+          year={years[i]}
+          title={s.title}
+          backgroundImage={backgroundImages[i]}
+          carouselImages={s.images}
+          carouselSpacing={6}
+          zIndex={4 - i} // Decreasing z-index for proper layering
+          customColor={customColors[i]}
+        />
       ))}
+
+      <PageFooter />
     </PageHeader>
   );
 }

@@ -3,14 +3,32 @@
   "sections": [
     {
       "type": "intro",
-      "title": "Featured Columbia University Assignment",
+      "title": "Featured Assignments",
+      "time": "2019-2022",
       "body": [
-        "Here is the featured coursework I have finished at Columbia University."
+        "Here are some featured courseworks I finish at Columbia University."
       ]
     },
     {
       "type": "gallery",
-      "title": "Descriptive Hungarian Grammar — Final Paper & Handout",
+      "title": "Assignment Template",
+      "body": [
+        "I designed these cover templates for my assignments.",
+        "It's finished by Microsoft Publisher."
+      ],
+      "images": [
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639372416/joeyhougallery/reports/IMG_8757_bkgvdc.jpg",
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639372417/joeyhougallery/reports/IMG_8758_nabudq.jpg"
+      ]
+    },
+    {
+      "type": "gallery",
+      "title": "Descriptive Hungarian Grammar",
+      "body": [
+        "This is the handout for the final presentation.",
+        "It's a comparison of grammers between Hungarian and Mandarin Chinese.",
+        "The report is finished by LaTeX."
+      ],
       "images": [
         "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639376152/joeyhougallery/reports/Hungarian/IMG_8767_jdqdw4.jpg",
         "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639376161/joeyhougallery/reports/Hungarian/IMG_8768_cwlfmh.jpg",
@@ -20,17 +38,12 @@
     },
     {
       "type": "gallery",
-      "title": "Assignment Template",
-      "body": "Cover designed in early 2020 using Microsoft Publisher.",
-      "images": [
-        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639372416/joeyhougallery/reports/IMG_8757_bkgvdc.jpg",
-        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639372417/joeyhougallery/reports/IMG_8758_nabudq.jpg"
-      ]
-    },
-    {
-      "type": "gallery",
-      "title": "Course 1 — Computer Science Theory",
-      "body": "Pages selected from homework; figures drawn in Word; compiled by LaTeX.",
+      "title": "Computer Science Theory",
+      "body": [
+        "Here are selected pages from my homework.",
+        "The figures are drawn in Microsoft Word,",
+        "and the file is compiled by LaTeX."
+      ],
       "images": [
         "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639373173/joeyhougallery/reports/CS%20Theory/IMG_8763_hjk0om.jpg",
         "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639373166/joeyhougallery/reports/CS%20Theory/IMG_8760_jdlaye.jpg",
@@ -40,8 +53,11 @@
     },
     {
       "type": "gallery",
-      "title": "Course 2 — Ordinary Differential Equations",
-      "body": "Pages selected from Summer 2020 ODE course work; compiled by LaTeX.",
+      "title": "Ordinary Differential Equations",
+      "body": [
+        "Here are selected pages from my homework.",
+        "It's finished by LaTeX."
+      ],
       "images": [
         "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639375168/joeyhougallery/reports/ODE/IMG_8765_n7zgq7.jpg",
         "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639375176/joeyhougallery/reports/ODE/IMG_8766_syxy0a.jpg"
