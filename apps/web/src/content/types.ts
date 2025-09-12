@@ -23,7 +23,7 @@ export type PageContent = {
 };
 
 // Videos
-export type VideoItem = { title: string; youtubeId: string; description?: string };
+export type VideoItem = { title: string; youtubeId: string; description?: string; body?: string };
 export type SectionVideos = { type: 'videos'; title: string; items: VideoItem[] };
 export type VideosPageContent = {
   title: string;
