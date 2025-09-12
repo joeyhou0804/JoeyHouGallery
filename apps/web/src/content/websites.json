@@ -3,12 +3,16 @@
   "sections": [
     {
       "type": "intro",
+      "time": "2021.07",
       "title": "The Black Box Institute — Official Website",
       "body": [
-        "Canadian boutique advisory company based in Toronto. I built the full website in one week and got positive feedback from supervisors and partners."
+        "The Black Box Institute is a Canadian boutique advisory company based in Toronto.",
+        "I built the full website in one week with Wix.com.",
+        "The website balances professional design and the efficiency of future updates.",
+        "It got positive feedback from supervisors and partners."
       ],
       "links": [
-        { "label": "Visit site", "href": "https://www.theblackboxinstitute.com/" }
+        { "label": "Visit the official site of The Black Box Institute", "href": "https://www.theblackboxinstitute.com/" }
       ]
     },
     {

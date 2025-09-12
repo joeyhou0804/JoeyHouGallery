@@ -1,8 +1,10 @@
 import Section from '@/components/Section';
 import PageHeader from '@/components/PageHeader';
+import MainSection from '@/components/MainSection';
 import ImageGrid from '@/components/ImageGrid';
 import TextBlock from '@/components/TextBlock';
-import type { PageContent } from '@/content/types';
+import PageFooter from '@/components/PageFooter';
+import type { PageContent, Section as SectionType } from '@/content/types';
 import content from '@/content/websites.json';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
@@ -13,9 +15,14 @@ export const metadata = { title: 'Websites · Joey Hou Gallery' };
 
 export default function WebsitesPage() {
   const data = content as PageContent;
+  const introSection = data.sections.find(s => s.type === 'intro') as Extract<SectionType, { type: 'intro' }>;
+  const otherSections = data.sections.slice(1);
+  
   return (
     <PageHeader pageKey="websites">
-      {data.sections.map((s, i) => (
+      <MainSection section={introSection} time={introSection.time} backgroundType="bottom-only" />
+
+      {otherSections.map((s, i) => (
         <Section key={i}>
           {s.type === 'intro' ? (
             <Card>
@@ -47,6 +54,8 @@ export default function WebsitesPage() {
           )}
         </Section>
       ))}
+
+      <PageFooter />
     </PageHeader>
   );
 }
