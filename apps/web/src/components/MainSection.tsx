@@ -40,7 +40,11 @@ export default function MainSection({
           sm: 8,   // medium depth on small screens
           md: 10,  // original depth on medium+ screens
         };
-        const steps = 120;     // number of teeth * 2
+        const steps = {
+          xs: 40,   // 20 teeth on mobile
+          sm: 80,   // 40 teeth on small screens  
+          md: 120,  // 60 teeth on desktop (original)
+        };
 
         return {
           backgroundImage: `url(/backgrounds/section_background.png)`,
@@ -59,8 +63,8 @@ export default function MainSection({
             clipPath: `polygon(
               0% 0%, 100% 0%, 
               100% calc(100% - ${depth.xs}px),
-              ${Array.from({ length: steps + 1 }, (_, i) => {
-                const x = ((steps - i) / steps) * 100;
+              ${Array.from({ length: steps.xs + 1 }, (_, i) => {
+                const x = ((steps.xs - i) / steps.xs) * 100;
                 const isPeak = i % 2 === 0;
                 const y = isPeak ? '100%' : `calc(100% - ${depth.xs}px)`;
                 return `${x.toFixed(2)}% ${y}`;
@@ -73,8 +77,8 @@ export default function MainSection({
             marginTop: isFirst ? `-${depth.xs + 40}px` : `-${depth.xs}px`,
             clipPath: `polygon(
               0% 0%,
-              ${Array.from({ length: steps + 1 }, (_, i) => {
-                const x = (i / steps) * 100;
+              ${Array.from({ length: steps.xs + 1 }, (_, i) => {
+                const x = (i / steps.xs) * 100;
                 const isPeak = i % 2 === 0;
                 const y = isPeak ? '0%' : `${depth.xs}px`;
                 return `${x.toFixed(2)}% ${y}`;
@@ -87,15 +91,15 @@ export default function MainSection({
             marginTop: isFirst ? `-${depth.xs + 40}px` : `-${depth.xs}px`,
             clipPath: `polygon(
               0% 0%,
-              ${Array.from({ length: steps + 1 }, (_, i) => {
-                const x = (i / steps) * 100;
+              ${Array.from({ length: steps.xs + 1 }, (_, i) => {
+                const x = (i / steps.xs) * 100;
                 const isPeak = i % 2 === 0;
                 const y = isPeak ? '0%' : `${depth.xs}px`;
                 return `${x.toFixed(2)}% ${y}`;
               }).join(', ')},
               100% 0%, 100% calc(100% - ${depth.xs}px),
-              ${Array.from({ length: steps + 1 }, (_, i) => {
-                const x = ((steps - i) / steps) * 100;
+              ${Array.from({ length: steps.xs + 1 }, (_, i) => {
+                const x = ((steps.xs - i) / steps.xs) * 100;
                 const isPeak = i % 2 === 0;
                 const y = isPeak ? '100%' : `calc(100% - ${depth.xs}px)`;
                 return `${x.toFixed(2)}% ${y}`;
@@ -109,8 +113,8 @@ export default function MainSection({
             clipPath: `polygon(
               0% 0%, 100% 0%, 
               100% calc(100% - ${depth.sm}px),
-              ${Array.from({ length: steps + 1 }, (_, i) => {
-                const x = ((steps - i) / steps) * 100;
+              ${Array.from({ length: steps.sm + 1 }, (_, i) => {
+                const x = ((steps.sm - i) / steps.sm) * 100;
                 const isPeak = i % 2 === 0;
                 const y = isPeak ? '100%' : `calc(100% - ${depth.sm}px)`;
                 return `${x.toFixed(2)}% ${y}`;
@@ -123,8 +127,8 @@ export default function MainSection({
             marginTop: isFirst ? `-${depth.sm + 40}px` : `-${depth.sm}px`,
             clipPath: `polygon(
               0% 0%,
-              ${Array.from({ length: steps + 1 }, (_, i) => {
-                const x = (i / steps) * 100;
+              ${Array.from({ length: steps.sm + 1 }, (_, i) => {
+                const x = (i / steps.sm) * 100;
                 const isPeak = i % 2 === 0;
                 const y = isPeak ? '0%' : `${depth.sm}px`;
                 return `${x.toFixed(2)}% ${y}`;
@@ -137,15 +141,15 @@ export default function MainSection({
             marginTop: isFirst ? `-${depth.sm + 40}px` : `-${depth.sm}px`,
             clipPath: `polygon(
               0% 0%,
-              ${Array.from({ length: steps + 1 }, (_, i) => {
-                const x = (i / steps) * 100;
+              ${Array.from({ length: steps.sm + 1 }, (_, i) => {
+                const x = (i / steps.sm) * 100;
                 const isPeak = i % 2 === 0;
                 const y = isPeak ? '0%' : `${depth.sm}px`;
                 return `${x.toFixed(2)}% ${y}`;
               }).join(', ')},
               100% 0%, 100% calc(100% - ${depth.sm}px),
-              ${Array.from({ length: steps + 1 }, (_, i) => {
-                const x = ((steps - i) / steps) * 100;
+              ${Array.from({ length: steps.sm + 1 }, (_, i) => {
+                const x = ((steps.sm - i) / steps.sm) * 100;
                 const isPeak = i % 2 === 0;
                 const y = isPeak ? '100%' : `calc(100% - ${depth.sm}px)`;
                 return `${x.toFixed(2)}% ${y}`;
@@ -159,8 +163,8 @@ export default function MainSection({
             clipPath: `polygon(
               0% 0%, 100% 0%, 
               100% calc(100% - ${depth.md}px),
-              ${Array.from({ length: steps + 1 }, (_, i) => {
-                const x = ((steps - i) / steps) * 100;
+              ${Array.from({ length: steps.md + 1 }, (_, i) => {
+                const x = ((steps.md - i) / steps.md) * 100;
                 const isPeak = i % 2 === 0;
                 const y = isPeak ? '100%' : `calc(100% - ${depth.md}px)`;
                 return `${x.toFixed(2)}% ${y}`;
@@ -173,8 +177,8 @@ export default function MainSection({
             marginTop: isFirst ? `-${depth.md + 40}px` : `-${depth.md}px`,
             clipPath: `polygon(
               0% 0%,
-              ${Array.from({ length: steps + 1 }, (_, i) => {
-                const x = (i / steps) * 100;
+              ${Array.from({ length: steps.md + 1 }, (_, i) => {
+                const x = (i / steps.md) * 100;
                 const isPeak = i % 2 === 0;
                 const y = isPeak ? '0%' : `${depth.md}px`;
                 return `${x.toFixed(2)}% ${y}`;
@@ -187,15 +191,15 @@ export default function MainSection({
             marginTop: isFirst ? `-${depth.md + 40}px` : `-${depth.md}px`,
             clipPath: `polygon(
               0% 0%,
-              ${Array.from({ length: steps + 1 }, (_, i) => {
-                const x = (i / steps) * 100;
+              ${Array.from({ length: steps.md + 1 }, (_, i) => {
+                const x = (i / steps.md) * 100;
                 const isPeak = i % 2 === 0;
                 const y = isPeak ? '0%' : `${depth.md}px`;
                 return `${x.toFixed(2)}% ${y}`;
               }).join(', ')},
               100% 0%, 100% calc(100% - ${depth.md}px),
-              ${Array.from({ length: steps + 1 }, (_, i) => {
-                const x = ((steps - i) / steps) * 100;
+              ${Array.from({ length: steps.md + 1 }, (_, i) => {
+                const x = ((steps.md - i) / steps.md) * 100;
                 const isPeak = i % 2 === 0;
                 const y = isPeak ? '100%' : `calc(100% - ${depth.md}px)`;
                 return `${x.toFixed(2)}% ${y}`;
