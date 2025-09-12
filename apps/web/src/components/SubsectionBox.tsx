@@ -58,11 +58,11 @@ function SubsectionTitle({
             zIndex: 1,
           }}
         >
-          <Typography sx={{ color: rightColor, fontSize: '0.9rem', pt: '2px' }}>★</Typography>
-          <Typography sx={{ color: rightColor, fontWeight: 'bold', fontSize: '1.2rem', pt: '2px' }}>
+          <Typography sx={{ color: rightColor, fontSize: { xs: '0.7rem', sm: '0.8rem', md: '0.9rem' }, pt: '2px' }}>★</Typography>
+          <Typography sx={{ color: rightColor, fontWeight: 'bold', fontSize: { xs: '0.9rem', sm: '1.1rem', md: '1.2rem' }, pt: '2px' }}>
             {year}
           </Typography>
-          <Typography sx={{ color: rightColor, fontSize: '0.9rem', pt: '2px' }}>★</Typography>
+          <Typography sx={{ color: rightColor, fontSize: { xs: '0.7rem', sm: '0.8rem', md: '0.9rem' }, pt: '2px' }}>★</Typography>
         </Box>
       )}
 
@@ -90,16 +90,23 @@ function SubsectionTitle({
             backgroundSize: 'auto, 100% 100%',
             backgroundPosition: 'left top, left top',
             padding: year ? '32px 16px 16px 16px' : 2, // Add extra padding when capsule is present
-            margin: '32px 32px 0 32px',
+            marginTop: '32px', // Fixed top margin
+            marginBottom: 0, // Fixed bottom margin
 
-            // Responsive right-side zigzag pattern
+            // Responsive margins and zigzag pattern
             [theme.breakpoints.up('xs')]: {
+              marginLeft: '16px',
+              marginRight: '16px',
               clipPath: `polygon(0% 0%, 100% 0%, calc(100% - ${depth.xs}px) 25%, 100% 50%, calc(100% - ${depth.xs}px) 75%, 100% 100%, 0% 100%)`,
             },
             [theme.breakpoints.up('sm')]: {
+              marginLeft: '24px',
+              marginRight: '24px',
               clipPath: `polygon(0% 0%, 100% 0%, calc(100% - ${depth.sm}px) 25%, 100% 50%, calc(100% - ${depth.sm}px) 75%, 100% 100%, 0% 100%)`,
             },
             [theme.breakpoints.up('md')]: {
+              marginLeft: '32px',
+              marginRight: '32px',
               clipPath: `polygon(0% 0%, 100% 0%, calc(100% - ${depth.md}px) 25%, 100% 50%, calc(100% - ${depth.md}px) 75%, 100% 100%, 0% 100%)`,
             },
           };
@@ -112,7 +119,7 @@ function SubsectionTitle({
             color: 'white',
             fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
             textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3), 0px 0px 1px rgba(0, 0, 0, 0.5)',
-            fontSize: { xs: '1.8rem', sm: '2.2rem', md: '2.5rem' }
+            fontSize: { xs: '1.8rem', sm: '2.2rem', md: '2.5rem', lg: '2.8rem' }
           }}
         >
           {title}
@@ -169,7 +176,7 @@ export default function SubsectionBox({
       />
 
       {/* Body content section */}
-      <Box sx={{ p: 3 }}>
+      <Box sx={{ p: { xs: 2, sm: 2.5, md: 3 } }}>
         {/* Custom children content (like buttons) */}
         {children && (
           <Box sx={{ textAlign: 'center' }}>
@@ -249,21 +256,44 @@ export default function SubsectionBox({
             
             {/* Body text below images if it exists */}
             {body && (
-              <Stack spacing={1} sx={{ mt: 3 }}>
-                {Array.isArray(body) ? body.map((p, i) => (
-                  <Typography
-                    key={i}
-                    sx={{ 
-                      color: '#432F2F',
-                      fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
-                      lineHeight: 1.6,
-                      textAlign: 'center',
-                      fontWeight: 500,
-                    }}
-                  >
-                    {p}
-                  </Typography>
-                )) : (
+              <Box sx={{ mt: 3 }}>
+                {Array.isArray(body) ? (
+                  <>
+                    {/* On xs screens, combine all paragraphs into one */}
+                    <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+                      <Typography 
+                        sx={{ 
+                          color: '#432F2F',
+                          fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
+                          lineHeight: 1.6,
+                          textAlign: 'center',
+                          fontWeight: 500,
+                        }}
+                      >
+                        {body.join(' ')}
+                      </Typography>
+                    </Box>
+                    {/* On sm+ screens, keep separate paragraphs */}
+                    <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+                      <Stack spacing={1}>
+                        {body.map((p, i) => (
+                          <Typography
+                            key={i}
+                            sx={{ 
+                              color: '#432F2F',
+                              fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
+                              lineHeight: 1.6,
+                              textAlign: 'center',
+                              fontWeight: 500,
+                            }}
+                          >
+                            {p}
+                          </Typography>
+                        ))}
+                      </Stack>
+                    </Box>
+                  </>
+                ) : (
                   <Typography
                     sx={{ 
                       color: '#432F2F',
@@ -276,28 +306,51 @@ export default function SubsectionBox({
                     {body}
                   </Typography>
                 )}
-              </Stack>
+              </Box>
             )}
           </>
         )}
 
         {/* Body text without images */}
         {body && (!section.images || hideImages) && !children && (
-          <Stack spacing={1}>
-            {Array.isArray(body) ? body.map((p, i) => (
-              <Typography
-                key={i}
-                sx={{ 
-                  color: '#432F2F',
-                  fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
-                  lineHeight: 1.6,
-                  textAlign: 'center',
-                  fontWeight: 500,
-                }}
-              >
-                {p}
-              </Typography>
-            )) : (
+          <Box>
+            {Array.isArray(body) ? (
+              <>
+                {/* On xs screens, combine all paragraphs into one */}
+                <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+                  <Typography 
+                    sx={{ 
+                      color: '#432F2F',
+                      fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
+                      lineHeight: 1.6,
+                      textAlign: 'center',
+                      fontWeight: 500,
+                    }}
+                  >
+                    {body.join(' ')}
+                  </Typography>
+                </Box>
+                {/* On sm+ screens, keep separate paragraphs */}
+                <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+                  <Stack spacing={1}>
+                    {body.map((p, i) => (
+                      <Typography
+                        key={i}
+                        sx={{ 
+                          color: '#432F2F',
+                          fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
+                          lineHeight: 1.6,
+                          textAlign: 'center',
+                          fontWeight: 500,
+                        }}
+                      >
+                        {p}
+                      </Typography>
+                    ))}
+                  </Stack>
+                </Box>
+              </>
+            ) : (
               <Typography
                 sx={{ 
                   color: '#432F2F',
@@ -310,7 +363,7 @@ export default function SubsectionBox({
                 {body}
               </Typography>
             )}
-          </Stack>
+          </Box>
         )}
       </Box>
     </Box>
