@@ -90,7 +90,13 @@ export const translations = {
         chineseCharactersTitle: 'Chinese Characters & Western Art',
         chineseCharactersDescription: 'Columbia Art Humanities Individual Creative Project',
         travelJournalsTitle: 'Travel Journals — Italy',
-        travelJournalsDescription: 'I drew these during a summer trip to Italy with my mom.'
+        travelJournalsDescription: 'I drew these during a summer trip to Italy with my mom.',
+        artStyles: {
+          renaissance: 'Renaissance',
+          cubism: 'Cubism',
+          modernism: 'Modernism',
+          impressionism: 'Impressionism'
+        }
       },
       handbooks: {
         title: 'Handbooks',
@@ -118,7 +124,7 @@ export const translations = {
         title: 'Posters',
         wallNewspapersTitle: 'Wall Newspapers',
         wallNewspapersDescription: [
-          'I was in charge of designing class wall newspaper/bulletin boards for over 6 years.',
+          'I was in charge of designing and making class wall newspaper/bulletin boards for over 6 years.',
           'In my middle school and high school,',
           'these wall newspapers are made in huge colored papers.',
           'Some of the designs are displayed here.'
@@ -258,11 +264,16 @@ export const translations = {
       },
       arts: {
         title: '画作',
-        // TODO: Add Chinese translations
         chineseCharactersTitle: '汉字与西方经典艺术',
         chineseCharactersDescription: '哥伦比亚大学艺术人文个人创作项目',
         travelJournalsTitle: '意大利画图游记',
-        travelJournalsDescription: '有一年的夏天，我和妈妈在意大利旅游，每天都在画画图游记。'
+        travelJournalsDescription: '有一年夏天，我和妈妈在意大利旅游，每天都在画画图游记。',
+        artStyles: {
+          renaissance: '文艺复兴',
+          cubism: '立体主义',
+          modernism: '现代主义',
+          impressionism: '印象派'
+        }
       },
       handbooks: {
         title: '手册',
@@ -280,7 +291,7 @@ export const translations = {
         englishTitle: '英文版',
         musicTitle: '合唱团音乐教材',
         musicDescription: [
-          '有一年的夏天，我给合唱团团员编写了一本音乐教材，',
+          '有一年夏天，我给我所在的合唱团团员编写了一本音乐教材，',
           '用来帮助新成员快速学习乐理和读谱。'
         ],
         downloadCityU: '下载城大卷',
@@ -292,7 +303,7 @@ export const translations = {
         // TODO: Add Chinese translations
         wallNewspapersTitle: '板报',
         wallNewspapersDescription: [
-          '中学的六年里，我一直负责设计班级板报。',
+          '中学的六年里，我一直负责设计和制作班级板报。',
           '在我们中学，',
           '板报是用大幅彩纸制作的。',
           '这里展示我的一些设计。'

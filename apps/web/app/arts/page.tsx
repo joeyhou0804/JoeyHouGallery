@@ -75,7 +75,12 @@ export default function ArtsPage() {
       <Section>
         <ArtCardGrid 
           images={chineseCharactersImages} 
-          titles={["Renaissance", "Cubism", "Moderism", "Impressionism"]} 
+          titles={[
+            t('pages.arts.artStyles.renaissance'),
+            t('pages.arts.artStyles.cubism'), 
+            t('pages.arts.artStyles.modernism'),
+            t('pages.arts.artStyles.impressionism')
+          ]} 
         />
       </Section>
 
