@@ -33,19 +33,23 @@ export default function PageFooter() {
       <Box
         sx={(theme) => {
           const depth = { xs: 6, sm: 8, md: 10 };
-          const steps = 120;
+          const steps = {
+            xs: 40,   // 20 teeth on mobile
+            sm: 80,   // 40 teeth on small screens  
+            md: 120,  // 60 teeth on desktop (original)
+          };
 
-          const makeClip = (d: number) => `polygon(
+          const makeClip = (d: number, s: number) => `polygon(
             0% 0%,
-            ${Array.from({ length: steps + 1 }, (_, i) => {
-              const x = (i / steps) * 100;
+            ${Array.from({ length: s + 1 }, (_, i) => {
+              const x = (i / s) * 100;
               const isPeak = i % 2 === 0;
               const y = isPeak ? '0%' : `${d}px`;
               return `${x.toFixed(2)}% ${y}`;
             }).join(', ')},
             100% 0%, 100% calc(100% - ${d}px),
-            ${Array.from({ length: steps + 1 }, (_, i) => {
-              const x = ((steps - i) / steps) * 100;
+            ${Array.from({ length: s + 1 }, (_, i) => {
+              const x = ((s - i) / s) * 100;
               const isPeak = i % 2 === 0;
               const y = isPeak ? '100%' : `calc(100% - ${d}px)`;
               return `${x.toFixed(2)}% ${y}`;
@@ -87,9 +91,9 @@ export default function PageFooter() {
               pointerEvents: 'none',
               zIndex: 0,
 
-              [theme.breakpoints.up('xs')]: { clipPath: makeClip(depth.xs) },
-              [theme.breakpoints.up('sm')]: { clipPath: makeClip(depth.sm) },
-              [theme.breakpoints.up('md')]: { clipPath: makeClip(depth.md) },
+              [theme.breakpoints.up('xs')]: { clipPath: makeClip(depth.xs, steps.xs) },
+              [theme.breakpoints.up('sm')]: { clipPath: makeClip(depth.sm, steps.sm) },
+              [theme.breakpoints.up('md')]: { clipPath: makeClip(depth.md, steps.md) },
             },
 
             '& > .content': {
