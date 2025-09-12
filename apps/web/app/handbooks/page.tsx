@@ -56,8 +56,15 @@ export default function HandbooksPage() {
     type: 'intro' as const,
     title: t('pages.handbooks.musicTitle'),
     body: t('pages.handbooks.musicDescription'),
+    time: '2018.06',
     links: [
       { label: t('pages.handbooks.downloadTextbook'), href: "https://40a431a6-5c85-45f3-b955-58c8e40d7db4.filesusr.com/ugd/6a9383_22eb6cd3c73a43ef8a4b89df506e82f9.pdf" }
+    ],
+    images: [
+      "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638423030/joeyhougallery/handbooks/Music/IMG_4255_rwycth.jpg",
+      "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638423030/joeyhougallery/handbooks/Music/IMG_4256_ioek0q.jpg",
+      "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638423034/joeyhougallery/handbooks/Music/IMG_4257_h8k7no.jpg",
+      "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638423030/joeyhougallery/handbooks/Music/IMG_4258_jo8j9t.jpg"
     ]
   };
 
@@ -93,12 +100,10 @@ export default function HandbooksPage() {
   ];
 
   const englishExampleImages = [
-    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409959/joeyhougallery/handbooks/Admission-pedia/English/IMG_7709.PNG_wngqnm.png",
-    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409959/joeyhougallery/handbooks/Admission-pedia/English/IMG_7710.PNG_nqvtsg.png",
-    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409959/joeyhougallery/handbooks/Admission-pedia/English/IMG_7711.PNG_l1ffvi.png",
-    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409959/joeyhougallery/handbooks/Admission-pedia/English/IMG_7712.PNG_u4lzl5.png",
-    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409959/joeyhougallery/handbooks/Admission-pedia/English/IMG_7713.PNG_xflmfw.png",
-    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409960/joeyhougallery/handbooks/Admission-pedia/English/IMG_7714.PNG_bbww6m.png"
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409684/joeyhougallery/handbooks/Admission-pedia/English/IMG_8216.PNG_y5afkq.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409683/joeyhougallery/handbooks/Admission-pedia/English/IMG_8217.PNG_coztwk.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409683/joeyhougallery/handbooks/Admission-pedia/English/IMG_8218.PNG_sfmprt.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409683/joeyhougallery/handbooks/Admission-pedia/English/IMG_8219_fmdvkz.png"
   ];
 
   // Custom images for first Simplified Chinese section (zh_cn_1 to zh_cn_5)
