@@ -159,7 +159,10 @@ export default function PageHeader({ pageKey, children }: PageHeaderProps) {
                   textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3), 0px 0px 1px rgba(0, 0, 0, 0.5)',
                   fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem', lg: '5.5rem' },
                   textAlign: 'left',
-                  lineHeight: 1
+                  lineHeight: 1,
+                  whiteSpace: 'nowrap',
+                  writingMode: 'horizontal-tb',
+                  textOrientation: 'mixed'
                 }}
               >
                 {t(`pages.${pageKey}.title`)}

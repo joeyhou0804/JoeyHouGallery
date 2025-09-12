@@ -356,20 +356,43 @@ export default function MainSection({
       {/* Description text below the zigzag banner */}
       <Box sx={{ px: '30px' }}>
         <Stack spacing={1}>
-          {Array.isArray(bodyContent) ? bodyContent.map((p, i) => (
-            <Typography 
-              key={i}
-              sx={{ 
-                color: '#432F2F',
-                fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
-                lineHeight: 1.6,
-                textAlign: 'center',
-                fontWeight: 500,
-              }}
-            >
-              {p}
-            </Typography>
-          )) : (
+          {Array.isArray(bodyContent) ? (
+            <>
+              {/* On xs screens, combine all paragraphs into one */}
+              <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+                <Typography 
+                  sx={{ 
+                    color: '#432F2F',
+                    fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
+                    lineHeight: 1.6,
+                    textAlign: 'center',
+                    fontWeight: 500,
+                  }}
+                >
+                  {bodyContent.join(' ')}
+                </Typography>
+              </Box>
+              {/* On sm+ screens, keep separate paragraphs */}
+              <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+                <Stack spacing={1}>
+                  {bodyContent.map((p, i) => (
+                    <Typography 
+                      key={i}
+                      sx={{ 
+                        color: '#432F2F',
+                        fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
+                        lineHeight: 1.6,
+                        textAlign: 'center',
+                        fontWeight: 500,
+                      }}
+                    >
+                      {p}
+                    </Typography>
+                  ))}
+                </Stack>
+              </Box>
+            </>
+          ) : (
             <Typography
               sx={{ 
                 color: '#432F2F',
