@@ -45,6 +45,7 @@ export default function VideosPage() {
                 title={v.title}
                 youtubeId={v.youtubeId}
                 description={v.description}
+                body={v.body}
                 colorIndex={idx}
               />
             ))

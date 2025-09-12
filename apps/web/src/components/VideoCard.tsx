@@ -47,9 +47,13 @@ export default function VideoCard({
   return (
     <Box
       sx={{
-        backgroundColor: 'white',
+        backgroundImage: `url(/backgrounds/section_background.png)`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
         borderRadius: 3,
         boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12)',
+        border: '6px solid white',
         overflow: 'hidden',
         mb: 4,
         position: 'relative',
@@ -101,7 +105,6 @@ export default function VideoCard({
               width: '60%',
               pt: 3, pl: 3, pb: 3,
               pr: COL_GAP / 8 * 1, // keep as 1.5 if you prefer; here just to show it's tied to COL_GAP
-              pr: 1.5,             // 12px
               display: 'flex',
               alignItems: 'flex-start',
             }}
@@ -139,7 +142,7 @@ export default function VideoCard({
                   color: rightColor,
                   fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
                   // Larger colored text
-                  fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' },
+                  fontSize: { xs: '1.75rem', sm: '2rem', md: '2.25rem' },
                   fontWeight: 800,
                   mb: 1.25,
                   lineHeight: 1.2,
