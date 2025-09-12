@@ -27,13 +27,10 @@ export default function MainSection({
 }) {
   const { t, language } = useTranslation();
   
-  // Use translated content for Chinese, original content for English
-  const isChineseLang = language === 'zh-CN';
-  const title = isChineseLang ? t('pages.applications.stickyarTitle') : section.title;
-  const bodyContent = isChineseLang 
-    ? t('pages.applications.stickyarDescription') 
-    : section.body || [];
-  const linkLabel = isChineseLang ? t('pages.applications.githubLabel') : (section.links?.[0]?.label || 'Go to my GitHub');
+  // Use the content passed in through props
+  const title = section.title;
+  const bodyContent = section.body || [];
+  const linkLabel = section.links?.[0]?.label || t('ui.goToGitHub');
 
   return (
     <Box

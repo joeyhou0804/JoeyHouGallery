@@ -239,20 +239,19 @@ export const translations = {
     // Page content translations - ADD YOUR CHINESE TRANSLATIONS HERE
     pages: {
       apps: {
-        title: '应用',
-        // TODO: Add Chinese translations for all application content
-        stickyarTitle: 'StickyAR - iOS AR应用',
+        title: '程序',
+        stickyarTitle: 'StickyAR - AR手机程序',
         stickyarDescription: [
-          '这个iOS应用程序集成了AR（增强现实）技术。',
+          '这个iOS手机软件集成了AR（增强现实）技术。',
           '这是我和3名哥伦比亚大学的同学合作完成的小组项目。',
-          '可以前往我的GitHub查看代码。'
+          '请前往我的GitHub查看代码。'
         ],
         applicationIdeaTitle: '创作理念',
         applicationIdeaDescription: '这个iOS AR的创作理念是在智能手机上重现便利贴的功能。',
         githubLabel: '前往我的GitHub',
         highLevelOverviewTitle: '程序概览',
         highLevelOverviewDescription: [
-          '我们根据四个部分，为每个人分配了工作。',
+          '程序分为四个部分，大家分工合作。',
           '功能包括：便利贴的创建、键盘输入、选择、删除、背景更改、便签大小更改。'
         ],
         manipulationTitle: '操作演示'

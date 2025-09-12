@@ -126,10 +126,9 @@ export default function SubsectionBox({
 }) {
   const { t, language } = useTranslation();
   
-  // Use translated content for Chinese, original content for English
-  const isChineseLang = language === 'zh-CN';
-  const title = customTitle || (isChineseLang ? t('pages.applications.applicationIdeaTitle') : section.title);
-  const body = isChineseLang ? t('pages.applications.applicationIdeaDescription') : section.body;
+  // Use custom title or the section title
+  const title = customTitle || section.title;
+  const body = section.body;
 
   return (
     <Box

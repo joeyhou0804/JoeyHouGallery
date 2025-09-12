@@ -10,6 +10,7 @@ import { useTranslation } from '@/hooks/useTranslation';
 
 export default function ApplicationsPage() {
   const { t, language } = useTranslation();
+  
 
   // Create translated content structure
   const introSection = {
@@ -33,7 +34,7 @@ export default function ApplicationsPage() {
       type: 'gallery' as const,
       title: t('pages.apps.highLevelOverviewTitle'),
       body: Array.isArray(t('pages.apps.highLevelOverviewDescription')) 
-        ? (t('pages.apps.highLevelOverviewDescription') as string[]).join(' ')
+        ? (t('pages.apps.highLevelOverviewDescription') as string[])[0]
         : t('pages.apps.highLevelOverviewDescription'),
       images: [
         "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1663653460/joeyhougallery/applications/%E6%88%AA%E5%B1%8F2022-09-19_%E4%B8%8B%E5%8D%8810.54.33_upkbhu.png"
