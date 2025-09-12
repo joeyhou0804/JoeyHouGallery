@@ -69,7 +69,7 @@ export default function ApplicationsPage() {
       <MainSection section={introSection} backgroundType="bottom-only" />
 
       {gallerySections.map((s, i) => (
-        <Section key={i}>
+        <Section key={i} sx={{ py: 2 }}>
           {i === 2 ? ( // Third section (index 2) is the Manipulation section
             <>
               <SubsectionBox section={{ ...s, images: [] }} index={i} />

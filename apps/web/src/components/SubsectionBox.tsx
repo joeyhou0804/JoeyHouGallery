@@ -138,7 +138,8 @@ export default function SubsectionBox({
   children,
   title: customTitle,
   imageLayout = 'default',
-  hideImages = false
+  hideImages = false,
+  sx
 }: { 
   section: Extract<SectionType, { type: 'gallery' }> | any, 
   index: number,
@@ -147,7 +148,8 @@ export default function SubsectionBox({
   children?: React.ReactNode,
   title?: string,
   imageLayout?: 'default' | 'centered-single' | 'centered-stacked',
-  hideImages?: boolean
+  hideImages?: boolean,
+  sx?: any
 }) {
   const { t, language } = useTranslation();
   
@@ -164,6 +166,7 @@ export default function SubsectionBox({
         overflow: 'hidden',
         mx: 2,
         mt: index === 0 ? 6 : 1, // Extra margin top for the first gallery section (Application Idea)
+        ...sx,
       }}
     >
       {/* SubsectionTitle */}
