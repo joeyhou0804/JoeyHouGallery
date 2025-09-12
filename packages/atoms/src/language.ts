@@ -242,12 +242,12 @@ export const translations = {
         title: '程序',
         stickyarTitle: 'StickyAR - AR手机程序',
         stickyarDescription: [
-          '这个iOS手机软件集成了AR（增强现实）技术。',
+          '这个iOS手机程序集成了AR（增强现实）技术。',
           '这是我和3名哥伦比亚大学的同学合作完成的小组项目。',
           '请前往我的GitHub查看代码。'
         ],
         applicationIdeaTitle: '创作理念',
-        applicationIdeaDescription: '这个iOS AR的创作理念是在智能手机上重现便利贴的功能。',
+        applicationIdeaDescription: '这个AR手机程序的创作理念是在智能手机上重现便利贴的功能。',
         githubLabel: '前往我的GitHub',
         highLevelOverviewTitle: '程序概览',
         highLevelOverviewDescription: [
