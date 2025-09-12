@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef, useCallback } from "react";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -19,10 +19,13 @@ export default function ControllableCarousel({
 }: ControllableCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const theme = useTheme();
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
 
   // Breakpoint booleans
   const upMd = useMediaQuery(theme.breakpoints.up("md")); // >= md
   const upSm = useMediaQuery(theme.breakpoints.up("sm")); // >= sm
+  const isXs = useMediaQuery(theme.breakpoints.down("sm")); // < sm (xs only)
 
   // Card sizes derived from your sx:
   // Center: { xs: 300x400, sm: 400x500, md: 450x600 }
@@ -46,6 +49,35 @@ export default function ControllableCarousel({
     );
   };
 
+  // Touch handlers for swipe support
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    if (!touchStartX.current || !touchEndX.current) return;
+    
+    const deltaX = touchStartX.current - touchEndX.current;
+    const minSwipeDistance = 50;
+    
+    if (Math.abs(deltaX) > minSwipeDistance) {
+      if (deltaX > 0) {
+        // Swiped left, go to next
+        goToNext();
+      } else {
+        // Swiped right, go to previous
+        goToPrevious();
+      }
+    }
+    
+    touchStartX.current = 0;
+    touchEndX.current = 0;
+  }, []);
+
   if (images.length === 0) return null;
 
   // For side cards, the nth card offset from center edge:
@@ -62,7 +94,7 @@ export default function ControllableCarousel({
       <Box
         sx={{
           position: "relative",
-          height: { xs: "400px", sm: "500px", md: "600px" },
+          height: { xs: "500px", sm: "500px", md: "600px" },
           width: "100vw",
           left: "50%",
           right: "50%",
@@ -80,12 +112,16 @@ export default function ControllableCarousel({
             transform: "translateX(-50%)",
             zIndex: 3,
           }}
+          onTouchStart={isXs ? handleTouchStart : undefined}
+          onTouchMove={isXs ? handleTouchMove : undefined}
+          onTouchEnd={isXs ? handleTouchEnd : undefined}
         >
           <Box
             sx={{
-              cursor: "default",
-              height: { xs: "400px", sm: "500px", md: "600px" },
-              width: { xs: "300px", sm: "400px", md: "450px" },
+              cursor: isXs ? "default" : "default",
+              height: { xs: "500px", sm: "500px", md: "600px" },
+              width: { xs: "90vw", sm: "400px", md: "450px" },
+              maxWidth: { xs: "400px", sm: "400px", md: "450px" },
               borderRadius: 2,
               overflow: "hidden",
               boxShadow: "0 8px 24px rgba(0, 0, 0, 0.3)",
@@ -104,8 +140,8 @@ export default function ControllableCarousel({
           </Box>
         </Box>
 
-        {/* Left side images */}
-        {[1, 2].map((offset) => {
+        {/* Left side images - hidden on xs screens */}
+        {!isXs && [1, 2].map((offset) => {
           const leftIndex = currentIndex - offset;
           if (leftIndex < 0) return null;
           return (
@@ -152,8 +188,8 @@ export default function ControllableCarousel({
           );
         })}
 
-        {/* Right side images */}
-        {[1, 2].map((offset) => {
+        {/* Right side images - hidden on xs screens */}
+        {!isXs && [1, 2].map((offset) => {
           const rightIndex = currentIndex + offset;
           if (rightIndex >= images.length) return null;
           return (
@@ -200,8 +236,8 @@ export default function ControllableCarousel({
           );
         })}
 
-        {/* Left Arrow */}
-        {images.length > 1 && currentIndex > 0 && (
+        {/* Left Arrow - hidden on xs screens */}
+        {!isXs && images.length > 1 && currentIndex > 0 && (
           <IconButton
             onClick={goToPrevious}
             sx={{
@@ -229,8 +265,8 @@ export default function ControllableCarousel({
           </IconButton>
         )}
 
-        {/* Right Arrow */}
-        {images.length > 1 && currentIndex < images.length - 1 && (
+        {/* Right Arrow - hidden on xs screens */}
+        {!isXs && images.length > 1 && currentIndex < images.length - 1 && (
           <IconButton
             onClick={goToNext}
             sx={{
