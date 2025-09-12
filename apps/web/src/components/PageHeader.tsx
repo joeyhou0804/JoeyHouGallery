@@ -43,7 +43,11 @@ export default function PageHeader({ pageKey, children }: PageHeaderProps) {
             sm: 8,   // medium depth on small screens
             md: 10,  // original depth on medium+ screens
           };
-          const steps = 120;     // number of teeth * 2  (keep your ~0.83% spacing)
+          const steps = {
+            xs: 40,   // 20 teeth on mobile
+            sm: 80,   // 40 teeth on small screens  
+            md: 120,  // 60 teeth on desktop (original)
+          };
 
           return {
             // one background, so no phase/mismatch issues
@@ -72,8 +76,8 @@ export default function PageHeader({ pageKey, children }: PageHeaderProps) {
               clipPath: `polygon(
                 0% 0%, 100% 0%, 
                 100% calc(100% - ${depth.xs}px),
-                ${Array.from({ length: steps + 1 }, (_, i) => {
-                  const x = ((steps - i) / steps) * 100;
+                ${Array.from({ length: steps.xs + 1 }, (_, i) => {
+                  const x = ((steps.xs - i) / steps.xs) * 100;
                   const isPeak = i % 2 === 0;
                   const y = isPeak ? '100%' : `calc(100% - ${depth.xs}px)`;
                   return `${x.toFixed(2)}% ${y}`;
@@ -87,8 +91,8 @@ export default function PageHeader({ pageKey, children }: PageHeaderProps) {
               clipPath: `polygon(
                 0% 0%, 100% 0%, 
                 100% calc(100% - ${depth.sm}px),
-                ${Array.from({ length: steps + 1 }, (_, i) => {
-                  const x = ((steps - i) / steps) * 100;
+                ${Array.from({ length: steps.sm + 1 }, (_, i) => {
+                  const x = ((steps.sm - i) / steps.sm) * 100;
                   const isPeak = i % 2 === 0;
                   const y = isPeak ? '100%' : `calc(100% - ${depth.sm}px)`;
                   return `${x.toFixed(2)}% ${y}`;
@@ -102,8 +106,8 @@ export default function PageHeader({ pageKey, children }: PageHeaderProps) {
               clipPath: `polygon(
                 0% 0%, 100% 0%, 
                 100% calc(100% - ${depth.md}px),
-                ${Array.from({ length: steps + 1 }, (_, i) => {
-                  const x = ((steps - i) / steps) * 100;
+                ${Array.from({ length: steps.md + 1 }, (_, i) => {
+                  const x = ((steps.md - i) / steps.md) * 100;
                   const isPeak = i % 2 === 0;
                   const y = isPeak ? '100%' : `calc(100% - ${depth.md}px)`;
                   return `${x.toFixed(2)}% ${y}`;
@@ -114,7 +118,7 @@ export default function PageHeader({ pageKey, children }: PageHeaderProps) {
           };
         }}
       >
-        <Container maxWidth="xl" sx={{ position: 'relative', height: '300px' }}>
+        <Container maxWidth="xl" sx={{ position: 'relative', height: { xs: '200px', sm: '250px', md: '300px' } }}>
           {/* Centered container for character and title */}
           <Box 
             sx={{ 
@@ -124,11 +128,11 @@ export default function PageHeader({ pageKey, children }: PageHeaderProps) {
               transform: 'translate(-50%, -50%)',
               display: 'flex',
               alignItems: 'center',
-              gap: 4,
+              gap: { xs: 1, sm: 2, md: 3, lg: 4 },
               zIndex: 2
             }}
           >
-            {/* Character image on the left - bigger */}
+            {/* Character image on the left - responsive size */}
             <Box>
               <Image
                 src={`/titles/${getCharacterImage(pageKey)}`}
@@ -138,8 +142,8 @@ export default function PageHeader({ pageKey, children }: PageHeaderProps) {
                 sizes="100vw"
                 style={{
                   width: 'auto',
-                  height: '240px',
-                  maxWidth: '400px',
+                  height: 'clamp(160px, 20vw, 240px)',
+                  maxWidth: 'clamp(200px, 25vw, 400px)',
                   objectFit: 'contain',
                 }}
               />
