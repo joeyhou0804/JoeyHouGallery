@@ -144,7 +144,7 @@ export default function Subsection({
         </SubsectionBox>
         
         {carouselImages && carouselImages.length > 0 && (
-          <Box sx={{ mt: carouselSpacing }}>
+          <Box sx={{ mt: { xs: 3, sm: 4, md: 6 } }}>
             <ControllableCarousel images={carouselImages} />
           </Box>
         )}

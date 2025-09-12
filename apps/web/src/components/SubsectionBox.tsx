@@ -164,7 +164,7 @@ export default function SubsectionBox({
         borderRadius: 2,
         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
         overflow: 'hidden',
-        mx: 2,
+        mx: { xs: 1, sm: 2, md: 3 },
         mt: index === 0 ? 6 : 1, // Extra margin top for the first gallery section (Application Idea)
         ...sx,
       }}
