@@ -51,11 +51,15 @@ export default function ControllableCarousel({
 
   // Touch handlers for swipe support
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
+    if (e.touches[0]) {
+      touchStartX.current = e.touches[0].clientX;
+    }
   }, []);
 
   const handleTouchMove = useCallback((e: React.TouchEvent) => {
-    touchEndX.current = e.touches[0].clientX;
+    if (e.touches[0]) {
+      touchEndX.current = e.touches[0].clientX;
+    }
   }, []);
 
   const handleTouchEnd = useCallback(() => {
