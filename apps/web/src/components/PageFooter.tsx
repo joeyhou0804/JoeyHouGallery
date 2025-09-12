@@ -118,9 +118,10 @@ export default function PageFooter() {
             position: 'relative', 
             height: { xs: 'auto', sm: '80px' }, 
             display: 'flex', 
-            alignItems: 'flex-end', 
+            alignItems: { xs: 'center', sm: 'flex-end' },
+            justifyContent: { xs: 'center', sm: 'flex-start' },
             zIndex: 2,
-            mb: { xs: 2, sm: 0 }
+            mb: { xs: 12, sm: 0 }
           }}>
             <Link href="/" style={{ textDecoration: 'none' }}>
               <Box
@@ -128,9 +129,10 @@ export default function PageFooter() {
                   cursor: 'pointer',
                   transition: 'transform 0.2s ease',
                   position: 'absolute',
-                  bottom: 0,
-                  left: language === 'zh-CN' ? 40 : 0,
-                  '&:hover': { transform: 'scale(1.05)' },
+                  bottom: { xs: '-60px', sm: 0 },
+                  left: { xs: '50%', sm: language === 'zh-CN' ? 40 : 0 },
+                  transform: { xs: 'translateX(-50%)', sm: 'none' },
+                  '&:hover': { transform: { xs: 'translateX(-50%) scale(1.05)', sm: 'scale(1.05)' } },
                 }}
               >
                 <Image
