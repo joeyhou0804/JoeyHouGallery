@@ -1,3 +1,5 @@
+"use client";
+
 import Section from '@/components/Section';
 import PageHeader from '@/components/PageHeader';
 import MainSection from '@/components/MainSection';
@@ -5,17 +7,62 @@ import VideoCard from '@/components/VideoCard';
 import TextBlock from '@/components/TextBlock';
 import YouTubeEmbed from '@/components/YouTubeEmbed';
 import PageFooter from '@/components/PageFooter';
-import type { VideosPageContent } from '@/content/types';
-import content from '@/content/videos.json';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid';
-
-export const metadata = { title: 'Videos · Joey Hou Gallery' };
+import { useTranslation } from '@/hooks/useTranslation';
 
 export default function VideosPage() {
-  const data = content as unknown as VideosPageContent;
+  const { t } = useTranslation();
+  
+  // Create translated content structure
+  const data = {
+    sections: [
+      {
+        type: 'intro' as const,
+        title: t('pages.videos.videoEssayTitle'),
+        time: '2021.12',
+        body: t('pages.videos.videoEssayDescription')
+      },
+      {
+        type: 'videos' as const,
+        title: t('pages.videos.videoEssayTitle'),
+        items: [
+          {
+            title: t('pages.videos.introVideoTitle'),
+            youtubeId: "Xz08rpOaU0M",
+            description: t('pages.videos.videoEssayLabel'),
+            body: t('pages.videos.videoEssayBody')
+          }
+        ]
+      },
+      {
+        type: 'intro' as const,
+        title: t('pages.videos.orientationTitle'),
+        time: '2020-2021',
+        body: t('pages.videos.orientationDescription')
+      },
+      {
+        type: 'videos' as const,
+        title: 'Columbia & CityU HK JBDP Pre-departure Orientation Session',
+        items: [
+          {
+            title: t('pages.videos.episode2Title'),
+            youtubeId: "8d3AIE3-kQA",
+            description: t('pages.videos.qaLabel'),
+            body: t('pages.videos.episode2Body')
+          },
+          {
+            title: t('pages.videos.episode1Title'),
+            youtubeId: "DNJFN6HK7MQ",
+            description: t('pages.videos.qaLabel'),
+            body: t('pages.videos.episode1Body')
+          }
+        ]
+      }
+    ]
+  };
   return (
     <PageHeader pageKey="videos">
       {data.sections.map((section, i) => (

@@ -1,16 +1,64 @@
+"use client";
+
 import PageHeader from '@/components/PageHeader';
 import MainSection from '@/components/MainSection';
 import Subsection from '@/components/Subsection';
 import PageFooter from '@/components/PageFooter';
-import type { PageContent, Section as SectionType } from '@/content/types';
-import content from '@/content/reports.json';
-
-export const metadata = { title: 'Reports · Joey Hou Gallery' };
+import { useTranslation } from '@/hooks/useTranslation';
 
 export default function ReportsPage() {
-  const data = content as PageContent;
-  const introSection = data.sections.find(s => s.type === 'intro') as Extract<SectionType, { type: 'intro' }>;
-  const gallerySections = data.sections.filter(s => s.type === 'gallery') as Extract<SectionType, { type: 'gallery' }>[];
+  const { t } = useTranslation();
+  
+  // Create translated content structure
+  const introSection = {
+    type: 'intro' as const,
+    title: t('pages.reports.featuredTitle'),
+    body: t('pages.reports.featuredDescription'),
+    time: '2019-2022'
+  };
+  
+  const gallerySections = [
+    {
+      type: 'gallery' as const,
+      title: t('pages.reports.templateTitle'),
+      body: t('pages.reports.templateDescription'),
+      images: [
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639372416/joeyhougallery/reports/IMG_8757_bkgvdc.jpg",
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639372417/joeyhougallery/reports/IMG_8758_nabudq.jpg"
+      ]
+    },
+    {
+      type: 'gallery' as const,
+      title: t('pages.reports.hungarianTitle'),
+      body: t('pages.reports.hungarianDescription'),
+      images: [
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639376152/joeyhougallery/reports/Hungarian/IMG_8767_jdqdw4.jpg",
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639376161/joeyhougallery/reports/Hungarian/IMG_8768_cwlfmh.jpg",
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639376171/joeyhougallery/reports/Hungarian/IMG_8769_q5dsry.jpg",
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639376185/joeyhougallery/reports/Hungarian/IMG_8770_tm7iji.jpg"
+      ]
+    },
+    {
+      type: 'gallery' as const,
+      title: t('pages.reports.csTitle'),
+      body: t('pages.reports.csDescription'),
+      images: [
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639373173/joeyhougallery/reports/CS%20Theory/IMG_8763_hjk0om.jpg",
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639373166/joeyhougallery/reports/CS%20Theory/IMG_8760_jdlaye.jpg",
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639373169/joeyhougallery/reports/CS%20Theory/IMG_8762_ozmopo.jpg",
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639373178/joeyhougallery/reports/CS%20Theory/%E7%85%A7%E7%89%87_2021-12-13_12.25.18_%E4%B8%8A%E5%8D%88_wunz16.jpg"
+      ]
+    },
+    {
+      type: 'gallery' as const,
+      title: t('pages.reports.mathTitle'),
+      body: t('pages.reports.mathDescription'),
+      images: [
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639375168/joeyhougallery/reports/ODE/IMG_8765_n7zgq7.jpg",
+        "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639375176/joeyhougallery/reports/ODE/IMG_8766_syxy0a.jpg"
+      ]
+    }
+  ];
   
   // Background images for each subsection
   const backgroundImages = [
