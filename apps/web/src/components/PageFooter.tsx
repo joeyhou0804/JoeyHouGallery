@@ -195,7 +195,11 @@ export default function PageFooter() {
                   lg: '1', 
                   md: '1', 
                   sm: '1' 
-                }
+                },
+                // Center button within grid cell for all screen sizes
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
               }}
             >
               <Image
@@ -281,7 +285,11 @@ export default function PageFooter() {
                       md: getGridColumnForAllScreens().md,
                       sm: getGridColumnForAllScreens().sm
                     },
-                    gridRow: getGridRow()
+                    gridRow: getGridRow(),
+                    // Center buttons within grid cells for all screen sizes
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
                   }}
                 >
                   <Link href={s.href}>
