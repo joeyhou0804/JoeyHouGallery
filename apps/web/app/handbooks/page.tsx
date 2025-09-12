@@ -90,13 +90,13 @@ export default function HandbooksPage() {
   ].filter(Boolean) as string[]; // Remove any undefined values
 
   const traditionalExampleImages = [
-    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409913/joeyhougallery/handbooks/Admission-pedia/%E7%B9%81%E9%AB%94/IMG_7702.PNG_hc9u8u.png",
-    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409914/joeyhougallery/handbooks/Admission-pedia/%E7%B9%81%E9%AB%94/IMG_7703.PNG_rk6ndc.png",
-    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409914/joeyhougallery/handbooks/Admission-pedia/%E7%B9%81%E9%AB%94/IMG_7704.PNG_mwvszw.png",
-    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409914/joeyhougallery/handbooks/Admission-pedia/%E7%B9%81%E9%AB%94/IMG_7705.PNG_kgbr2z.png",
-    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409914/joeyhougallery/handbooks/Admission-pedia/%E7%B9%81%E9%AB%94/IMG_7706.PNG_cvzlhk.png",
-    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409915/joeyhougallery/handbooks/Admission-pedia/%E7%B9%81%E9%AB%94/IMG_7707.PNG_iqccqb.png",
-    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409916/joeyhougallery/handbooks/Admission-pedia/%E7%B9%81%E9%AB%94/IMG_7708.PNG_fzfj2e.png"
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409685/joeyhougallery/handbooks/Admission-pedia/%E7%B9%81%E4%BD%93/IMG_7702.PNG_jvmn4n.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409683/joeyhougallery/handbooks/Admission-pedia/%E7%B9%81%E4%BD%93/IMG_7703.PNG_sg1xd8.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409684/joeyhougallery/handbooks/Admission-pedia/%E7%B9%81%E4%BD%93/IMG_7704.PNG_l0rzap.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409684/joeyhougallery/handbooks/Admission-pedia/%E7%B9%81%E4%BD%93/IMG_7705.PNG_cvmlj4.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409685/joeyhougallery/handbooks/Admission-pedia/%E7%B9%81%E4%BD%93/IMG_7706.PNG_enwuh6.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409687/joeyhougallery/handbooks/Admission-pedia/%E7%B9%81%E4%BD%93/IMG_7707.PNG_h7udmw.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409684/joeyhougallery/handbooks/Admission-pedia/%E7%B9%81%E4%BD%93/IMG_7708.PNG_jhxa1t.png"
   ];
 
   const englishExampleImages = [
