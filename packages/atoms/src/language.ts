@@ -125,7 +125,7 @@ export const translations = {
         ],
         highSchool1Description: 'A career planning themed bulletin board (background) design.',
         highSchool2Description: 'A friendship/classmates themed bulletin board (background) design.',
-        highSchool3Description: 'A Gao Kao themed bulletin board (background) design.'
+        highSchool3Description: 'A Gao Kao (Chinese College Entrance Exam) themed bulletin board design.'
       },
       reports: {
         title: 'Reports',
@@ -197,7 +197,7 @@ export const translations = {
   'zh-CN': {
     // Navigation
     home: '首页',
-    applications: '应用',
+    applications: '程序',
     arts: '画作',
     handbooks: '手册',
     posters: '海报',
@@ -212,7 +212,7 @@ export const translations = {
     
     // Section labels for buttons
     sectionsLabels: {
-      applications: '应用',
+      applications: '程序',
       arts: '画作',
       handbooks: '手册',
       posters: '海报',
@@ -243,130 +243,130 @@ export const translations = {
         stickyarTitle: 'StickyAR - AR手机程序',
         stickyarDescription: [
           '这个iOS手机程序集成了AR（增强现实）技术。',
-          '这是我和3名哥伦比亚大学的同学合作完成的小组项目。',
+          '我和3名哥伦比亚大学同学合作完成了这个小组项目。',
           '请前往我的GitHub查看代码。'
         ],
-        applicationIdeaTitle: '创作理念',
-        applicationIdeaDescription: '这个AR手机程序的创作理念是在智能手机上重现便利贴的功能。',
+        applicationIdeaTitle: '创作初衷',
+        applicationIdeaDescription: '这个AR手机程序的创作初衷是在智能手机上再现便利贴的功能。',
         githubLabel: '前往我的GitHub',
         highLevelOverviewTitle: '程序概览',
         highLevelOverviewDescription: [
           '程序分为四个部分，大家分工合作。',
-          '功能包括：便利贴的创建、键盘输入、选择、删除、背景更改、便签大小更改。'
+          '程序功能包括：便利贴的创建、键盘输入、选择、删除、背景更改、便签大小更改。'
         ],
         manipulationTitle: '操作演示'
       },
       arts: {
         title: '画作',
         // TODO: Add Chinese translations
-        chineseCharactersTitle: '汉字与西方艺术',
+        chineseCharactersTitle: '汉字与西方经典艺术',
         chineseCharactersDescription: '哥伦比亚大学艺术人文个人创作项目',
-        travelJournalsTitle: '旅行日记 — 意大利',
-        travelJournalsDescription: '这些是我与妈妈在意大利夏日旅行时创作的。'
+        travelJournalsTitle: '意大利画图游记',
+        travelJournalsDescription: '有一年的夏天，我和妈妈在意大利旅游，每天都在画画图游记。'
       },
       handbooks: {
         title: '手册',
         // TODO: Add Chinese translations
-        admissionPediaTitle: '入学百科全书',
+        admissionPediaTitle: '报读百科',
         admissionPediaDescription: [
-          '在哥伦比亚大学的第一学期，',
-          '2017届内地学生合作编写了两卷入学手册。',
-          '"入学百科全书"涵盖了城大-哥大联合学士学位项目的准备步骤。',
-          '它包含了必要的介绍和申请过程的详细说明，',
-          '以及学生的意见和建议。'
+          '在哥伦比亚大学的第一个学期，',
+          '2017级的内地学生合作编写了两卷报读参考手册。',
+          '《报读百科》涵盖了城大-哥大双联学士学位项目的准备步骤。',
+          '手册包括了申请过程的介绍和详细说明，',
+          '以及大家的经验和建议。'
         ],
         simplifiedTitle: '简体中文版',
         traditionalTitle: '繁体中文版',
         englishTitle: '英文版',
-        musicTitle: '音乐教学手册',
+        musicTitle: '合唱团音乐教材',
         musicDescription: [
-          '我在夏天为我的合唱团编写了一本音乐教学手册。',
-          '这本教材帮助新成员快速学习音乐理论和读谱。'
+          '有一年的夏天，我给合唱团团员编写了一本音乐教材，',
+          '用来帮助新成员快速学习乐理和读谱。'
         ],
-        downloadCityU: '下载城大版本',
-        downloadColumbia: '下载哥大版本',
-        downloadTextbook: '下载教材'
+        downloadCityU: '下载城大卷',
+        downloadColumbia: '下载哥大卷',
+        downloadTextbook: '下载音乐教材'
       },
       posters: {
         title: '海报',
         // TODO: Add Chinese translations
-        wallNewspapersTitle: '黑板报',
+        wallNewspapersTitle: '板报',
         wallNewspapersDescription: [
-          '我负责设计班级黑板报/公告板超过6年。',
-          '在我的初中和高中时期，',
-          '这些黑板报都是用大幅彩纸制作的。',
-          '这里展示了一些设计。'
+          '中学的六年里，我一直负责设计班级板报。',
+          '在我们中学，',
+          '板报是用大幅彩纸制作的。',
+          '这里展示我的一些设计。'
         ],
-        highSchool1Description: '职业规划主题公告板（背景）设计。',
-        highSchool2Description: '友谊/同学主题公告板（背景）设计。',
-        highSchool3Description: '高考主题公告板（背景）设计。'
+        highSchool1Description: '职业规划主题板报（背景）设计。',
+        highSchool2Description: '友谊/同学主题板报（背景）设计。',
+        highSchool3Description: '高考主题板报设计。'
       },
       reports: {
         title: '报告',
         // TODO: Add Chinese translations
-        featuredTitle: '精选作业',
-        featuredDescription: '这里是我在哥伦比亚大学完成的一些精选课程作业。',
-        templateTitle: '作业模板',
+        featuredTitle: '作业精选',
+        featuredDescription: '这里展示了一部分我在哥伦比亚大学完成的课程作业。',
+        templateTitle: '作业封面模板',
         templateDescription: [
-          '我为我的作业设计了这些封面模板。',
-          '它们是用Microsoft Publisher完成的。'
+          '这是我给本科作业设计的封面模板。',
+          '文件由Microsoft Publisher制作。'
         ],
-        hungarianTitle: '匈牙利语描述性语法',
+        hungarianTitle: '匈牙利语语法',
         hungarianDescription: [
-          '这是期末展示的讲义。',
-          '它是匈牙利语和普通话语法的比较。',
-          '报告是用LaTeX完成的。'
+          '这是我的期末展示讲义，',
+          '主题是匈牙利语和普通话语法的比较。',
+          '这份报告用LaTeX制作。'
         ],
         csTitle: '计算机科学理论',
         csDescription: [
-          '这里是我作业中的精选页面。',
-          '图形是在Microsoft Word中绘制的，',
-          '文件由LaTeX编译。'
+          '这里展示了一部分作业页面。',
+          '其中的图形用Microsoft Word绘制，',
+          '文件由LaTeX制作。'
         ],
         mathTitle: '常微分方程',
-        mathDescription: '它是用LaTeX完成的。'
+        mathDescription: '这份作业由LaTeX完成。'
       },
       videos: {
         title: '视频',
         // TODO: Add Chinese translations
-        videoEssayTitle: '视频短文',
+        videoEssayTitle: '简介视频',
         videoEssayDescription: [
-          '我为硕士学位项目申请制作了这个视频短文。',
-          '它也是一个很好的2分钟介绍视频！'
+          '由于硕士学位项目申请需要，我做了这个简介视频。',
+          '也可以算做我的2分钟个人介绍呢！'
         ],
         orientationTitle: '迎新视频',
         orientationDescription: [
-          '我在2019-2022年期间参加了联合学士学位项目（JBDP）。',
-          '这是哥伦比亚大学和香港城市大学之间的项目。',
-          '每年该项目都为录取学生举办行前迎新会。',
-          '我为其中两次迎新会录制并完成了两个视频。'
+          '在2019-2022年期间，',
+          '我参加了哥伦比亚大学和香港城市大学之间的双联学士学位项目（双学位项目）。',
+          '每年春天，这个项目都为录取学生举办行前说明会。',
+          '我给其中的两次说明会录制并剪辑了这两个视频。'
         ],
         introVideoTitle: '介绍视频',
-        videoEssayLabel: '视频短文',
+        videoEssayLabel: '简介视频',
         videoEssayBody: '这是我在2021年为硕士项目申请制作的2分钟介绍视频。',
         episode2Title: '2021年 - 第二集',
         episode1Title: '2020年 - 第一集',
-        qaLabel: '小猴的问答环节',
-        episode2Body: '这是为2021年的迎新会制作的。',
-        episode1Body: '这是为2020年的迎新会制作的。'
+        qaLabel: '小猴同学问与答',
+        episode2Body: '2021年行前说明会',
+        episode1Body: '2020年行前说明会'
       },
       websites: {
         title: '网站',
         // TODO: Add Chinese translations
         consultingTitle: '咨询公司网站',
         consultingDescription: [
-          'The Black Box Institute是位于多伦多的加拿大精品咨询公司。',
-          '我用Wix.com在一周内建成了完整的网站。',
-          '网站平衡了专业设计和未来更新的效率。',
-          '它得到了主管和合作伙伴的积极反馈。'
+          'The Black Box Institute是位于加拿大多伦多的精品咨询公司。',
+          '我用Wix.com在一周内建成全站。',
+          '网站综合考虑了设计的专业性和更新的便捷性。',
+          '公司主管和合作伙伴对网站做出了高度评价。'
         ],
-        musicTitle: '音乐理论学习网站',
+        musicTitle: '乐理学习网站',
         musicDescription: [
-          '我设计了一个教学大纲来帮助我的朋友学习基础音乐理论知识。',
-          '然后我在哥伦比亚大学带领4人小组完成了这个网站。',
-          '这个网站是用简单的HTML、CSS和Javascript实现的。'
+          '为了帮助朋友学习基础乐理知识，我设计了教学大纲，',
+          '然后在哥伦比亚大学带领4人小组完成了这个网站。',
+          '网站用基本的HTML、CSS和Javascript实现。'
         ],
-        visitOfficial: '访问The Black Box Institute官方网站',
+        visitOfficial: '前往The Black Box Institute官方网站',
         codeOnGithub: 'GitHub上的代码'
       }
     }
