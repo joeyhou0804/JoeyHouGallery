@@ -131,7 +131,7 @@ export default function Subsection({
         };
       }}
     >
-      <Section sx={{ mt: 5 }}> {/* Move content down 40px */}
+      <Section sx={{ mt: { xs: 3, sm: 4, md: 5 }, py: { xs: 3, sm: 4, md: 6 } }}> {/* Responsive top margin and padding */}
         <SubsectionBox 
           section={section} 
           index={index} 
