@@ -6,8 +6,6 @@ import PageHeader from '@/components/PageHeader';
 import TextBlock from '@/components/TextBlock';
 import MainSection from '@/components/MainSection';
 import Subsection from '@/components/Subsection';
-import type { PageContent } from '@/content/types';
-import content from '@/content/handbooks.json';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -16,36 +14,92 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { GlowPillButton } from '../apps/GlowPillButton';
 import PageFooter from '@/components/PageFooter';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export default function HandbooksPage() {
-  const data = content as PageContent;
+  const { t } = useTranslation();
   
-  // Get images from "Page Examples — Simplified" section and reorder to: 0, 2, 3, 4, 5, 1, 6
-  const simplifiedGallerySection = data.sections
-    .find(s => s.title === 'Page Examples — Simplified' && s.type === 'gallery') as Extract<typeof data.sections[0], { type: 'gallery' }>;
-  const simplifiedOriginalImages = simplifiedGallerySection?.images || [];
+  // Create translated content structure
+  const admissionSection = {
+    type: 'intro' as const,
+    title: t('pages.handbooks.admissionPediaTitle'),
+    body: t('pages.handbooks.admissionPediaDescription'),
+  };
+
+  const simplifiedSection = {
+    type: 'intro' as const,
+    title: t('pages.handbooks.simplifiedTitle'),
+    links: [
+      { label: t('pages.handbooks.downloadCityU'), href: "https://40a431a6-5c85-45f3-b955-58c8e40d7db4.filesusr.com/ugd/6a9383_014e1a0451a1438a8f1b090e55967da3.pdf" },
+      { label: t('pages.handbooks.downloadColumbia'), href: "https://40a431a6-5c85-45f3-b955-58c8e40d7db4.filesusr.com/ugd/6a9383_6581e003ac7e47429655508e49198406.pdf" }
+    ]
+  };
+
+  const traditionalSection = {
+    type: 'intro' as const,
+    title: t('pages.handbooks.traditionalTitle'),
+    links: [
+      { label: t('pages.handbooks.downloadCityU'), href: "https://40a431a6-5c85-45f3-b955-58c8e40d7db4.filesusr.com/ugd/6a9383_7eb71bbd629145ffbe84c3c0754bb7bc.pdf" },
+      { label: t('pages.handbooks.downloadColumbia'), href: "https://40a431a6-5c85-45f3-b955-58c8e40d7db4.filesusr.com/ugd/6a9383_e9f8a4b95f7146c2a0fa3b5ba9d56502.pdf" }
+    ]
+  };
+
+  const englishSection = {
+    type: 'intro' as const,
+    title: t('pages.handbooks.englishTitle'),
+    links: [
+      { label: t('pages.handbooks.downloadCityU'), href: "https://40a431a6-5c85-45f3-b955-58c8e40d7db4.filesusr.com/ugd/6a9383_b59f2b2b34854d32bce83b1f0c2dd6c2.pdf" }
+    ]
+  };
+
+  const musicSection = {
+    type: 'intro' as const,
+    title: t('pages.handbooks.musicTitle'),
+    body: t('pages.handbooks.musicDescription'),
+    links: [
+      { label: t('pages.handbooks.downloadTextbook'), href: "https://40a431a6-5c85-45f3-b955-58c8e40d7db4.filesusr.com/ugd/6a9383_22eb6cd3c73a43ef8a4b89df506e82f9.pdf" }
+    ]
+  };
+
+  // Static images arrays
+  const simplifiedOriginalImages = [
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409686/joeyhougallery/handbooks/Admission-pedia/%E7%AE%80%E4%BD%93/IMG_7695.PNG_h0fnln.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409685/joeyhougallery/handbooks/Admission-pedia/%E7%AE%80%E4%BD%93/IMG_7700.PNG_jc51yy.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409683/joeyhougallery/handbooks/Admission-pedia/%E7%AE%80%E4%BD%93/IMG_7696.PNG_utqe5e.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409683/joeyhougallery/handbooks/Admission-pedia/%E7%AE%80%E4%BD%93/IMG_7697.PNG_npawrf.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409683/joeyhougallery/handbooks/Admission-pedia/%E7%AE%80%E4%BD%93/IMG_7698.PNG_er8mgj.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409684/joeyhougallery/handbooks/Admission-pedia/%E7%AE%80%E4%BD%93/IMG_7699.PNG_chhlad.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409683/joeyhougallery/handbooks/Admission-pedia/%E7%AE%80%E4%BD%93/IMG_7701.PNG_xycp5f.png"
+  ];
   
-  const simplifiedExampleImages = simplifiedOriginalImages.length >= 7 
-    ? [
-        simplifiedOriginalImages[0], // 0
-        simplifiedOriginalImages[2], // 2
-        simplifiedOriginalImages[3], // 3
-        simplifiedOriginalImages[4], // 4
-        simplifiedOriginalImages[5], // 5
-        simplifiedOriginalImages[1], // 1 (moved to second-to-last)
-        simplifiedOriginalImages[6]  // 6
-      ].filter(Boolean) as string[] // Remove any undefined values
-    : [...simplifiedOriginalImages]; // fallback to original order if less than 7 images
+  const simplifiedExampleImages = [
+    simplifiedOriginalImages[0], // 0
+    simplifiedOriginalImages[2], // 2
+    simplifiedOriginalImages[3], // 3
+    simplifiedOriginalImages[4], // 4
+    simplifiedOriginalImages[5], // 5
+    simplifiedOriginalImages[1], // 1 (moved to second-to-last)
+    simplifiedOriginalImages[6]  // 6
+  ].filter(Boolean) as string[]; // Remove any undefined values
 
-  // Get images from "Page Examples — Traditional" section for carousel
-  const traditionalGallerySection = data.sections
-    .find(s => s.title === 'Page Examples — Traditional' && s.type === 'gallery') as Extract<typeof data.sections[0], { type: 'gallery' }>;
-  const traditionalExampleImages = traditionalGallerySection?.images || [];
+  const traditionalExampleImages = [
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409913/joeyhougallery/handbooks/Admission-pedia/%E7%B9%81%E9%AB%94/IMG_7702.PNG_hc9u8u.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409914/joeyhougallery/handbooks/Admission-pedia/%E7%B9%81%E9%AB%94/IMG_7703.PNG_rk6ndc.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409914/joeyhougallery/handbooks/Admission-pedia/%E7%B9%81%E9%AB%94/IMG_7704.PNG_mwvszw.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409914/joeyhougallery/handbooks/Admission-pedia/%E7%B9%81%E9%AB%94/IMG_7705.PNG_kgbr2z.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409914/joeyhougallery/handbooks/Admission-pedia/%E7%B9%81%E9%AB%94/IMG_7706.PNG_cvzlhk.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409915/joeyhougallery/handbooks/Admission-pedia/%E7%B9%81%E9%AB%94/IMG_7707.PNG_iqccqb.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409916/joeyhougallery/handbooks/Admission-pedia/%E7%B9%81%E9%AB%94/IMG_7708.PNG_fzfj2e.png"
+  ];
 
-  // Get images from "Page Examples — English" section for carousel
-  const englishGallerySection = data.sections
-    .find(s => s.title === 'Page Examples — English' && s.type === 'gallery') as Extract<typeof data.sections[0], { type: 'gallery' }>;
-  const englishExampleImages = englishGallerySection?.images || [];
+  const englishExampleImages = [
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409959/joeyhougallery/handbooks/Admission-pedia/English/IMG_7709.PNG_wngqnm.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409959/joeyhougallery/handbooks/Admission-pedia/English/IMG_7710.PNG_nqvtsg.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409959/joeyhougallery/handbooks/Admission-pedia/English/IMG_7711.PNG_l1ffvi.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409959/joeyhougallery/handbooks/Admission-pedia/English/IMG_7712.PNG_u4lzl5.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409959/joeyhougallery/handbooks/Admission-pedia/English/IMG_7713.PNG_xflmfw.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409960/joeyhougallery/handbooks/Admission-pedia/English/IMG_7714.PNG_bbww6m.png"
+  ];
 
   // Custom images for first Simplified Chinese section (zh_cn_1 to zh_cn_5)
   const firstSimplifiedImages = [
@@ -56,14 +110,6 @@ export default function HandbooksPage() {
     '/zh_cn_5.png'
   ];
 
-  
-  // Get typed sections for proper TypeScript support
-  const simplifiedSection = data.sections.find(s => s.title === 'Simplified Chinese Version' && s.type === 'intro') as Extract<typeof data.sections[0], { type: 'intro' }>;
-  const englishSection = data.sections.find(s => s.title === 'English Version' && s.type === 'intro') as Extract<typeof data.sections[0], { type: 'intro' }>;
-  const traditionalSection = data.sections.find(s => s.title === 'Traditional Chinese Version' && s.type === 'intro') as Extract<typeof data.sections[0], { type: 'intro' }>;
-  const admissionSection = data.sections.find(s => s.type === 'intro' && s.title === 'Admission‑pedia') as Extract<typeof data.sections[0], { type: 'intro' }>;
-  const musicSection = data.sections.find(s => s.type === 'intro' && s.title === 'Music Tutorial Textbook') as Extract<typeof data.sections[0], { type: 'intro' }>;
-
   // Custom order array for Subsection components
   const customOrder = [
     // 1. Simplified Chinese Version (first)
@@ -72,7 +118,7 @@ export default function HandbooksPage() {
       section={simplifiedSection} 
       index={0} 
       year="2025"
-      title="Simplified Chinese Version"
+      title={t('pages.handbooks.simplifiedTitle')}
       carouselImages={firstSimplifiedImages}
       carouselSpacing={6}
       zIndex={4}
@@ -97,7 +143,7 @@ export default function HandbooksPage() {
       section={englishSection} 
       index={2} 
       year="2019"
-      title="English Version"
+      title={t('pages.handbooks.englishTitle')}
       backgroundImage="/backgrounds/subsection_background_3.png"
       carouselImages={englishExampleImages}
       carouselSpacing={6}
@@ -110,7 +156,7 @@ export default function HandbooksPage() {
             href={englishSection.links[0].href}
             rel="noreferrer"
           >
-            Download Volume of CityU
+            {englishSection.links[0].label}
           </GlowPillButton>
         )}
       </Box>
@@ -122,7 +168,7 @@ export default function HandbooksPage() {
       section={traditionalSection} 
       index={1} 
       year="2019"
-      title="Traditional Chinese Version"
+      title={t('pages.handbooks.traditionalTitle')}
       backgroundImage="/backgrounds/subsection_background_2.png"
       carouselImages={traditionalExampleImages}
       carouselSpacing={6}
@@ -148,7 +194,7 @@ export default function HandbooksPage() {
       section={simplifiedSection} 
       index={0} 
       year="2019"
-      title="Simplified Chinese Version"
+      title={t('pages.handbooks.simplifiedTitle')}
       carouselImages={simplifiedExampleImages}
       carouselSpacing={6}
       zIndex={1}
@@ -191,58 +237,6 @@ export default function HandbooksPage() {
         />
       </Box>
       
-      {/* Remaining sections */}
-      {data.sections
-        .filter(s => 
-          s.title !== 'Admission‑pedia' && 
-          s.title !== 'Simplified Chinese Version' && 
-          s.title !== 'Traditional Chinese Version' && 
-          s.title !== 'English Version' &&
-          s.title !== 'Music Tutorial Textbook' &&
-          s.title !== 'Page Examples — Simplified' && 
-          s.title !== 'Page Examples — Traditional' && 
-          s.title !== 'Page Examples — English' &&
-          s.title !== 'Page Examples — Music'
-        )
-        .map((s, i) => (
-          <Section key={i}>
-            {s.type === 'intro' ? (
-              <Card>
-                <CardContent>
-                  <Typography variant="h4" gutterBottom>
-                    {s.title}
-                  </Typography>
-                  {Array.isArray(s.body) && (
-                    <Stack spacing={1} sx={{ mb: 2 }}>
-                      {s.body.map((p, idx) => (
-                        <Typography key={idx}>{p}</Typography>
-                      ))}
-                    </Stack>
-                  )}
-                  {s.links?.map((l) => (
-                    <Button key={l.href} href={l.href} target="_blank" rel="noreferrer" sx={{ mr: 1 }} variant="contained">
-                      {l.label}
-                    </Button>
-                  ))}
-                </CardContent>
-              </Card>
-            ) : (
-              <>
-                <TextBlock centered>
-                  <Typography variant="h5" gutterBottom>
-                    {s.title}
-                  </Typography>
-                  {'body' in s && s.body && (
-                    <Typography variant="body1" color="text.secondary">
-                      {s.body as any}
-                    </Typography>
-                  )}
-                </TextBlock>
-                <ImageGrid images={(s as any).images} />
-              </>
-            )}
-          </Section>
-        ))}
       <PageFooter />
     </PageHeader>
   );
