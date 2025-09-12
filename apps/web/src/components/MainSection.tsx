@@ -218,7 +218,7 @@ export default function MainSection({
             <Box
               sx={{
                 position: 'absolute',
-                top: { xs: -2, sm: -4, md: -6 },
+                top: { xs: -16, sm: -18, md: -20 },
                 left: '50%',
                 transform: 'translateX(-50%)',
                 backgroundColor: 'white',
@@ -315,7 +315,7 @@ export default function MainSection({
             
             position: 'relative',
             padding: 4,
-            margin: 2,
+            margin: { xs: 1, sm: 2, md: 3 },
             
             // Responsive clipPath
             [theme.breakpoints.up('xs')]: {
