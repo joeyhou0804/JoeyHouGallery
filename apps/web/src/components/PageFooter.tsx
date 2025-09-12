@@ -105,7 +105,7 @@ export default function PageFooter() {
           sx={{
             height: '100%',
             display: 'flex',
-            alignItems: 'flex-end',
+            alignItems: { xs: 'flex-end', sm: 'flex-start', md: 'flex-start', lg: 'flex-end' },
             justifyContent: 'space-between',
             px: 4,
             pt: 6,
@@ -144,14 +144,43 @@ export default function PageFooter() {
 
           {/* Navigation buttons on the right */}
           <Box sx={{ 
-            display: 'flex',
+            display: { xs: 'flex', sm: 'grid', md: 'grid', lg: 'grid' },
+            flexDirection: { xs: 'column' },
             gap: 2,
             alignItems: 'center',
-            flexWrap: 'wrap',
-            justifyContent: 'flex-end'
+            justifyContent: 'flex-end',
+            // lg: 1 row with all 8 buttons
+            gridTemplateColumns: { 
+              lg: 'repeat(8, 1fr)',
+              // md: 2 rows with 4 buttons each
+              md: 'repeat(4, 1fr)',
+              // sm: 3 columns for 3-3-2 pattern
+              sm: 'repeat(3, 1fr)'
+            },
+            gridTemplateRows: {
+              lg: '1fr',
+              md: 'repeat(2, 1fr)',
+              sm: 'repeat(3, 1fr)'
+            }
           }}>
             {/* Language switching button - first */}
-            <Box onClick={handleLanguageSwitch} sx={{ cursor: 'pointer' }}>
+            <Box 
+              onClick={handleLanguageSwitch} 
+              sx={{ 
+                cursor: 'pointer',
+                // Grid positioning for different layouts
+                gridColumn: { 
+                  lg: '1', 
+                  md: '1', 
+                  sm: '1' 
+                },
+                gridRow: { 
+                  lg: '1', 
+                  md: '1', 
+                  sm: '1' 
+                }
+              }}
+            >
               <Image
                 src={language === 'zh-CN' ? '/buttons/button_cn_8.png' : '/buttons/button_en_8.png'}
                 alt={language === 'zh-CN' ? '切换到英文' : 'Switch to Chinese'}
@@ -175,34 +204,85 @@ export default function PageFooter() {
             </Box>
 
             {/* All section buttons */}
-            {sections.map((s) => {
+            {sections.map((s, index) => {
               const buttonImage = language === 'zh-CN'
                 ? `/buttons/button_cn_${s.buttonIndex}.png`
                 : `/buttons/button_en_${s.buttonIndex}.png`;
               
+              // Calculate grid positions (language button is index 0, so section buttons start at index 1)
+              const buttonPosition = index + 2; // +2 because language button is position 1
+              
+              // Grid positioning for different layouts
+              const getGridColumn = () => {
+                if (buttonPosition <= 8) { // lg: all in one row
+                  return { lg: buttonPosition.toString() };
+                }
+                return { lg: '1' }; // fallback
+              };
+              
+              const getGridRow = () => {
+                // lg: all in row 1
+                const lg = '1';
+                // md: 2 rows with 4 buttons each (positions 1-4 in row 1, 5-8 in row 2)
+                const md = buttonPosition <= 4 ? '1' : '2';
+                // sm: 3 rows with 3-3-2 pattern (1-3 in row 1, 4-6 in row 2, 7-8 in row 3)
+                const sm = buttonPosition <= 3 ? '1' : buttonPosition <= 6 ? '2' : '3';
+                
+                return { lg, md, sm };
+              };
+              
+              const getGridColumnForMdSm = () => {
+                // md: positions 1-4 map to columns 1-4, positions 5-8 map to columns 1-4
+                const md = buttonPosition <= 4 ? buttonPosition.toString() : (buttonPosition - 4).toString();
+                // sm: positions 1-3 map to columns 1-3, positions 4-6 map to columns 1-3, positions 7-8 map to columns 1-2
+                let sm;
+                if (buttonPosition <= 3) {
+                  sm = buttonPosition.toString();
+                } else if (buttonPosition <= 6) {
+                  sm = (buttonPosition - 3).toString();
+                } else {
+                  sm = (buttonPosition - 6).toString();
+                }
+                
+                return { md, sm };
+              };
+              
               return (
-                <Link key={s.href} href={s.href}>
-                  <Image
-                    src={buttonImage}
-                    alt={t(s.labelKey)}
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    style={{
-                      width: 'auto',
-                      height: '100px',
-                      maxWidth: '300px',
-                      cursor: 'pointer',
-                      transition: 'transform 0.2s ease, opacity 0.2s ease',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'scale(1.05)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'scale(1)';
-                    }}
-                  />
-                </Link>
+                <Box
+                  key={s.href}
+                  sx={{
+                    // Grid positioning
+                    gridColumn: {
+                      lg: buttonPosition.toString(),
+                      md: getGridColumnForMdSm().md,
+                      sm: getGridColumnForMdSm().sm
+                    },
+                    gridRow: getGridRow()
+                  }}
+                >
+                  <Link href={s.href}>
+                    <Image
+                      src={buttonImage}
+                      alt={t(s.labelKey)}
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      style={{
+                        width: 'auto',
+                        height: '100px',
+                        maxWidth: '300px',
+                        cursor: 'pointer',
+                        transition: 'transform 0.2s ease, opacity 0.2s ease',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.05)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                      }}
+                    />
+                  </Link>
+                </Box>
               );
             })}
           </Box>
