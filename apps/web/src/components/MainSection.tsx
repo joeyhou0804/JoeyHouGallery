@@ -53,7 +53,7 @@ export default function MainSection({
           backgroundPosition: 'center',
           position: 'relative',
           zIndex: 5, // Lower z-index than title section
-          paddingTop: `calc(${theme.spacing(4)} + ${extraTopPadding}px)`,
+          paddingTop: `calc(${theme.spacing(3)} + ${extraTopPadding}px)`, // Base padding for xs
           marginBottom: extendBackground ? '-120px' : 0,
 
           // Responsive zigzag configuration
@@ -108,7 +108,7 @@ export default function MainSection({
             )`,
           },
           [theme.breakpoints.up('sm')]: backgroundType === 'bottom-only' ? {
-            paddingBottom: `calc(${theme.spacing(6)} + ${depth.sm}px)`,
+            paddingBottom: `calc(${theme.spacing(5)} + ${depth.sm}px)`, // Medium bottom padding
             marginTop: `-${depth.sm}px`,
             clipPath: `polygon(
               0% 0%, 100% 0%, 
@@ -122,8 +122,8 @@ export default function MainSection({
               0% calc(100% - ${depth.sm}px)
             )`,
           } : extendBackground ? {
-            paddingTop: isFirst ? `calc(${theme.spacing(4)} + ${depth.sm + 40 + extraTopPadding}px)` : `calc(${theme.spacing(4)} + ${depth.sm + extraTopPadding}px)`,
-            paddingBottom: `calc(${theme.spacing(6)} + 120px)`,
+            paddingTop: isFirst ? `calc(${theme.spacing(5)} + ${depth.sm + 40 + extraTopPadding}px)` : `calc(${theme.spacing(4)} + ${depth.sm + extraTopPadding}px)`,
+            paddingBottom: `calc(${theme.spacing(7)} + 120px)`,
             marginTop: isFirst ? `-${depth.sm + 40}px` : `-${depth.sm}px`,
             clipPath: `polygon(
               0% 0%,
@@ -136,8 +136,8 @@ export default function MainSection({
               100% 0%, 100% 100%, 0% 100%, 0% 0%
             )`,
           } : {
-            paddingTop: isFirst ? `calc(${theme.spacing(4)} + ${depth.sm + 40 + extraTopPadding}px)` : `calc(${theme.spacing(4)} + ${depth.sm + extraTopPadding}px)`,
-            paddingBottom: `calc(${theme.spacing(6)} + ${depth.sm}px)`,
+            paddingTop: isFirst ? `calc(${theme.spacing(5)} + ${depth.sm + 40 + extraTopPadding}px)` : `calc(${theme.spacing(4)} + ${depth.sm + extraTopPadding}px)`,
+            paddingBottom: `calc(${theme.spacing(5)} + ${depth.sm}px)`,
             marginTop: isFirst ? `-${depth.sm + 40}px` : `-${depth.sm}px`,
             clipPath: `polygon(
               0% 0%,
@@ -172,8 +172,8 @@ export default function MainSection({
               0% calc(100% - ${depth.md}px)
             )`,
           } : extendBackground ? {
-            paddingTop: isFirst ? `calc(${theme.spacing(4)} + ${depth.md + 40 + extraTopPadding}px)` : `calc(${theme.spacing(4)} + ${depth.md + extraTopPadding}px)`,
-            paddingBottom: `calc(${theme.spacing(6)} + 120px)`,
+            paddingTop: isFirst ? `calc(${theme.spacing(6)} + ${depth.md + 40 + extraTopPadding}px)` : `calc(${theme.spacing(5)} + ${depth.md + extraTopPadding}px)`,
+            paddingBottom: `calc(${theme.spacing(8)} + 120px)`,
             marginTop: isFirst ? `-${depth.md + 40}px` : `-${depth.md}px`,
             clipPath: `polygon(
               0% 0%,
@@ -186,7 +186,7 @@ export default function MainSection({
               100% 0%, 100% 100%, 0% 100%, 0% 0%
             )`,
           } : {
-            paddingTop: isFirst ? `calc(${theme.spacing(4)} + ${depth.md + 40 + extraTopPadding}px)` : `calc(${theme.spacing(4)} + ${depth.md + extraTopPadding}px)`,
+            paddingTop: isFirst ? `calc(${theme.spacing(6)} + ${depth.md + 40 + extraTopPadding}px)` : `calc(${theme.spacing(5)} + ${depth.md + extraTopPadding}px)`,
             paddingBottom: `calc(${theme.spacing(6)} + ${depth.md}px)`,
             marginTop: isFirst ? `-${depth.md + 40}px` : `-${depth.md}px`,
             clipPath: `polygon(
@@ -210,8 +210,8 @@ export default function MainSection({
         };
       }}
     >
-      <Section>
-        <Stack spacing={3}>
+      <Section sx={{ py: { xs: 3, sm: 4, md: 6 } }}>
+        <Stack spacing={{ xs: 2, sm: 2.5, md: 3 }}>
           {/* Rectangle with zigzag borders for the title */}
           <Box sx={{ position: 'relative' }}>
             {/* Capsule with date at the top */}

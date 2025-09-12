@@ -53,7 +53,11 @@ export default function Subsection({
           sm: 8,   // medium depth on small screens
           md: 10,  // original depth on medium+ screens
         };
-        const steps = 120;
+        const steps = {
+          xs: 40,   // 20 teeth on mobile
+          sm: 80,   // 40 teeth on small screens  
+          md: 120,  // 60 teeth on desktop (original)
+        };
 
         return {
           backgroundImage: `url(${backgroundImage})`,
@@ -77,8 +81,8 @@ export default function Subsection({
             clipPath: `polygon(
               0% 0%, 100% 0%, 
               100% calc(100% - ${depth.xs}px),
-              ${Array.from({ length: steps + 1 }, (_, i) => {
-                const x = ((steps - i) / steps) * 100;
+              ${Array.from({ length: steps.xs + 1 }, (_, i) => {
+                const x = ((steps.xs - i) / steps.xs) * 100;
                 const isPeak = i % 2 === 0;
                 const y = isPeak ? '100%' : `calc(100% - ${depth.xs}px)`;
                 return `${x.toFixed(2)}% ${y}`;
@@ -96,8 +100,8 @@ export default function Subsection({
             clipPath: `polygon(
               0% 0%, 100% 0%, 
               100% calc(100% - ${depth.sm}px),
-              ${Array.from({ length: steps + 1 }, (_, i) => {
-                const x = ((steps - i) / steps) * 100;
+              ${Array.from({ length: steps.sm + 1 }, (_, i) => {
+                const x = ((steps.sm - i) / steps.sm) * 100;
                 const isPeak = i % 2 === 0;
                 const y = isPeak ? '100%' : `calc(100% - ${depth.sm}px)`;
                 return `${x.toFixed(2)}% ${y}`;
@@ -115,8 +119,8 @@ export default function Subsection({
             clipPath: `polygon(
               0% 0%, 100% 0%, 
               100% calc(100% - ${depth.md}px),
-              ${Array.from({ length: steps + 1 }, (_, i) => {
-                const x = ((steps - i) / steps) * 100;
+              ${Array.from({ length: steps.md + 1 }, (_, i) => {
+                const x = ((steps.md - i) / steps.md) * 100;
                 const isPeak = i % 2 === 0;
                 const y = isPeak ? '100%' : `calc(100% - ${depth.md}px)`;
                 return `${x.toFixed(2)}% ${y}`;
