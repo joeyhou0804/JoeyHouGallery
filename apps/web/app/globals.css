@@ -63,3 +63,8 @@
 .mario-font-chinese {
   font-family: 'MarioChinese', 'Mario', sans-serif !important;
 }
+
+/* Prevent horizontal scroll */
+html, body {
+  overflow-x: hidden;
+}
