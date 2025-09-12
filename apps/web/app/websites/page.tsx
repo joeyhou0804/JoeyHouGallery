@@ -17,11 +17,11 @@ export const metadata = { title: 'Websites · Joey Hou Gallery' };
 export default function WebsitesPage() {
   const data = content as PageContent;
   const allIntroSections = data.sections.filter(s => s.type === 'intro') as Extract<SectionType, { type: 'intro' }>[];
-  const blackBoxIntroSection = allIntroSections[0];
-  const musicIntroSection = allIntroSections[1];
+  const blackBoxIntroSection = allIntroSections[0]!;
+  const musicIntroSection = allIntroSections[1]!;
   const allGallerySections = data.sections.filter(s => s.type === 'gallery') as Extract<SectionType, { type: 'gallery' }>[];
-  const blackBoxGallerySection = allGallerySections[0];
-  const musicGallerySection = allGallerySections[1];
+  const blackBoxGallerySection = allGallerySections[0]!;
+  const musicGallerySection = allGallerySections[1]!;
   
   return (
     <PageHeader pageKey="websites">

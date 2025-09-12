@@ -99,7 +99,7 @@ function CarouselRow({
     const measure = () => {
       if (viewportRef.current) setViewportW(viewportRef.current.clientWidth);
       if (firstCycleRef.current) setCycleW(firstCycleRef.current.scrollWidth);
-      if (trackRef.current) {
+      if (trackRef.current && typeof window !== 'undefined') {
         const cs = getComputedStyle(trackRef.current);
         const g =
           parseFloat((cs as any).columnGap || (cs as any).gap || '0') || 0;
@@ -195,7 +195,7 @@ function CarouselRow({
           // ✅ the same gap BETWEEN cycles (the seam)
           gap: 2,
           // expose the pixel value to children so inner cycles use the same exact gap
-          '--g': getComputedStyle(document.documentElement).fontSize
+          '--g': typeof window !== 'undefined' && getComputedStyle(document.documentElement).fontSize
             ? // MUI spacing(2) ≈ 16px by default; use theme to compute precise px
               theme.spacing(2)
             : '16px',
