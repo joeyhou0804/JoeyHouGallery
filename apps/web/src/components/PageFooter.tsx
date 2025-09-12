@@ -210,7 +210,7 @@ export default function PageFooter() {
                 sizes="100vw"
                 style={{
                   width: 'auto',
-                  height: '100px',
+                  height: '110px',
                   maxWidth: '300px',
                   cursor: 'pointer',
                   transition: 'transform 0.2s ease, opacity 0.2s ease',
@@ -301,7 +301,7 @@ export default function PageFooter() {
                       sizes="100vw"
                       style={{
                         width: 'auto',
-                        height: '100px',
+                        height: '110px',
                         maxWidth: '300px',
                         cursor: 'pointer',
                         transition: 'transform 0.2s ease, opacity 0.2s ease',
