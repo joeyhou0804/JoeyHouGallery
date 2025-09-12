@@ -68,23 +68,41 @@ function SubsectionTitle({
 
       {/* Title background */}
       <Box
-        sx={{
-          backgroundImage: `
-            repeating-linear-gradient(
-              -45deg,
-              transparent,
-              transparent 8px,
-              rgba(255, 255, 255, 0.3) 8px,
-              rgba(255, 255, 255, 0.3) 16px
-            ),
-            ${backgroundGradient}
-          `,
-          backgroundRepeat: 'repeat, no-repeat',
-          backgroundSize: 'auto, 100% 100%',
-          backgroundPosition: 'left top, left top',
-          padding: 2,
-          margin: '32px 32px 0 32px',
-          clipPath: 'polygon(0% 0%, 100% 0%, calc(100% - 30px) 25%, 100% 50%, calc(100% - 30px) 75%, 100% 100%, 0% 100%)',
+        sx={(theme) => {
+          const depth = {
+            xs: 12,   // smaller depth on mobile
+            sm: 14,   // medium depth on small screens
+            md: 16,  // original depth on medium+ screens
+          };
+
+          return {
+            backgroundImage: `
+              repeating-linear-gradient(
+                -45deg,
+                transparent,
+                transparent 8px,
+                rgba(255, 255, 255, 0.3) 8px,
+                rgba(255, 255, 255, 0.3) 16px
+              ),
+              ${backgroundGradient}
+            `,
+            backgroundRepeat: 'repeat, no-repeat',
+            backgroundSize: 'auto, 100% 100%',
+            backgroundPosition: 'left top, left top',
+            padding: year ? '32px 16px 16px 16px' : 2, // Add extra padding when capsule is present
+            margin: '32px 32px 0 32px',
+
+            // Responsive right-side zigzag pattern
+            [theme.breakpoints.up('xs')]: {
+              clipPath: `polygon(0% 0%, 100% 0%, calc(100% - ${depth.xs}px) 25%, 100% 50%, calc(100% - ${depth.xs}px) 75%, 100% 100%, 0% 100%)`,
+            },
+            [theme.breakpoints.up('sm')]: {
+              clipPath: `polygon(0% 0%, 100% 0%, calc(100% - ${depth.sm}px) 25%, 100% 50%, calc(100% - ${depth.sm}px) 75%, 100% 100%, 0% 100%)`,
+            },
+            [theme.breakpoints.up('md')]: {
+              clipPath: `polygon(0% 0%, 100% 0%, calc(100% - ${depth.md}px) 25%, 100% 50%, calc(100% - ${depth.md}px) 75%, 100% 100%, 0% 100%)`,
+            },
+          };
         }}
       >
         <Typography 
