@@ -13,6 +13,7 @@ interface VideoCardProps {
   body?: string | string[];
   colorIndex?: number;
   customGradient?: string;
+  sx?: any;
 }
 
 export default function VideoCard({
@@ -21,7 +22,8 @@ export default function VideoCard({
   description,
   body,
   colorIndex = 0,
-  customGradient
+  customGradient,
+  sx
 }: VideoCardProps) {
   const { language } = useTranslation();
 
@@ -57,6 +59,7 @@ export default function VideoCard({
         overflow: 'hidden',
         mb: 4,
         position: 'relative',
+        ...sx,
       }}
     >
       <Box sx={{ position: 'relative' }}>

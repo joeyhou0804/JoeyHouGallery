@@ -3,10 +3,11 @@
   "sections": [
     {
       "type": "intro",
-      "title": "Video Essay & Introduction",
+      "title": "Video Essay",
+      "time": "2021.12",
       "body": [
-        "Welcome to my video section!",
-        "This is a video essay for master degree programs. It is also a nice 2-minute introduction video!"
+        "I made this video essay for master degree program applications.",
+        "It is also a nice 2-minute introduction video!"
       ]
     },
     {
@@ -22,18 +23,31 @@
       ]
     },
     {
+      "type": "intro",
+      "title": "Orientation Videos",
+      "time": "2020-2021",
+      "body": [
+        "I was in a Joint Bachelors Degree Program (JBDP) during 2019-2022.",
+        "It's a program between Columbia University and City University of Hong Kong.",
+        "For every year the program has a pre-departure orientation session for admitted students.",
+        "I recorded and finished two videos for two of the sessions."
+      ]
+    },
+    {
       "type": "videos",
       "title": "Columbia & CityU HK JBDP Pre-departure Orientation Session",
       "items": [
         {
-          "title": "Joey's Question & Answer [Episode 2] (2021)",
+          "title": "2021 - Episode 2",
           "youtubeId": "8d3AIE3-kQA",
-          "description": "Orientation Session 2021"
+          "description": "Joey's Question & Answer",
+          "body": "This is for the orientation session in 2021."
         },
         {
-          "title": "Joey's Question & Answer [Episode 1] (2020)",
+          "title": "2020 - Episode 1",
           "youtubeId": "DNJFN6HK7MQ",
-          "description": "Orientation Session 2020"
+          "description": "Joey's Question & Answer",
+          "body": "This is for the orientation session in 2020."
         }
       ]
     }
