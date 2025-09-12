@@ -340,9 +340,9 @@ export const translations = {
       videos: {
         title: '视频',
         // TODO: Add Chinese translations
-        videoEssayTitle: '视频短文',
+        videoEssayTitle: '简介视频',
         videoEssayDescription: [
-          '由于硕士学位项目申请需要，我做了这个视频短文。',
+          '由于硕士学位项目申请需要，我做了这个简介视频。',
           '也可以算做我的2分钟个人介绍呢！'
         ],
         orientationTitle: '迎新视频',
@@ -352,8 +352,8 @@ export const translations = {
           '每年春天，这个项目都为录取学生举办行前说明会。',
           '我给其中的两次说明会录制并剪辑了这两个视频。'
         ],
-        introVideoTitle: '个人介绍视频',
-        videoEssayLabel: '视频短文',
+        introVideoTitle: '介绍视频',
+        videoEssayLabel: '简介视频',
         videoEssayBody: '这是我在2021年为硕士项目申请制作的2分钟介绍视频。',
         episode2Title: '2021年 - 第二集',
         episode1Title: '2020年 - 第一集',

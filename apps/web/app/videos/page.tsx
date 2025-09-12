@@ -71,19 +71,19 @@ export default function VideosPage() {
             key={i}
             section={section as Extract<typeof section, { type: 'intro' }>}
             time={section.time}
-            backgroundType={section.title === 'Orientation Videos' ? 'full' : 'bottom-only'}
+            backgroundType={section.title === t('pages.videos.orientationTitle') ? 'full' : 'bottom-only'}
           />
         ) : (
           <Section key={i}>
-            {section.title === 'Video Essay' || section.title === 'Columbia & CityU HK JBDP Pre-departure Orientation Session' ? (
+            {section.title === t('pages.videos.videoEssayTitle') || section.title === 'Columbia & CityU HK JBDP Pre-departure Orientation Session' ? (
               // Use VideoCard for Video Essay and Orientation sections
               section.items.map((v, idx) => {
                 // Add extra spacing for specific videos
                 let sx = {};
-                if (section.title === 'Video Essay') {
+                if (section.title === t('pages.videos.videoEssayTitle')) {
                   // Video Essay: add top and bottom spaces
                   sx = { mt: 4, mb: 10 };
-                } else if (v.title === '2021 - Episode 2') {
+                } else if (v.title === t('pages.videos.episode2Title')) {
                   // 2021 Episode 2: add top spaces
                   sx = { mt: 4 };
                 }
