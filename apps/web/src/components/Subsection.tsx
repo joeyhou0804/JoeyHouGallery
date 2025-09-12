@@ -19,7 +19,8 @@ export default function Subsection({
   carouselSpacing = 6,
   zIndex = 1,
   customColor,
-  extendBackground = false
+  extendBackground = false,
+  hideImages = false
 }: { 
   section: Extract<SectionType, { type: 'gallery' }> | any, 
   index: number,
@@ -32,7 +33,8 @@ export default function Subsection({
   carouselSpacing?: number,
   zIndex?: number,
   customColor?: 'red' | 'blue' | 'green',
-  extendBackground?: boolean
+  extendBackground?: boolean,
+  hideImages?: boolean
 }) {
   // Convert customColor to gradient
   const colorGradients = {
@@ -132,6 +134,7 @@ export default function Subsection({
           year={year}
           title={title}
           customGradient={finalGradient}
+          hideImages={hideImages}
         >
           {children}
         </SubsectionBox>

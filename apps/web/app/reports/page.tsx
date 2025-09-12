@@ -43,6 +43,7 @@ export default function ReportsPage() {
           zIndex={4 - i} // Decreasing z-index for proper layering
           customColor={customColors[i]}
           extendBackground={i === 3} // Apply extendBackground to the last subsection (Ordinary Differential Equations)
+          hideImages={true} // Hide images in SubsectionBox on reports page, show them in carousels instead
         />
       ))}
 
