@@ -1,5 +1,6 @@
 import Section from '@/components/Section';
 import PageHeader from '@/components/PageHeader';
+import VideoCard from '@/components/VideoCard';
 import TextBlock from '@/components/TextBlock';
 import YouTubeEmbed from '@/components/YouTubeEmbed';
 import type { VideosPageContent } from '@/content/types';
@@ -36,7 +37,19 @@ export default function VideosPage() {
                 ) : null}
               </CardContent>
             </Card>
+          ) : section.title === 'Video Essay' ? (
+            // Use VideoCard for Video Essay section
+            section.items.map((v, idx) => (
+              <VideoCard
+                key={v.youtubeId}
+                title={v.title}
+                youtubeId={v.youtubeId}
+                description={v.description}
+                colorIndex={idx}
+              />
+            ))
           ) : (
+            // Keep original layout for other video sections
             <>
               <TextBlock centered>
                 <Typography variant="h5">
