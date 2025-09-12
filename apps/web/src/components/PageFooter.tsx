@@ -159,7 +159,6 @@ export default function PageFooter() {
           {/* Navigation buttons */}
           <Box sx={{ 
             display: { xs: 'grid', sm: 'grid', md: 'grid', lg: 'grid' },
-            gap: 2,
             alignItems: 'center',
             justifyContent: { xs: 'center', sm: 'flex-end', md: 'flex-end', lg: 'flex-end' },
             // xs: 2 columns, 4 rows for 8 buttons
