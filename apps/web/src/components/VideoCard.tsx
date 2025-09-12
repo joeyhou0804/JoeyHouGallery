@@ -38,9 +38,10 @@ export default function VideoCard({
   })();
 
   // Layout constants
-  const CARD_PAD = 24;        // equals p:3
-  const STRIPE_HEIGHT = 80;   // height of the stripe
-  const STRIPE_TOP = 48;      // move stripe down (video top is 24, so this is lower)
+  const CARD_PAD = 24;          // top/bottom/left padding around video (p:3)
+  const STRIPE_HEIGHT = 50;     // stripe height
+  const STRIPE_TOP = 48;        // stripe sits below the video top (video top is 24)
+  const COL_GAP = 12;           // visual gap between video and right text (video pr & right pl)
   const RIGHT_SPACER = Math.max(0, STRIPE_TOP + STRIPE_HEIGHT - CARD_PAD);
 
   return (
@@ -70,18 +71,21 @@ export default function VideoCard({
             pointerEvents: 'none',
           }}
         >
-          {/* Reserve the left video area (60% + padding) */}
-          <Box sx={{ flex: `0 0 calc(60% + ${CARD_PAD}px)` }} />
-          {/* Title only on the right side */}
-          <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+          {/* Reserve: left column width (60%) + the right column's inner left padding (COL_GAP)
+              -> ensures the stripe title's left edge aligns with the colored text */}
+          <Box sx={{ flex: `0 0 calc(60% + ${COL_GAP}px)` }} />
+
+          {/* Title area: no extra padding so it lines up with right column text */}
+          <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-start' }}>
             <Typography
               sx={{
                 color: 'white',
                 fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
-                fontSize: { xs: '1.2rem', sm: '1.4rem', md: '1.6rem' },
+                fontSize: { xs: '1.1rem', sm: '1.25rem', md: '1.35rem' }, // keep stripe title smaller
                 fontWeight: 'bold',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
                 lineHeight: 1.2,
+                textAlign: 'left',
               }}
             >
               {title}
@@ -91,8 +95,17 @@ export default function VideoCard({
 
         {/* Main content sits above the stripe */}
         <Box sx={{ display: 'flex', minHeight: 300, position: 'relative', zIndex: 2 }}>
-          {/* Video: equal padding on all sides */}
-          <Box sx={{ width: '60%', p: 3, display: 'flex', alignItems: 'flex-start' }}>
+          {/* Video: equal top/left/bottom; smaller right padding to create the gap */}
+          <Box
+            sx={{
+              width: '60%',
+              pt: 3, pl: 3, pb: 3,
+              pr: COL_GAP / 8 * 1, // keep as 1.5 if you prefer; here just to show it's tied to COL_GAP
+              pr: 1.5,             // 12px
+              display: 'flex',
+              alignItems: 'flex-start',
+            }}
+          >
             <Box
               sx={{
                 width: '100%',
@@ -106,8 +119,17 @@ export default function VideoCard({
             </Box>
           </Box>
 
-          {/* Right text column */}
-          <Box sx={{ width: '40%', p: 3, display: 'flex', flexDirection: 'column' }}>
+          {/* Right text column: left padding = COL_GAP so it matches the stripe title start */}
+          <Box
+            sx={{
+              width: '40%',
+              pt: 3, pr: 3, pb: 3,
+              pl: 1.5, // 12px (== COL_GAP)
+              display: 'flex',
+              flexDirection: 'column',
+              textAlign: 'left',
+            }}
+          >
             {/* Spacer ensures text starts below stripe */}
             <Box sx={{ height: RIGHT_SPACER }} />
 
@@ -116,9 +138,12 @@ export default function VideoCard({
                 sx={{
                   color: rightColor,
                   fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
-                  fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
-                  fontWeight: 'bold',
-                  mb: 2,
+                  // Larger colored text
+                  fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' },
+                  fontWeight: 800,
+                  mb: 1.25,
+                  lineHeight: 1.2,
+                  textAlign: 'left',
                 }}
               >
                 {description}
@@ -132,9 +157,10 @@ export default function VideoCard({
                     key={i}
                     sx={{
                       color: '#432F2F',
-                      fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
+                      fontSize: { xs: '1.05rem', sm: '1.15rem', md: '1.25rem' },
                       lineHeight: 1.6,
                       fontWeight: 500,
+                      textAlign: 'left',
                     }}
                   >
                     {p}
@@ -143,9 +169,10 @@ export default function VideoCard({
                   <Typography
                     sx={{
                       color: '#432F2F',
-                      fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
+                      fontSize: { xs: '1.05rem', sm: '1.15rem', md: '1.25rem' },
                       lineHeight: 1.6,
                       fontWeight: 500,
+                      textAlign: 'left',
                     }}
                   >
                     {body}

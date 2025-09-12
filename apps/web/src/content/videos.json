@@ -14,9 +14,10 @@
       "title": "Video Essay",
       "items": [
         {
-          "title": "Video Essay - Jiangtian (Joey) Hou 侯江天",
+          "title": "Introduction video",
           "youtubeId": "Xz08rpOaU0M",
-          "description": "A two minutes long introduction video"
+          "description": "Video Essay",
+          "body": "This is a 2-minute introduction video I made in 2021 for master program applications."
         }
       ]
     },
