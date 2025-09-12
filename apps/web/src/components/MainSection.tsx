@@ -214,7 +214,7 @@ export default function MainSection({
             <Box
               sx={{
                 position: 'absolute',
-                top: -6,
+                top: { xs: -2, sm: -4, md: -6 },
                 left: '50%',
                 transform: 'translateX(-50%)',
                 backgroundColor: 'white',
@@ -227,21 +227,29 @@ export default function MainSection({
                 zIndex: 1,
               }}
             >
-              <Typography sx={{ color: '#BB8F43', fontSize: '0.9rem', pt: '2px' }}>★</Typography>
-              <Typography sx={{ color: '#BB8F43', fontWeight: 'bold', fontSize: '1.2rem', pt: '2px' }}>
+              <Typography sx={{ color: '#BB8F43', fontSize: { xs: '0.7rem', sm: '0.8rem', md: '0.9rem' }, pt: '2px' }}>★</Typography>
+              <Typography sx={{ color: '#BB8F43', fontWeight: 'bold', fontSize: { xs: '0.9rem', sm: '1.1rem', md: '1.2rem' }, pt: '2px' }}>
                 {time || '2022.04'}
               </Typography>
-              <Typography sx={{ color: '#BB8F43', fontSize: '0.9rem', pt: '2px' }}>★</Typography>
+              <Typography sx={{ color: '#BB8F43', fontSize: { xs: '0.7rem', sm: '0.8rem', md: '0.9rem' }, pt: '2px' }}>★</Typography>
             </Box>
         
         <Box
         sx={(theme) => {
-          const depth = 30; // increased depth for taller zigzags
+          const depth = {
+            xs: 20,  // smaller teeth on mobile
+            sm: 25,  // medium teeth on small screens
+            md: 30,  // original depth on desktop
+          };
           const hasMultipleLines = title.includes('&');
-          const zigzagCount = hasMultipleLines ? 3 : 2; // 3 zigzags for multi-line, 2 for single line
+          // Force 3 zigzags on xs screens, otherwise use original logic
+          const getZigzagCount = (breakpoint: string) => {
+            if (breakpoint === 'xs') return 3;
+            return hasMultipleLines ? 3 : 2;
+          };
 
           // Create zigzag polygon with dynamic zigzag count (90-degree angles)
-          const zigzagPolygon = (() => {
+          const createZigzagPolygon = (zigzagCount: number, depthPx: number) => {
             const pts: string[] = [];
             // Top edge (left to right)
             pts.push('0% 0%', '100% 0%');
@@ -250,16 +258,16 @@ export default function MainSection({
             pts.push('100% 0%');        // start at top-right
             if (zigzagCount === 2) {
               // 2 zigzags: 25%, 50%, 75%
-              pts.push(`calc(100% - ${depth}px) 25%`);  // in to first zigzag
+              pts.push(`calc(100% - ${depthPx}px) 25%`);  // in to first zigzag
               pts.push('100% 50%');       // out to middle peak
-              pts.push(`calc(100% - ${depth}px) 75%`);  // in to second zigzag
+              pts.push(`calc(100% - ${depthPx}px) 75%`);  // in to second zigzag
             } else if (zigzagCount === 3) {
               // 3 zigzags evenly distributed: 16.67%, 33.33%, 50%, 66.67%, 83.33%
-              pts.push(`calc(100% - ${depth}px) 16.67%`);  // in to first zigzag
+              pts.push(`calc(100% - ${depthPx}px) 16.67%`);  // in to first zigzag
               pts.push('100% 33.33%');       // out to first peak
-              pts.push(`calc(100% - ${depth}px) 50%`);  // in to second zigzag
+              pts.push(`calc(100% - ${depthPx}px) 50%`);  // in to second zigzag
               pts.push('100% 66.67%');       // out to second peak
-              pts.push(`calc(100% - ${depth}px) 83.33%`);  // in to third zigzag
+              pts.push(`calc(100% - ${depthPx}px) 83.33%`);  // in to third zigzag
             }
             pts.push('100% 100%');      // end at bottom-right
             
@@ -270,21 +278,21 @@ export default function MainSection({
             pts.push('0% 100%');        // start at bottom-left
             if (zigzagCount === 2) {
               // 2 zigzags: 75%, 50%, 25%
-              pts.push(`${depth}px 75%`); // in to first zigzag
+              pts.push(`${depthPx}px 75%`); // in to first zigzag
               pts.push('0% 50%');         // out to middle peak
-              pts.push(`${depth}px 25%`); // in to second zigzag
+              pts.push(`${depthPx}px 25%`); // in to second zigzag
             } else if (zigzagCount === 3) {
               // 3 zigzags evenly distributed: 83.33%, 66.67%, 50%, 33.33%, 16.67%
-              pts.push(`${depth}px 83.33%`); // in to third zigzag
+              pts.push(`${depthPx}px 83.33%`); // in to third zigzag
               pts.push('0% 66.67%');         // out to second peak
-              pts.push(`${depth}px 50%`); // in to second zigzag
+              pts.push(`${depthPx}px 50%`); // in to second zigzag
               pts.push('0% 33.33%');         // out to first peak
-              pts.push(`${depth}px 16.67%`); // in to first zigzag
+              pts.push(`${depthPx}px 16.67%`); // in to first zigzag
             }
             pts.push('0% 0%');          // end at top-left
             
             return `polygon(${pts.join(', ')})`;
-          })();
+          };
 
           return {
             // Yellow gradient background with stripes
@@ -303,8 +311,18 @@ export default function MainSection({
             
             position: 'relative',
             padding: 4,
-            clipPath: zigzagPolygon,
             margin: 2,
+            
+            // Responsive clipPath
+            [theme.breakpoints.up('xs')]: {
+              clipPath: createZigzagPolygon(getZigzagCount('xs'), depth.xs),
+            },
+            [theme.breakpoints.up('sm')]: {
+              clipPath: createZigzagPolygon(getZigzagCount('sm'), depth.sm),
+            },
+            [theme.breakpoints.up('md')]: {
+              clipPath: createZigzagPolygon(getZigzagCount('md'), depth.md),
+            },
           };
         }}
       >
@@ -315,7 +333,7 @@ export default function MainSection({
             color: 'white',
             fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
             textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3), 0px 0px 1px rgba(0, 0, 0, 0.5)',
-            fontSize: { xs: '2.5rem', sm: '3rem', md: '3.5rem' }
+            fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem', lg: '3.5rem' }
           }}
         >
           {title.includes('&') ? (
