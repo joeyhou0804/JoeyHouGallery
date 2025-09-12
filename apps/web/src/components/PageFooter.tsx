@@ -104,16 +104,24 @@ export default function PageFooter() {
           maxWidth="xl"
           sx={{
             height: '100%',
-            display: 'flex',
-            alignItems: { xs: 'flex-end', sm: 'flex-start', md: 'flex-start', lg: 'flex-end' },
-            justifyContent: 'space-between',
+            display: { xs: 'flex', sm: 'flex', md: 'flex', lg: 'flex' },
+            flexDirection: { xs: 'column', sm: 'row', md: 'row', lg: 'row' },
+            alignItems: { xs: 'center', sm: 'flex-start', md: 'flex-start', lg: 'flex-end' },
+            justifyContent: { xs: 'center', sm: 'space-between', md: 'space-between', lg: 'space-between' },
             px: 4,
             pt: 6,
             pb: 4,
           }}
         >
-          {/* Logo on the left */}
-          <Box sx={{ position: 'relative', height: '80px', display: 'flex', alignItems: 'flex-end', zIndex: 2 }}>
+          {/* Logo */}
+          <Box sx={{ 
+            position: 'relative', 
+            height: { xs: 'auto', sm: '80px' }, 
+            display: 'flex', 
+            alignItems: 'flex-end', 
+            zIndex: 2,
+            mb: { xs: 2, sm: 0 }
+          }}>
             <Link href="/" style={{ textDecoration: 'none' }}>
               <Box
                 sx={{
@@ -142,15 +150,15 @@ export default function PageFooter() {
             </Link>
           </Box>
 
-          {/* Navigation buttons on the right */}
+          {/* Navigation buttons */}
           <Box sx={{ 
-            display: { xs: 'flex', sm: 'grid', md: 'grid', lg: 'grid' },
-            flexDirection: { xs: 'column' },
+            display: { xs: 'grid', sm: 'grid', md: 'grid', lg: 'grid' },
             gap: 2,
             alignItems: 'center',
-            justifyContent: 'flex-end',
-            // lg: 1 row with all 8 buttons
+            justifyContent: { xs: 'center', sm: 'flex-end', md: 'flex-end', lg: 'flex-end' },
+            // xs: 2 columns, 4 rows for 8 buttons
             gridTemplateColumns: { 
+              xs: 'repeat(2, 1fr)',
               lg: 'repeat(8, 1fr)',
               // md: 2 rows with 4 buttons each
               md: 'repeat(4, 1fr)',
@@ -158,6 +166,7 @@ export default function PageFooter() {
               sm: 'repeat(3, 1fr)'
             },
             gridTemplateRows: {
+              xs: 'repeat(4, 1fr)',
               lg: '1fr',
               md: 'repeat(2, 1fr)',
               sm: 'repeat(3, 1fr)'
@@ -170,11 +179,13 @@ export default function PageFooter() {
                 cursor: 'pointer',
                 // Grid positioning for different layouts
                 gridColumn: { 
+                  xs: '1',
                   lg: '1', 
                   md: '1', 
                   sm: '1' 
                 },
                 gridRow: { 
+                  xs: '1',
                   lg: '1', 
                   md: '1', 
                   sm: '1' 
@@ -221,6 +232,9 @@ export default function PageFooter() {
               };
               
               const getGridRow = () => {
+                // xs: 4 rows with 2 buttons each
+                // buttonPosition: 2->row1, 3->row2, 4->row2, 5->row3, 6->row3, 7->row4, 8->row4
+                const xs = Math.ceil(buttonPosition / 2).toString();
                 // lg: all in row 1
                 const lg = '1';
                 // md: 2 rows with 4 buttons each (positions 1-4 in row 1, 5-8 in row 2)
@@ -228,10 +242,13 @@ export default function PageFooter() {
                 // sm: 3 rows with 3-3-2 pattern (1-3 in row 1, 4-6 in row 2, 7-8 in row 3)
                 const sm = buttonPosition <= 3 ? '1' : buttonPosition <= 6 ? '2' : '3';
                 
-                return { lg, md, sm };
+                return { xs, lg, md, sm };
               };
               
-              const getGridColumnForMdSm = () => {
+              const getGridColumnForAllScreens = () => {
+                // xs: 2 columns, alternating within each row
+                // buttonPosition: 2->col2, 3->col1, 4->col2, 5->col1, 6->col2, 7->col1, 8->col2
+                const xs = buttonPosition % 2 === 0 ? '2' : '1';
                 // md: positions 1-4 map to columns 1-4, positions 5-8 map to columns 1-4
                 const md = buttonPosition <= 4 ? buttonPosition.toString() : (buttonPosition - 4).toString();
                 // sm: positions 1-3 map to columns 1-3, positions 4-6 map to columns 1-3, positions 7-8 map to columns 1-2
@@ -244,7 +261,7 @@ export default function PageFooter() {
                   sm = (buttonPosition - 6).toString();
                 }
                 
-                return { md, sm };
+                return { xs, md, sm };
               };
               
               return (
@@ -253,9 +270,10 @@ export default function PageFooter() {
                   sx={{
                     // Grid positioning
                     gridColumn: {
+                      xs: getGridColumnForAllScreens().xs,
                       lg: buttonPosition.toString(),
-                      md: getGridColumnForMdSm().md,
-                      sm: getGridColumnForMdSm().sm
+                      md: getGridColumnForAllScreens().md,
+                      sm: getGridColumnForAllScreens().sm
                     },
                     gridRow: getGridRow()
                   }}
