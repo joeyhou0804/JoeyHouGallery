@@ -34,8 +34,8 @@ export default function ApplicationsPage() {
       type: 'gallery' as const,
       title: t('pages.apps.highLevelOverviewTitle'),
       body: Array.isArray(t('pages.apps.highLevelOverviewDescription')) 
-        ? (t('pages.apps.highLevelOverviewDescription') as string[])[0]
-        : t('pages.apps.highLevelOverviewDescription'),
+        ? (t('pages.apps.highLevelOverviewDescription') as unknown as string[])[0]
+        : t('pages.apps.highLevelOverviewDescription') as string,
       images: [
         "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1663653460/joeyhougallery/applications/%E6%88%AA%E5%B1%8F2022-09-19_%E4%B8%8B%E5%8D%8810.54.33_upkbhu.png"
       ]
@@ -44,7 +44,7 @@ export default function ApplicationsPage() {
       type: 'gallery' as const,
       title: t('pages.apps.manipulationTitle'),
       body: Array.isArray(t('pages.apps.highLevelOverviewDescription')) 
-        ? (t('pages.apps.highLevelOverviewDescription') as string[])[1] || ''
+        ? (t('pages.apps.highLevelOverviewDescription') as unknown as string[])[1] || ''
         : '',
       images: [
         "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1663653461/joeyhougallery/applications/%E6%88%AA%E5%B1%8F2022-09-19_%E4%B8%8B%E5%8D%8810.55.00_lmwf4y.png",
