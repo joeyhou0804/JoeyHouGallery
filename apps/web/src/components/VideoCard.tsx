@@ -111,6 +111,20 @@ export default function VideoCard({
             {/* Spacer ensures text starts below stripe */}
             <Box sx={{ height: RIGHT_SPACER }} />
 
+            {description && (
+              <Typography
+                sx={{
+                  color: rightColor,
+                  fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
+                  fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
+                  fontWeight: 'bold',
+                  mb: 2,
+                }}
+              >
+                {description}
+              </Typography>
+            )}
+
             {body && (
               <Stack spacing={1}>
                 {Array.isArray(body) ? body.map((p, i) => (
