@@ -1,6 +1,7 @@
 import Section from '@/components/Section';
 import PageHeader from '@/components/PageHeader';
 import MainSection from '@/components/MainSection';
+import Carousel from '@/components/Carousel';
 import ImageGrid from '@/components/ImageGrid';
 import TextBlock from '@/components/TextBlock';
 import PageFooter from '@/components/PageFooter';
@@ -42,6 +43,8 @@ export default function WebsitesPage() {
                 ))}
               </CardContent>
             </Card>
+          ) : s.title === 'Screenshots — The Black Box Institute' ? (
+            <Carousel images={(s as any).images} />
           ) : (
             <>
               <TextBlock centered>
