@@ -3,6 +3,7 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
+import { useMediaQuery, useTheme } from '@mui/material';
 import YouTubeEmbed from './YouTubeEmbed';
 import { useTranslation } from '@/hooks/useTranslation';
 
@@ -26,6 +27,8 @@ export default function VideoCard({
   sx
 }: VideoCardProps) {
   const { language } = useTranslation();
+  const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down('sm')); // xs screens only
 
   const gradients = [
     'linear-gradient(to right, #75C5EB, #297BC8)',
@@ -62,7 +65,109 @@ export default function VideoCard({
         ...sx,
       }}
     >
-      <Box sx={{ position: 'relative' }}>
+      {isXs ? (
+        // Mobile layout: vertical stack
+        <Box sx={{ p: 3 }}>
+          <Stack spacing={3} alignItems="center">
+            {/* Video */}
+            <Box
+              sx={{
+                width: '100%',
+                maxWidth: '400px',
+                aspectRatio: '16/9',
+                borderRadius: 2,
+                overflow: 'hidden',
+                boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
+              }}
+            >
+              <YouTubeEmbed id={youtubeId} title={title} />
+            </Box>
+            
+            {/* Colored stripe with title */}
+            <Box
+              sx={{
+                width: 'calc(100% + 48px)', // Extend beyond the padding
+                marginLeft: '-24px',
+                marginRight: '-24px',
+                height: STRIPE_HEIGHT,
+                backgroundImage: backgroundGradient,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                px: 2,
+                mb: description ? 1 : 0, // Reduce bottom margin when description follows
+              }}
+            >
+              <Typography
+                sx={{
+                  color: 'white',
+                  fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
+                  fontSize: { xs: '1.1rem' },
+                  fontWeight: 'bold',
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
+                  lineHeight: 1.2,
+                  textAlign: 'center',
+                }}
+              >
+                {title}
+              </Typography>
+            </Box>
+            
+            {/* Colored description text */}
+            {description && (
+              <Typography
+                sx={{
+                  color: rightColor,
+                  fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
+                  fontSize: { xs: '1.75rem' },
+                  fontWeight: 800,
+                  lineHeight: 1.2,
+                  textAlign: 'center',
+                  width: '100%',
+                }}
+              >
+                {description}
+              </Typography>
+            )}
+            
+            {/* Body text */}
+            {body && (
+              <Box sx={{ width: '100%' }}>
+                <Stack spacing={1}>
+                  {Array.isArray(body) ? body.map((p, i) => (
+                    <Typography
+                      key={i}
+                      sx={{
+                        color: '#432F2F',
+                        fontSize: { xs: '1.05rem' },
+                        lineHeight: 1.6,
+                        fontWeight: 500,
+                        textAlign: 'center',
+                      }}
+                    >
+                      {p}
+                    </Typography>
+                  )) : (
+                    <Typography
+                      sx={{
+                        color: '#432F2F',
+                        fontSize: { xs: '1.05rem' },
+                        lineHeight: 1.6,
+                        fontWeight: 500,
+                        textAlign: 'center',
+                      }}
+                    >
+                      {body}
+                    </Typography>
+                  )}
+                </Stack>
+              </Box>
+            )}
+          </Stack>
+        </Box>
+      ) : (
+        // Desktop layout: original side-by-side
+        <Box sx={{ position: 'relative' }}>
         {/* Absolute colored stripe (below video top) */}
         <Box
           sx={{
@@ -188,7 +293,8 @@ export default function VideoCard({
             )}
           </Box>
         </Box>
-      </Box>
+        </Box>
+      )}
     </Box>
   );
 }
