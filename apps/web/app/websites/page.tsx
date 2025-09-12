@@ -16,47 +16,26 @@ export const metadata = { title: 'Websites · Joey Hou Gallery' };
 
 export default function WebsitesPage() {
   const data = content as PageContent;
-  const introSection = data.sections.find(s => s.type === 'intro') as Extract<SectionType, { type: 'intro' }>;
-  const otherSections = data.sections.slice(1);
+  const allIntroSections = data.sections.filter(s => s.type === 'intro') as Extract<SectionType, { type: 'intro' }>[];
+  const blackBoxIntroSection = allIntroSections[0];
+  const musicIntroSection = allIntroSections[1];
+  const allGallerySections = data.sections.filter(s => s.type === 'gallery') as Extract<SectionType, { type: 'gallery' }>[];
+  const blackBoxGallerySection = allGallerySections[0];
+  const musicGallerySection = allGallerySections[1];
   
   return (
     <PageHeader pageKey="websites">
-      <MainSection section={introSection} time={introSection.time} backgroundType="bottom-only" />
+      {/* Black Box Institute Section */}
+      <MainSection section={blackBoxIntroSection} time={blackBoxIntroSection.time} backgroundType="bottom-only" />
+      <Section>
+        <Carousel images={blackBoxGallerySection.images} />
+      </Section>
 
-      {otherSections.map((s, i) => (
-        <Section key={i}>
-          {s.type === 'intro' ? (
-            <Card>
-              <CardContent>
-                <Typography variant="h4" gutterBottom>
-                  {s.title}
-                </Typography>
-                {Array.isArray(s.body) && s.body.map((p, idx) => (
-                  <Typography key={idx} paragraph>
-                    {p}
-                  </Typography>
-                ))}
-                {s.links?.map((l) => (
-                  <Button key={l.href} href={l.href} target="_blank" rel="noreferrer" sx={{ mr: 1 }} variant="contained">
-                    {l.label}
-                  </Button>
-                ))}
-              </CardContent>
-            </Card>
-          ) : s.title === 'Screenshots — The Black Box Institute' ? (
-            <Carousel images={(s as any).images} />
-          ) : (
-            <>
-              <TextBlock centered>
-                <Typography variant="h5">
-                  {s.title}
-                </Typography>
-              </TextBlock>
-              <ImageGrid images={(s as any).images} />
-            </>
-          )}
-        </Section>
-      ))}
+      {/* Music Theory Section */}
+      <MainSection section={musicIntroSection} time={musicIntroSection.time} backgroundType="bottom-only" />
+      <Section>
+        <Carousel images={musicGallerySection.images} />
+      </Section>
 
       <PageFooter />
     </PageHeader>

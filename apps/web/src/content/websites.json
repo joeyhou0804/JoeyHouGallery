@@ -4,7 +4,7 @@
     {
       "type": "intro",
       "time": "2021.07",
-      "title": "The Black Box Institute — Official Website",
+      "title": "Consulting Company Website",
       "body": [
         "The Black Box Institute is a Canadian boutique advisory company based in Toronto.",
         "I built the full website in one week with Wix.com.",
@@ -31,9 +31,12 @@
     },
     {
       "type": "intro",
-      "title": "Learn Music with Us — Music Theory Learning Website",
+      "time": "2022.04",
+      "title": "Music Theory Learning Website",
       "body": [
-        "Led a group of 4 at Columbia University and finished this website with a music theory syllabus I designed."
+        "I designed a syllabus to help my friends learn basic music theory knowledge.",
+        "Then I led a group of 4 at Columbia University to finish this website.",
+        "This website is implemented with simple HTML, CSS, and Javascript."
       ],
       "links": [
         { "label": "Code on GitHub", "href": "https://github.com/joeyhou0804" }
