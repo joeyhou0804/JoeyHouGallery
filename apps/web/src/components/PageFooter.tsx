@@ -203,7 +203,7 @@ export default function PageFooter() {
               }}
             >
               <Image
-                src={language === 'zh-CN' ? '/buttons/button_cn_8.png' : '/buttons/button_en_8.png'}
+                src={language === 'zh-CN' ? '/buttons/button_homepage_cn_8.png' : '/buttons/button_homepage_en_8.png'}
                 alt={language === 'zh-CN' ? '切换到英文' : 'Switch to Chinese'}
                 width={0}
                 height={0}
@@ -227,8 +227,8 @@ export default function PageFooter() {
             {/* All section buttons */}
             {sections.map((s, index) => {
               const buttonImage = language === 'zh-CN'
-                ? `/buttons/button_cn_${s.buttonIndex}.png`
-                : `/buttons/button_en_${s.buttonIndex}.png`;
+                ? `/buttons/button_homepage_cn_${s.buttonIndex}.png`
+                : `/buttons/button_homepage_en_${s.buttonIndex}.png`;
               
               // Calculate grid positions (language button is index 0, so section buttons start at index 1)
               const buttonPosition = index + 2; // +2 because language button is position 1
