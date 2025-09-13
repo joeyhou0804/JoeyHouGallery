@@ -152,7 +152,7 @@ function CarouselRow({
       }}
     >
       {images.map((img, i) => (
-        <Box key={`${i}-${ariaHidden ? 'dup' : 'main'}`} sx={{ minWidth: 280, height: 180, flexShrink: 0 }}>
+        <Box key={`${i}-${ariaHidden ? 'dup' : 'main'}`} sx={{ minWidth: { xs: 200, sm: 240, md: 280 }, height: { xs: 120, sm: 150, md: 180 }, flexShrink: 0 }}>
           <img
             src={img}
             alt={ariaHidden ? '' : `Manipulation ${i + 1}`}
