@@ -110,7 +110,7 @@ export default function Carousel({ images, speedPxPerSec = 80 }: CarouselProps) 
   );
 
   return (
-    <Box sx={{ position: 'relative', mt: 8, mb: { xs: 8, sm: 10, md: 12 } }}>
+    <Box sx={{ position: 'relative', mt: 8, mb: 4 }}>
       <BackgroundZigZag />
       <CarouselRow images={firstHalf} direction="rtl" speedPxPerSec={speedPxPerSec} />
       <CarouselRow images={secondHalf} direction="ltr" speedPxPerSec={speedPxPerSec} />
@@ -192,18 +192,7 @@ function CarouselRow({
       }}
     >
       {images.map((img, i) => (
-        <Box key={`${i}-${ariaHidden ? 'dup' : 'main'}`} sx={{ 
-          width: { xs: '60vw', sm: 240, md: 280 }, 
-          maxWidth: { xs: 250, sm: 240, md: 280 },
-          height: { xs: '36vw', sm: 150, md: 180 }, 
-          maxHeight: { xs: 150, sm: 150, md: 180 },
-          minWidth: { xs: 180, sm: 240, md: 280 },
-          flexShrink: 0,
-          backgroundColor: 'white',
-          borderRadius: 2,
-          border: '6px solid white',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-        }}>
+        <Box key={`${i}-${ariaHidden ? 'dup' : 'main'}`} sx={{ minWidth: 280, height: 180, flexShrink: 0 }}>
           <img
             src={img}
             alt={ariaHidden ? '' : `Manipulation ${i + 1}`}
@@ -211,9 +200,10 @@ function CarouselRow({
             style={{
               width: '100%',
               height: '100%',
-              objectFit: 'contain',
-              maxWidth: '100%',
-              maxHeight: '100%',
+              objectFit: 'cover',
+              borderRadius: 8,
+              border: '6px solid white',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
             }}
           />
         </Box>

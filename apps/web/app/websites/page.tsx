@@ -82,9 +82,7 @@ export default function WebsitesPage() {
         <Carousel images={musicGallerySection.images} />
       </Section>
 
-      <Box sx={{ mt: '-80px' }}>
-        <PageFooter />
-      </Box>
+      <PageFooter />
     </PageHeader>
   );
 }
