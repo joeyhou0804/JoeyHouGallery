@@ -184,7 +184,12 @@ export default function SubsectionBox({
       <Box sx={{ p: { xs: 2, sm: 2.5, md: 3 } }}>
         {/* Custom children content (like buttons) */}
         {children && (
-          <Box sx={{ textAlign: 'center' }}>
+          <Box sx={{
+            textAlign: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}>
             {children}
           </Box>
         )}

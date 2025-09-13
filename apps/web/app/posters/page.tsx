@@ -21,7 +21,7 @@ export default function PostersPage() {
   const gallerySections = [
     {
       type: 'gallery' as const,
-      title: 'High School 1',
+      title: t('pages.posters.highSchool1Title'),
       body: t('pages.posters.highSchool1Description'),
       images: [
         "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638407917/joeyhougallery/posters/IMG_0949_wm7cwx.jpg",
@@ -30,7 +30,7 @@ export default function PostersPage() {
     },
     {
       type: 'gallery' as const,
-      title: 'High School 2',
+      title: t('pages.posters.highSchool2Title'),
       body: t('pages.posters.highSchool2Description'),
       images: [
         "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638407917/joeyhougallery/posters/IMG_0953_vuilc2.jpg"
@@ -38,7 +38,7 @@ export default function PostersPage() {
     },
     {
       type: 'gallery' as const,
-      title: 'High School 3',
+      title: t('pages.posters.highSchool3Title'),
       body: t('pages.posters.highSchool3Description'),
       images: [
         "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638407917/joeyhougallery/posters/IMG_0955_s8ia2h.jpg"

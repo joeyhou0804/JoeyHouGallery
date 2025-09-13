@@ -67,7 +67,7 @@ export default function VideoCard({
     >
       {isXs ? (
         // Mobile layout: vertical stack
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ p: { xs: 1, sm: 3 } }}>
           <Stack spacing={3} alignItems="center">
             {/* Video */}
             <Box
