@@ -119,7 +119,7 @@ function SubsectionTitle({
             color: 'white',
             fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
             textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3), 0px 0px 1px rgba(0, 0, 0, 0.5)',
-            fontSize: { xs: '1.8rem', sm: '2.2rem', md: '2.5rem', lg: '2.8rem' }
+            fontSize: { xs: '1.2rem', sm: '1.6rem', md: '2.8rem', lg: '2.8rem' }
           }}
         >
           {title}
