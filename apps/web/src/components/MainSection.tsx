@@ -338,7 +338,7 @@ export default function MainSection({
             color: 'white',
             fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
             textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3), 0px 0px 1px rgba(0, 0, 0, 0.5)',
-            fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem', lg: '3.5rem' }
+            fontSize: { xs: '1.5rem', sm: '2rem', md: '3.5rem', lg: '4.5rem' }
           }}
         >
           {title.includes('&') ? (
