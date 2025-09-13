@@ -77,7 +77,7 @@ export default function WebsitesPage() {
       </Section>
 
       {/* Music Theory Section */}
-      <MainSection section={musicIntroSection} time={musicIntroSection.time} backgroundType="bottom-only" />
+      <MainSection section={musicIntroSection} time={musicIntroSection.time} backgroundType="full" />
       <Section>
         <Carousel images={musicGallerySection.images} />
       </Section>
