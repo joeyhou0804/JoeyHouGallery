@@ -20,7 +20,7 @@ export default function ArtCardGrid({ images, titles }: ArtCardGridProps) {
   const colors = ["#F1B17E", "#39DF88", "#6CBEEB", "#F58EC3", "#A69CE8", "#6D9CEB", "#D1393E"];
 
   return (
-    <Box sx={{ px: 2, py: 4 }}>
+    <Box sx={{ py: 4 }}>
       <Box
         sx={{
           display: 'grid',
