@@ -314,17 +314,18 @@ export default function MainSection({
             backgroundPosition: 'left top, left top',
             
             position: 'relative',
-            padding: 4,
-            margin: { xs: 1, sm: 2, md: 3 },
             
             // Responsive clipPath
             [theme.breakpoints.up('xs')]: {
+              padding: 2,
               clipPath: createZigzagPolygon(getZigzagCount('xs'), depth.xs),
             },
             [theme.breakpoints.up('sm')]: {
+              padding: 3,
               clipPath: createZigzagPolygon(getZigzagCount('sm'), depth.sm),
             },
             [theme.breakpoints.up('md')]: {
+              padding: 4,
               clipPath: createZigzagPolygon(getZigzagCount('md'), depth.md),
             },
           };
