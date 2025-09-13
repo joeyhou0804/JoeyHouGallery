@@ -20,24 +20,11 @@ export default function Carousel({ images, speedPxPerSec = 80 }: CarouselProps) 
     <Box
       sx={(theme) => {
         const depth = { xs: 6, sm: 8, md: 10 };
-        const steps = 120;
-        const zig = (d: number) => `
-          polygon(
-            0% 0%,
-            ${Array.from({ length: steps + 1 }, (_, i) => {
-              const x = (i / steps) * 100;
-              const y = i % 2 === 0 ? '0%' : `${d}px`;
-              return `${x.toFixed(2)}% ${y}`;
-            }).join(', ')},
-            100% 0%, 100% calc(100% - ${d}px),
-            ${Array.from({ length: steps + 1 }, (_, i) => {
-              const x = ((steps - i) / steps) * 100;
-              const y = i % 2 === 0 ? '100%' : `calc(100% - ${d}px)`;
-              return `${x.toFixed(2)}% ${y}`;
-            }).join(', ')},
-            0% calc(100% - ${d}px), 0% 0%
-          )
-        `;
+        const steps = {
+          xs: 40,   // 20 teeth on mobile
+          sm: 80,   // 40 teeth on small screens  
+          md: 120,  // 60 teeth on desktop (original)
+        };
 
         return {
           position: 'absolute',
@@ -61,9 +48,62 @@ export default function Carousel({ images, speedPxPerSec = 80 }: CarouselProps) 
           backgroundRepeat: 'repeat, no-repeat',
           backgroundSize: 'auto, 100% 100%',
           backgroundPosition: 'left top, left top',
-          [theme.breakpoints.up('xs')]: { paddingTop: `${depth.xs}px`, clipPath: zig(depth.xs) },
-          [theme.breakpoints.up('sm')]: { paddingTop: `${depth.sm}px`, clipPath: zig(depth.sm) },
-          [theme.breakpoints.up('md')]: { paddingTop: `${depth.md}px`, clipPath: zig(depth.md) },
+          
+          // Responsive zigzag pattern (same as PageHeader)
+          [theme.breakpoints.up('xs')]: {
+            paddingTop: `${depth.xs}px`,
+            clipPath: `polygon(
+              0% 0%,
+              ${Array.from({ length: steps.xs + 1 }, (_, i) => {
+                const x = (i / steps.xs) * 100;
+                const y = i % 2 === 0 ? '0%' : `${depth.xs}px`;
+                return `${x.toFixed(2)}% ${y}`;
+              }).join(', ')},
+              100% 0%, 100% calc(100% - ${depth.xs}px),
+              ${Array.from({ length: steps.xs + 1 }, (_, i) => {
+                const x = ((steps.xs - i) / steps.xs) * 100;
+                const y = i % 2 === 0 ? '100%' : `calc(100% - ${depth.xs}px)`;
+                return `${x.toFixed(2)}% ${y}`;
+              }).join(', ')},
+              0% calc(100% - ${depth.xs}px), 0% 0%
+            )`,
+          },
+          [theme.breakpoints.up('sm')]: {
+            paddingTop: `${depth.sm}px`,
+            clipPath: `polygon(
+              0% 0%,
+              ${Array.from({ length: steps.sm + 1 }, (_, i) => {
+                const x = (i / steps.sm) * 100;
+                const y = i % 2 === 0 ? '0%' : `${depth.sm}px`;
+                return `${x.toFixed(2)}% ${y}`;
+              }).join(', ')},
+              100% 0%, 100% calc(100% - ${depth.sm}px),
+              ${Array.from({ length: steps.sm + 1 }, (_, i) => {
+                const x = ((steps.sm - i) / steps.sm) * 100;
+                const y = i % 2 === 0 ? '100%' : `calc(100% - ${depth.sm}px)`;
+                return `${x.toFixed(2)}% ${y}`;
+              }).join(', ')},
+              0% calc(100% - ${depth.sm}px), 0% 0%
+            )`,
+          },
+          [theme.breakpoints.up('md')]: {
+            paddingTop: `${depth.md}px`,
+            clipPath: `polygon(
+              0% 0%,
+              ${Array.from({ length: steps.md + 1 }, (_, i) => {
+                const x = (i / steps.md) * 100;
+                const y = i % 2 === 0 ? '0%' : `${depth.md}px`;
+                return `${x.toFixed(2)}% ${y}`;
+              }).join(', ')},
+              100% 0%, 100% calc(100% - ${depth.md}px),
+              ${Array.from({ length: steps.md + 1 }, (_, i) => {
+                const x = ((steps.md - i) / steps.md) * 100;
+                const y = i % 2 === 0 ? '100%' : `calc(100% - ${depth.md}px)`;
+                return `${x.toFixed(2)}% ${y}`;
+              }).join(', ')},
+              0% calc(100% - ${depth.md}px), 0% 0%
+            )`,
+          },
         };
       }}
     />
