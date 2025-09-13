@@ -66,13 +66,13 @@ export default function PageHeader({ pageKey, children }: PageHeaderProps) {
 
             position: 'relative',
             zIndex: 10, // Ensure title section appears above white section
-            paddingTop: 2,
+            paddingTop: { xs: 1, sm: 1.5, md: 2 },
             marginBottom: 0,
 
             // Responsive zigzag bottom
             [theme.breakpoints.up('xs')]: {
               '--depth': `${depth.xs}px`,
-              paddingBottom: `calc(${theme.spacing(3)} + ${depth.xs}px)`,
+              paddingBottom: `calc(${theme.spacing(0.5)} + ${depth.xs}px)`,
               clipPath: `polygon(
                 0% 0%, 100% 0%, 
                 100% calc(100% - ${depth.xs}px),
@@ -87,7 +87,7 @@ export default function PageHeader({ pageKey, children }: PageHeaderProps) {
             },
             [theme.breakpoints.up('sm')]: {
               '--depth': `${depth.sm}px`,
-              paddingBottom: `calc(${theme.spacing(3)} + ${depth.sm}px)`,
+              paddingBottom: `calc(${theme.spacing(1)} + ${depth.sm}px)`,
               clipPath: `polygon(
                 0% 0%, 100% 0%, 
                 100% calc(100% - ${depth.sm}px),
@@ -102,7 +102,7 @@ export default function PageHeader({ pageKey, children }: PageHeaderProps) {
             },
             [theme.breakpoints.up('md')]: {
               '--depth': `${depth.md}px`,
-              paddingBottom: `calc(${theme.spacing(3)} + ${depth.md}px)`,
+              paddingBottom: `calc(${theme.spacing(1.5)} + ${depth.md}px)`,
               clipPath: `polygon(
                 0% 0%, 100% 0%, 
                 100% calc(100% - ${depth.md}px),
@@ -118,7 +118,7 @@ export default function PageHeader({ pageKey, children }: PageHeaderProps) {
           };
         }}
       >
-        <Container maxWidth="xl" sx={{ position: 'relative', height: { xs: '200px', sm: '250px', md: '300px' } }}>
+        <Container maxWidth="xl" sx={{ position: 'relative', height: { xs: '160px', sm: '200px', md: '300px' } }}>
           {/* Centered container for character and title */}
           <Box 
             sx={{ 
@@ -142,8 +142,8 @@ export default function PageHeader({ pageKey, children }: PageHeaderProps) {
                 sizes="100vw"
                 style={{
                   width: 'auto',
-                  height: 'clamp(160px, 20vw, 240px)',
-                  maxWidth: 'clamp(200px, 25vw, 400px)',
+                  height: 'clamp(120px, 18vw, 240px)',
+                  maxWidth: 'clamp(150px, 22vw, 400px)',
                   objectFit: 'contain',
                 }}
               />
@@ -157,7 +157,7 @@ export default function PageHeader({ pageKey, children }: PageHeaderProps) {
                   color: 'white',
                   fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
                   textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3), 0px 0px 1px rgba(0, 0, 0, 0.5)',
-                  fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem', lg: '5.5rem' },
+                  fontSize: { xs: '2rem', sm: '2.8rem', md: '4.5rem', lg: '5.5rem' },
                   textAlign: 'left',
                   lineHeight: 1,
                   whiteSpace: 'nowrap',
