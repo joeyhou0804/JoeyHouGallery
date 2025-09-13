@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import { useTranslation } from '@/hooks/useTranslation';
 
 export default function WebsitesPage() {
@@ -81,7 +82,9 @@ export default function WebsitesPage() {
         <Carousel images={musicGallerySection.images} />
       </Section>
 
-      <PageFooter />
+      <Box sx={{ mt: '-80px' }}>
+        <PageFooter />
+      </Box>
     </PageHeader>
   );
 }
