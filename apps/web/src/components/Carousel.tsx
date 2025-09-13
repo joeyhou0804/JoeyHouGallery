@@ -110,7 +110,7 @@ export default function Carousel({ images, speedPxPerSec = 80 }: CarouselProps) 
   );
 
   return (
-    <Box sx={{ position: 'relative', mt: 8, mb: 4 }}>
+    <Box sx={{ position: 'relative', mt: 8, mb: { xs: 8, sm: 10, md: 12 } }}>
       <BackgroundZigZag />
       <CarouselRow images={firstHalf} direction="rtl" speedPxPerSec={speedPxPerSec} />
       <CarouselRow images={secondHalf} direction="ltr" speedPxPerSec={speedPxPerSec} />
