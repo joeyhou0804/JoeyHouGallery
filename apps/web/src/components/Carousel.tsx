@@ -152,7 +152,14 @@ function CarouselRow({
       }}
     >
       {images.map((img, i) => (
-        <Box key={`${i}-${ariaHidden ? 'dup' : 'main'}`} sx={{ minWidth: { xs: 200, sm: 240, md: 280 }, height: { xs: 120, sm: 150, md: 180 }, flexShrink: 0 }}>
+        <Box key={`${i}-${ariaHidden ? 'dup' : 'main'}`} sx={{ 
+          width: { xs: '60vw', sm: 240, md: 280 }, 
+          maxWidth: { xs: 250, sm: 240, md: 280 },
+          height: { xs: '36vw', sm: 150, md: 180 }, 
+          maxHeight: { xs: 150, sm: 150, md: 180 },
+          minWidth: { xs: 180, sm: 240, md: 280 },
+          flexShrink: 0 
+        }}>
           <img
             src={img}
             alt={ariaHidden ? '' : `Manipulation ${i + 1}`}
@@ -160,10 +167,12 @@ function CarouselRow({
             style={{
               width: '100%',
               height: '100%',
-              objectFit: 'cover',
+              objectFit: 'contain',
               borderRadius: 8,
               border: '6px solid white',
               boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+              maxWidth: '100%',
+              maxHeight: '100%',
             }}
           />
         </Box>
