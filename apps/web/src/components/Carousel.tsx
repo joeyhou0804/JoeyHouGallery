@@ -158,7 +158,11 @@ function CarouselRow({
           height: { xs: '36vw', sm: 150, md: 180 }, 
           maxHeight: { xs: 150, sm: 150, md: 180 },
           minWidth: { xs: 180, sm: 240, md: 280 },
-          flexShrink: 0 
+          flexShrink: 0,
+          backgroundColor: 'white',
+          borderRadius: 2,
+          border: '6px solid white',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
         }}>
           <img
             src={img}
@@ -168,9 +172,6 @@ function CarouselRow({
               width: '100%',
               height: '100%',
               objectFit: 'contain',
-              borderRadius: 8,
-              border: '6px solid white',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
               maxWidth: '100%',
               maxHeight: '100%',
             }}
