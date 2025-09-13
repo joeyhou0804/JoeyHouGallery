@@ -90,21 +90,24 @@ function SubsectionTitle({
             backgroundSize: 'auto, 100% 100%',
             backgroundPosition: 'left top, left top',
             padding: year ? '32px 16px 16px 16px' : 2, // Add extra padding when capsule is present
-            marginTop: '32px', // Fixed top margin
+            marginTop: year ? '32px' : 0,
             marginBottom: 0, // Fixed bottom margin
 
             // Responsive margins and zigzag pattern
             [theme.breakpoints.up('xs')]: {
+              marginTop: year ? '32px' : '16px',
               marginLeft: '16px',
               marginRight: '16px',
               clipPath: `polygon(0% 0%, 100% 0%, calc(100% - ${depth.xs}px) 25%, 100% 50%, calc(100% - ${depth.xs}px) 75%, 100% 100%, 0% 100%)`,
             },
             [theme.breakpoints.up('sm')]: {
+              marginTop: year ? '32px' : '24px',
               marginLeft: '24px',
               marginRight: '24px',
               clipPath: `polygon(0% 0%, 100% 0%, calc(100% - ${depth.sm}px) 25%, 100% 50%, calc(100% - ${depth.sm}px) 75%, 100% 100%, 0% 100%)`,
             },
             [theme.breakpoints.up('md')]: {
+              marginTop: year ? '32px' : '32px',
               marginLeft: '32px',
               marginRight: '32px',
               clipPath: `polygon(0% 0%, 100% 0%, calc(100% - ${depth.md}px) 25%, 100% 50%, calc(100% - ${depth.md}px) 75%, 100% 100%, 0% 100%)`,
@@ -164,7 +167,6 @@ export default function SubsectionBox({
         borderRadius: 2,
         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
         overflow: 'hidden',
-        mx: { xs: 1, sm: 2, md: 3 },
         mt: index === 0 ? 6 : 1, // Extra margin top for the first gallery section (Application Idea)
         ...sx,
       }}
@@ -205,12 +207,12 @@ export default function SubsectionBox({
         
         {/* Images */}
         {section.images && !children && !hideImages && (
-          <>
+          <Box sx={{ mx: { md: '8px' } }}>
             {imageLayout === 'centered-stacked' ? (
               // Two images stacked vertically, centered
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
                 {section.images.map((src: string, imgIndex: number) => (
-                  <Box key={imgIndex} sx={{ width: { xs: '100%', sm: '80%', md: '60%' } }}>
+                  <Box key={imgIndex} sx={{ width: '100%' }}>
                     <Card>
                       <CloudImage src={src} alt={`${title} - ${imgIndex + 1}`} />
                     </Card>
@@ -220,7 +222,7 @@ export default function SubsectionBox({
             ) : imageLayout === 'centered-single' ? (
               // Single image centered
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Box sx={{ width: { xs: '100%', sm: '80%', md: '60%' } }}>
+                <Box sx={{ width: '100%' }}>
                   <Card>
                     <CloudImage src={section.images[0]} alt={title} />
                   </Card>
@@ -228,17 +230,10 @@ export default function SubsectionBox({
               </Box>
             ) : (
               // Default layout
-              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Box>
                 {section.images.length === 1 && (index === 0 || index === 1) ? (
                   // Single image centered and larger for Application Idea and High Level Overview
-                  <Box
-                    sx={{
-                      maxWidth: '70%',
-                      width: 'fit-content',
-                      display: 'flex',
-                      justifyContent: 'center',
-                    }}
-                  >
+                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                     <img
                       src={section.images[0]}
                       alt={title}
@@ -256,8 +251,12 @@ export default function SubsectionBox({
                 )}
               </Box>
             )}
-            
-            {/* Body text below images if it exists */}
+          </Box>
+        )}
+
+        {/* Body text below images if it exists */}
+        {section.images && !children && !hideImages && (
+          <>
             {body && (
               <Box sx={{ mt: 3 }}>
                 {Array.isArray(body) ? (
