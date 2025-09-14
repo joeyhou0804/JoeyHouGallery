@@ -122,6 +122,18 @@ export const translations = {
       },
       posters: {
         title: 'Posters',
+        capstoneTitle: 'Capstone Project',
+        capstoneDescription: [
+          'In University of California Berkeley (UC Berkeley),',
+          'I finished a capstone project as a part of my master degree program.',
+          'One important part of the project is to design a poster',
+          'so that people with no science background can easily understand our academic project details.'
+        ],
+        projectPosterTitle: 'Project Poster',
+        projectPosterDescription: [
+          'I led a group of 3 and finished this poster.',
+          'It contains delicately drawn explanation figures and carefully designed contents.'
+        ],
         wallNewspapersTitle: 'Wall Newspapers',
         wallNewspapersDescription: [
           'I was in charge of designing and making class wall newspaper/bulletin boards for over 6 years.',
@@ -129,6 +141,9 @@ export const translations = {
           'these wall newspapers are made in huge colored papers.',
           'Some of the designs are displayed here.'
         ],
+        highSchool1Title: 'High School Design 1',
+        highSchool2Title: 'High School Design 2',
+        highSchool3Title: 'High School Design 3',
         highSchool1Description: 'A career planning themed bulletin board (background) design.',
         highSchool2Description: 'A friendship/classmates themed bulletin board (background) design.',
         highSchool3Description: 'A Gao Kao (Chinese College Entrance Exam) themed bulletin board design.'
@@ -300,7 +315,18 @@ export const translations = {
       },
       posters: {
         title: '海报',
-        // TODO: Add Chinese translations
+        capstoneTitle: '毕业设计项目',
+        capstoneDescription: [
+          '在加州大学伯克利分校的时候（伯克利），',
+          '我参加过一个硕士学位项目的毕业设计。',
+          '项目的一个重要组成部分是设计一张海报，',
+          '让没有科学背景的人也能轻松理解我们项目的专业细节。'
+        ],
+        projectPosterTitle: '项目海报',
+        projectPosterDescription: [
+          '我带领3人小组完成了这张海报。',
+          '海报包含了精心绘制的说明图和仔细设计的内容。'
+        ],
         wallNewspapersTitle: '板报',
         wallNewspapersDescription: [
           '中学的六年里，我一直负责设计和制作班级板报。',
@@ -308,6 +334,9 @@ export const translations = {
           '板报是用大幅彩纸制作的。',
           '这里展示我的一些设计。'
         ],
+        highSchool1Title: '高中设计1',
+        highSchool2Title: '高中设计2',
+        highSchool3Title: '高中设计3',
         highSchool1Description: '职业规划主题板报（背景）设计。',
         highSchool2Description: '友谊/同学主题板报（背景）设计。',
         highSchool3Description: '高考主题板报设计。'

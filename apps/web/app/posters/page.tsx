@@ -9,15 +9,29 @@ import { useTranslation } from '@/hooks/useTranslation';
 
 export default function PostersPage() {
   const { t } = useTranslation();
-  
-  // Create translated content structure  
+
+  // Create translated content structure
+  const capstoneSection = {
+    type: 'intro' as const,
+    title: t('pages.posters.capstoneTitle'),
+    body: t('pages.posters.capstoneDescription'),
+    time: '2023.05'
+  };
+
   const introSection = {
     type: 'intro' as const,
     title: t('pages.posters.wallNewspapersTitle'),
     body: t('pages.posters.wallNewspapersDescription'),
     time: '2014-2017'
   };
-  
+
+  const capstoneGallerySection = {
+    type: 'gallery' as const,
+    title: t('pages.posters.projectPosterTitle'),
+    body: t('pages.posters.projectPosterDescription'),
+    images: ['/181B-poster.png']
+  };
+
   const gallerySections = [
     {
       type: 'gallery' as const,
@@ -48,7 +62,13 @@ export default function PostersPage() {
   
   return (
     <PageHeader pageKey="posters">
-      <MainSection section={introSection} time={introSection.time} isFirst={true} />
+      <MainSection section={capstoneSection} time={capstoneSection.time} isFirst={true} />
+
+      <Section>
+        <SubsectionBox section={capstoneGallerySection} index={0} imageLayout="centered-single" sx={{ mb: 12 }} />
+      </Section>
+
+      <MainSection section={introSection} time={introSection.time} />
 
       {gallerySections.map((s, i) => {
         // Determine the image layout based on the subsection index
