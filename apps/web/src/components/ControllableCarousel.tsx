@@ -43,8 +43,7 @@ export default function ControllableCarousel({
     if (prefetched.current.has(url)) return;
     const img = new Image();
     img.decoding = "async";
-    // @ts-expect-error: not in TS lib yet for HTMLImageElement, but supported in Chromium/WebKit
-    img.fetchPriority = "low";
+    (img as any).fetchPriority = "low";
     img.src = url;
     prefetched.current.add(url);
     prefetchImg.current = img; // keep a ref so it’s not GC’d immediately
