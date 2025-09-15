@@ -140,7 +140,7 @@ function EnterLogo({ delayMs = 120, children }: { delayMs?: number; children: Re
 // Within a 2x2 cluster, positions are row-major: [0]=TL, [1]=TR, [2]=BL, [3]=BR
 // Desktop: left cluster slides from LEFT; right cluster from RIGHT.
 // Mobile:  top cluster slides from TOP;  bottom cluster from BOTTOM.
-function clusterVectors(layout: 'horizontal' | 'vertical', side: 'A' | 'B') {
+function clusterVectors(layout: 'horizontal' | 'vertical', side: 'A' | 'B'): Array<{x: number, y: number}> {
   if (layout === 'horizontal') {
     return side === 'A'
       ? [ {x:-36,y:-18}, {x:-24,y:-18}, {x:-30,y: 18}, {x:-18,y: 18} ] // left cluster
@@ -226,7 +226,7 @@ export default function HomePage() {
         }}
       >
         {/* Slot 0 (TL): Language switch */}
-        <EnterButton delayMs={baseA + STAGGER_MS * 0} fromX={vecA[0].x} fromY={vecA[0].y}>
+        <EnterButton delayMs={baseA + STAGGER_MS * 0} fromX={vecA[0]?.x || 0} fromY={vecA[0]?.y || 0}>
           <Box onClick={handleLanguageSwitch} sx={{ cursor: 'pointer' }}>
             <Image
               src={language === 'zh-CN' ? '/buttons/button_homepage_cn_8.png' : '/buttons/button_homepage_en_8.png'}
@@ -256,7 +256,7 @@ export default function HomePage() {
               ? `/buttons/button_homepage_cn_${s.buttonIndex}.png`
               : `/buttons/button_homepage_en_${s.buttonIndex}.png`;
           return (
-            <EnterButton key={s.href} delayMs={baseA + STAGGER_MS * pos} fromX={vecA[pos].x} fromY={vecA[pos].y}>
+            <EnterButton key={s.href} delayMs={baseA + STAGGER_MS * pos} fromX={vecA[pos]?.x || 0} fromY={vecA[pos]?.y || 0}>
               <Link href={s.href}>
                 <Image
                   src={buttonImage}
@@ -335,13 +335,13 @@ export default function HomePage() {
       >
         {/* Posters, Reports, Videos, Websites */}
         {sections.slice(3, 7).map((s, i) => {
-          const pos = clusterOrder[i]; // 0..3 in TL,TR,BL,BR order
+          const pos = clusterOrder[i] ?? 0; // 0..3 in TL,TR,BL,BR order, fallback to 0
           const buttonImage =
             language === 'zh-CN'
               ? `/buttons/button_homepage_cn_${s.buttonIndex}.png`
               : `/buttons/button_homepage_en_${s.buttonIndex}.png`;
           return (
-            <EnterButton key={s.href} delayMs={baseB + STAGGER_MS * pos} fromX={vecB[pos].x} fromY={vecB[pos].y}>
+            <EnterButton key={s.href} delayMs={baseB + STAGGER_MS * pos} fromX={vecB[pos]?.x || 0} fromY={vecB[pos]?.y || 0}>
               <Link href={s.href}>
                 <Image
                   src={buttonImage}
