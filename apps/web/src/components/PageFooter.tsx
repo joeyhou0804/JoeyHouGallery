@@ -2,8 +2,13 @@
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+import IconButton from '@mui/material/IconButton';
 import Link from 'next/link';
 import Image from 'next/image';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import GitHubIcon from '@mui/icons-material/GitHub';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useAtom } from 'jotai';
 import { languageAtom, Language } from '@joey/atoms';
@@ -335,19 +340,85 @@ export default function PageFooter() {
         }}
       >
         <Box
-          component="p"
           sx={{
-            fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
-            color: 'white',
-            lineHeight: 1.6,
-            textAlign: 'left',
-            fontWeight: 500,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1.5,
             mt: 1,
             mb: 1,
             pl: 4,
           }}
         >
-          Made by Joey Hou in 2025.
+          <Box
+            component="p"
+            sx={{
+              fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
+              color: 'white',
+              lineHeight: 1.6,
+              fontWeight: 500,
+              m: 0,
+            }}
+          >
+            {t('ui.madeBy')}
+          </Box>
+
+          <Box sx={{ display: 'flex', gap: 0.5 }}>
+            <IconButton
+              component="a"
+              href="https://www.linkedin.com/in/joey1m/"
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                color: 'white',
+                p: 0.5,
+                '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' },
+              }}
+            >
+              <LinkedInIcon sx={{ fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' } }} />
+            </IconButton>
+
+            <IconButton
+              component="a"
+              href="https://www.facebook.com/JoeyHouKun"
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                color: 'white',
+                p: 0.5,
+                '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' },
+              }}
+            >
+              <FacebookIcon sx={{ fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' } }} />
+            </IconButton>
+
+            <IconButton
+              component="a"
+              href="https://www.instagram.com/joeyhou0804/"
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                color: 'white',
+                p: 0.5,
+                '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' },
+              }}
+            >
+              <InstagramIcon sx={{ fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' } }} />
+            </IconButton>
+
+            <IconButton
+              component="a"
+              href="https://github.com/joeyhou0804"
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                color: 'white',
+                p: 0.5,
+                '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' },
+              }}
+            >
+              <GitHubIcon sx={{ fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' } }} />
+            </IconButton>
+          </Box>
         </Box>
       </Box>
     </Box>

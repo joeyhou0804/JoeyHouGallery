@@ -1,8 +1,14 @@
 "use client";
 
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
 import Link from 'next/link';
 import Image from 'next/image';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import GitHubIcon from '@mui/icons-material/GitHub';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useAtom } from 'jotai';
 import { languageAtom, Language } from '@joey/atoms';
@@ -358,6 +364,93 @@ export default function HomePage() {
             </EnterButton>
           );
         })}
+      </Box>
+
+      {/* Footer text - positioned absolutely to not affect grid layout */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: { xs: 0, md: 'auto' },
+          bottom: { xs: 'auto', md: 0 },
+          left: 0,
+          right: 0,
+          display: 'flex',
+          justifyContent: 'center',
+          pt: { xs: 1, md: 0 },
+          pb: { xs: 0, md: 3 },
+        }}
+      >
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Typography
+            sx={{
+              color: '#000',
+              fontSize: { xs: '1rem', sm: '1.1rem' },
+              lineHeight: 1.6,
+              fontWeight: 500,
+              textAlign: 'center',
+            }}
+          >
+            {t('ui.madeBy')}
+          </Typography>
+
+          <Box sx={{ display: 'flex', gap: 0.5 }}>
+            <IconButton
+              component="a"
+              href="https://www.linkedin.com/in/joey1m/"
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                color: '#000',
+                p: 0.5,
+                '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.1)' },
+              }}
+            >
+              <LinkedInIcon sx={{ fontSize: { xs: '1rem', sm: '1.1rem' } }} />
+            </IconButton>
+
+            <IconButton
+              component="a"
+              href="https://www.facebook.com/JoeyHouKun"
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                color: '#000',
+                p: 0.5,
+                '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.1)' },
+              }}
+            >
+              <FacebookIcon sx={{ fontSize: { xs: '1rem', sm: '1.1rem' } }} />
+            </IconButton>
+
+            <IconButton
+              component="a"
+              href="https://www.instagram.com/joeyhou0804/"
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                color: '#000',
+                p: 0.5,
+                '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.1)' },
+              }}
+            >
+              <InstagramIcon sx={{ fontSize: { xs: '1rem', sm: '1.1rem' } }} />
+            </IconButton>
+
+            <IconButton
+              component="a"
+              href="https://github.com/joeyhou0804"
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                color: '#000',
+                p: 0.5,
+                '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.1)' },
+              }}
+            >
+              <GitHubIcon sx={{ fontSize: { xs: '1rem', sm: '1.1rem' } }} />
+            </IconButton>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );

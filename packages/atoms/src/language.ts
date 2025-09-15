@@ -250,7 +250,7 @@ export const translations = {
       switchToLight: '切换到明亮模式',
       switchToDark: '切换到深色模式',
       switchToEnglish: '切换到英文',
-      madeBy: '小猴同学于2025年制作',
+      madeBy: '小猴同学 2025年制作',
       downloadVolume: '下载城大版本',
       visitSite: '访问网站',
       goToGitHub: '访问我的GitHub',
