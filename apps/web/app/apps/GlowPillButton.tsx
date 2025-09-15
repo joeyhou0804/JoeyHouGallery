@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Button, { ButtonProps } from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
@@ -55,9 +56,57 @@ const CtaButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-export function GlowPillButton({ children, ...props }: ButtonProps) {
+export function GlowPillButton({ children, sx, animate = false, ...props }: ButtonProps & { animate?: boolean }) {
+  const [isVisible, setIsVisible] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!animate) {
+      setIsVisible(true);
+      setHasAnimated(true);
+      return;
+    }
+
+    const node = buttonRef.current;
+    if (!node || hasAnimated) return;
+
+    const prefersReduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      setIsVisible(true);
+      setHasAnimated(true);
+      return;
+    }
+
+    let timeoutId: number | undefined;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            timeoutId = window.setTimeout(() => {
+              setIsVisible(true);
+              setHasAnimated(true);
+            }, 500); // 500ms delay to appear after title but before body text
+            observer.unobserve(node);
+          }
+        });
+      },
+      {
+        threshold: 0,
+        rootMargin: '0px 0px -10% 0px',
+      }
+    );
+
+    observer.observe(node);
+    return () => {
+      if (timeoutId) window.clearTimeout(timeoutId);
+      observer.disconnect();
+    };
+  }, [animate, hasAnimated]);
+
   return (
     <CtaButton
+      ref={buttonRef}
       variant="contained"
       disableElevation
       disableRipple
@@ -69,6 +118,11 @@ export function GlowPillButton({ children, ...props }: ButtonProps) {
       sx={{
         // optional: match your JP font
         fontFamily: '"Sofia Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+        transform: isVisible ? 'translateY(0)' : 'translateY(40px)',
+        opacity: isVisible ? 1 : 0,
+        transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+        willChange: 'transform, opacity',
+        ...sx,
       }}
       {...props}
     >

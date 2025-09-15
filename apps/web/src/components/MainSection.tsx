@@ -514,6 +514,7 @@ export default function MainSection({
         <GlowPillButton
           key={l.href}
           href={l.href}
+          animate={true}
           sx={{ alignSelf: 'center', width: 'fit-content' }}
         >
           {linkLabel}
