@@ -7,6 +7,7 @@ import Stack from '@mui/material/Stack';
 import ImageGrid from '@/components/ImageGrid';
 import CloudImage from '@/components/CloudImage';
 import { useTranslation } from '@/hooks/useTranslation';
+import { useEffect, useState, useRef } from 'react';
 import type { Section as SectionType } from '@/content/types';
 
 // SubsectionTitle Component: Colored gradient backgrounds for subsection titles with optional year capsule
@@ -72,7 +73,7 @@ function SubsectionTitle({
           const depth = {
             xs: 12,   // smaller depth on mobile
             sm: 14,   // medium depth on small screens
-            md: 16,  // original depth on medium+ screens
+            md: 16,   // original depth on medium+ screens
           };
 
           return {
@@ -133,9 +134,9 @@ function SubsectionTitle({
 }
 
 // SubsectionBox Component: White box container with title, text and images
-export default function SubsectionBox({ 
-  section, 
-  index, 
+export default function SubsectionBox({
+  section,
+  index,
   year,
   customGradient,
   children,
@@ -143,8 +144,8 @@ export default function SubsectionBox({
   imageLayout = 'default',
   hideImages = false,
   sx
-}: { 
-  section: Extract<SectionType, { type: 'gallery' }> | any, 
+}: {
+  section: Extract<SectionType, { type: 'gallery' }> | any,
   index: number,
   year?: string,
   customGradient?: string,
@@ -155,19 +156,66 @@ export default function SubsectionBox({
   sx?: any
 }) {
   const { t, language } = useTranslation();
-  
+  const [isVisible, setIsVisible] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
   // Use custom title or the section title
   const title = customTitle || section.title;
   const body = section.body;
 
+  // Fade-in + move-up when the *top* reaches 10% from the bottom of the viewport
+  useEffect(() => {
+    const node = containerRef.current;
+    if (!node || hasAnimated) return;
+
+    // Respect reduced motion
+    const prefersReduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      setIsVisible(true);
+      setHasAnimated(true);
+      return;
+    }
+
+    let timeoutId: number | undefined;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // stagger by index for a cascading effect
+          timeoutId = window.setTimeout(() => {
+            setIsVisible(true);
+            setHasAnimated(true);
+          }, index * 100);
+          observer.unobserve(node);
+        }
+      },
+      {
+        threshold: 0,
+        // Shrink only the bottom by 10% so it fires as soon as the element's top crosses that line.
+        rootMargin: '0px 0px -10% 0px',
+      }
+    );
+
+    observer.observe(node);
+    return () => {
+      if (timeoutId) window.clearTimeout(timeoutId);
+      observer.disconnect();
+    };
+  }, [index, hasAnimated]);
+
   return (
     <Box
+      ref={containerRef}
       sx={{
         backgroundColor: 'white',
         borderRadius: 2,
         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
         overflow: 'hidden',
         mt: index === 0 ? 6 : 1, // Extra margin top for the first gallery section (Application Idea)
+        transform: isVisible ? 'translateY(0)' : 'translateY(40px)',
+        opacity: isVisible ? 1 : 0,
+        transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+        willChange: 'transform, opacity',
         ...sx,
       }}
     >
