@@ -179,15 +179,17 @@ export default function SubsectionBox({
 
     let timeoutId: number | undefined;
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          // stagger by index for a cascading effect
-          timeoutId = window.setTimeout(() => {
-            setIsVisible(true);
-            setHasAnimated(true);
-          }, index * 100);
-          observer.unobserve(node);
-        }
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // stagger by index for a cascading effect
+            timeoutId = window.setTimeout(() => {
+              setIsVisible(true);
+              setHasAnimated(true);
+            }, index * 100);
+            observer.unobserve(node);
+          }
+        });
       },
       {
         threshold: 0,

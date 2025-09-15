@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import { useTranslation } from '@/hooks/useTranslation';
+import { useEffect, useState, useRef } from 'react';
 import type { Section as SectionType } from '@/content/types';
 import { GlowPillButton } from '../../app/apps/GlowPillButton';
 import ControllableCarousel from './ControllableCarousel';
@@ -26,11 +27,93 @@ export default function MainSection({
   extendBackground?: boolean
 }) {
   const { t, language } = useTranslation();
-  
+  const [titleVisible, setTitleVisible] = useState(false);
+  const [bodyVisible, setBodyVisible] = useState(false);
+  const [titleAnimated, setTitleAnimated] = useState(false);
+  const [bodyAnimated, setBodyAnimated] = useState(false);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
+
   // Use the content passed in through props
   const title = section.title;
   const bodyContent = section.body || [];
   const linkLabel = section.links?.[0]?.label || t('ui.goToGitHub');
+
+  // Animation for title
+  useEffect(() => {
+    const node = titleRef.current;
+    if (!node || titleAnimated) return;
+
+    const prefersReduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      setTitleVisible(true);
+      setTitleAnimated(true);
+      return;
+    }
+
+    let timeoutId: number | undefined;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            timeoutId = window.setTimeout(() => {
+              setTitleVisible(true);
+              setTitleAnimated(true);
+            }, 0);
+            observer.unobserve(node);
+          }
+        });
+      },
+      {
+        threshold: 0,
+        rootMargin: '0px 0px -10% 0px',
+      }
+    );
+
+    observer.observe(node);
+    return () => {
+      if (timeoutId) window.clearTimeout(timeoutId);
+      observer.disconnect();
+    };
+  }, [titleAnimated]);
+
+  // Animation for body text
+  useEffect(() => {
+    const node = bodyRef.current;
+    if (!node || bodyAnimated) return;
+
+    const prefersReduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      setBodyVisible(true);
+      setBodyAnimated(true);
+      return;
+    }
+
+    let timeoutId: number | undefined;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            timeoutId = window.setTimeout(() => {
+              setBodyVisible(true);
+              setBodyAnimated(true);
+            }, 200); // 200ms delay after title
+            observer.unobserve(node);
+          }
+        });
+      },
+      {
+        threshold: 0,
+        rootMargin: '0px 0px -10% 0px',
+      }
+    );
+
+    observer.observe(node);
+    return () => {
+      if (timeoutId) window.clearTimeout(timeoutId);
+      observer.disconnect();
+    };
+  }, [bodyAnimated]);
 
   return (
     <Box
@@ -213,7 +296,16 @@ export default function MainSection({
       <Section sx={{ py: { xs: 3, sm: 4, md: 6 } }}>
         <Stack spacing={{ xs: 2, sm: 2.5, md: 3 }}>
           {/* Rectangle with zigzag borders for the title */}
-          <Box sx={{ position: 'relative' }}>
+          <Box
+            ref={titleRef}
+            sx={{
+              position: 'relative',
+              transform: titleVisible ? 'translateY(0)' : 'translateY(40px)',
+              opacity: titleVisible ? 1 : 0,
+              transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+              willChange: 'transform, opacity',
+            }}
+          >
             {/* Capsule with date at the top */}
             <Box
               sx={{
@@ -237,7 +329,7 @@ export default function MainSection({
               </Typography>
               <Typography sx={{ color: '#BB8F43', fontSize: { xs: '0.7rem', sm: '0.8rem', md: '0.9rem' }, pt: '2px' }}>★</Typography>
             </Box>
-        
+
         <Box
         sx={(theme) => {
           const depth = {
@@ -314,7 +406,7 @@ export default function MainSection({
             backgroundPosition: 'left top, left top',
             
             position: 'relative',
-            
+
             // Responsive clipPath
             [theme.breakpoints.up('xs')]: {
               padding: 2,
@@ -355,7 +447,16 @@ export default function MainSection({
       </Box>
 
       {/* Description text below the zigzag banner */}
-      <Box sx={{ px: '30px' }}>
+      <Box
+        ref={bodyRef}
+        sx={{
+          px: '30px',
+          transform: bodyVisible ? 'translateY(0)' : 'translateY(40px)',
+          opacity: bodyVisible ? 1 : 0,
+          transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+          willChange: 'transform, opacity',
+        }}
+      >
         <Stack spacing={1}>
           {Array.isArray(bodyContent) ? (
             <>
