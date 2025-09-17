@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.joeyhou.gallery/sitemap.xml
+Sitemap: https://joeyhougallery.vercel.app/sitemap.xml
 
