@@ -14,6 +14,8 @@ import { useAtom } from 'jotai';
 import { languageAtom, Language } from '@joey/atoms';
 import { useEffect, useRef, useState } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
+import { useImagePreloader } from '@/hooks/useImagePreloader';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 // ------------------------------
 // Config
@@ -55,11 +57,13 @@ function usePrefersReducedMotion() {
   return reduced;
 }
 
-function useRevealOnce<T extends HTMLElement>(options?: IntersectionObserverInit) {
+function useRevealOnce<T extends HTMLElement>(options?: IntersectionObserverInit & { imagesLoaded?: boolean }) {
   const ref = useRef<T | null>(null);
   const [visible, setVisible] = useState(false);
+  const imagesLoaded = options?.imagesLoaded ?? true;
+
   useEffect(() => {
-    if (!ref.current) return;
+    if (!ref.current || !imagesLoaded) return;
     const el = ref.current;
     const io = new IntersectionObserver(
       (entries) => {
@@ -74,7 +78,7 @@ function useRevealOnce<T extends HTMLElement>(options?: IntersectionObserverInit
     );
     io.observe(el);
     return () => io.disconnect();
-  }, [options]);
+  }, [options, imagesLoaded]);
   return { ref, visible };
 }
 
@@ -103,14 +107,16 @@ function EnterButton({
   delayMs = 0,
   fromX = 0,
   fromY = 0,
+  imagesLoaded = true,
 }: {
   children: React.ReactNode;
   delayMs?: number;
   fromX?: number;
   fromY?: number;
+  imagesLoaded?: boolean;
 }) {
   const reduced = usePrefersReducedMotion();
-  const { ref, visible } = useRevealOnce<HTMLDivElement>();
+  const { ref, visible } = useRevealOnce<HTMLDivElement>({ imagesLoaded });
   return (
     <Box ref={ref} sx={{ ...enterSx(visible, reduced, { fromX, fromY, delayMs, scaleFrom: 0.98 }) }}>
       {children}
@@ -118,9 +124,17 @@ function EnterButton({
   );
 }
 
-function EnterLogo({ delayMs = 120, children }: { delayMs?: number; children: React.ReactNode }) {
+function EnterLogo({
+  delayMs = 120,
+  children,
+  imagesLoaded = true
+}: {
+  delayMs?: number;
+  children: React.ReactNode;
+  imagesLoaded?: boolean;
+}) {
   const reduced = usePrefersReducedMotion();
-  const { ref, visible } = useRevealOnce<HTMLDivElement>();
+  const { ref, visible } = useRevealOnce<HTMLDivElement>({ imagesLoaded });
   return (
     <Box
       ref={ref}
@@ -164,6 +178,46 @@ export default function HomePage() {
   const theme = useTheme();
   const isVertical = useMediaQuery(theme.breakpoints.down('md')); // stacked layout trigger
 
+  // Generate all image URLs that need to be preloaded (memoize to prevent re-creation)
+  const imagesToPreload = useState(() => [
+    // Background image
+    '/backgrounds/homepage_background.png',
+    // Logo images
+    '/logos/logo_en.png',
+    '/logos/logo_cn.png',
+    // Language switch buttons
+    '/buttons/button_homepage_en_8.png',
+    '/buttons/button_homepage_cn_8.png',
+    // All section buttons (English)
+    ...sections.map(s => `/buttons/button_homepage_en_${s.buttonIndex}.png`),
+    // All section buttons (Chinese)
+    ...sections.map(s => `/buttons/button_homepage_cn_${s.buttonIndex}.png`),
+  ])[0];
+
+  // Simplified loading state with animated progress
+  const [isLoading, setIsLoading] = useState(true);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    // Animate progress over 2 seconds
+    const progressTimer = setInterval(() => {
+      setProgress(prev => {
+        if (prev >= 100) return 100;
+        return prev + 2;
+      });
+    }, 40);
+
+    const loadingTimer = setTimeout(() => {
+      setProgress(100);
+      setTimeout(() => setIsLoading(false), 200);
+    }, 2000);
+
+    return () => {
+      clearInterval(progressTimer);
+      clearTimeout(loadingTimer);
+    };
+  }, []);
+
   const handleLanguageSwitch = () => {
     const newLanguage: Language = currentLanguage === 'en' ? 'zh-CN' : 'en';
     setLanguage(newLanguage);
@@ -181,6 +235,61 @@ export default function HomePage() {
   const baseLogo = 0;
   const baseA = baseLogo + 200; // wait ~200ms after logo
   const baseB = baseA + clusterOrder.length * STAGGER_MS + 200;
+
+  // Show loading screen while images are loading
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: '#f5f5f5',
+          gap: 3,
+        }}
+      >
+        <LoadingSpinner size={60} variant="circular" />
+        <Typography
+          sx={{
+            color: '#432F2F',
+            fontSize: '1.2rem',
+            fontWeight: 500,
+            textAlign: 'center',
+          }}
+        >
+          {t('ui.loading') || 'Loading...'}
+        </Typography>
+        <Box
+          sx={{
+            width: 200,
+            height: 4,
+            backgroundColor: '#e0e0e0',
+            borderRadius: 2,
+            overflow: 'hidden',
+          }}
+        >
+          <Box
+            sx={{
+              width: `${progress}%`,
+              height: '100%',
+              backgroundColor: '#BB8F43',
+              transition: 'width 0.3s ease',
+            }}
+          />
+        </Box>
+        <Typography
+          sx={{
+            color: '#666',
+            fontSize: '0.9rem',
+          }}
+        >
+          {progress}%
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box
@@ -226,7 +335,7 @@ export default function HomePage() {
         }}
       >
         {/* Slot 0 (TL): Language switch */}
-        <EnterButton delayMs={baseA + STAGGER_MS * 0} fromX={vecA[0]?.x || 0} fromY={vecA[0]?.y || 0}>
+        <EnterButton delayMs={baseA + STAGGER_MS * 0} fromX={vecA[0]?.x || 0} fromY={vecA[0]?.y || 0} imagesLoaded={!isLoading}>
           <Box onClick={handleLanguageSwitch} sx={{ cursor: 'pointer' }}>
             <Image
               src={language === 'zh-CN' ? '/buttons/button_homepage_cn_8.png' : '/buttons/button_homepage_en_8.png'}
@@ -256,7 +365,7 @@ export default function HomePage() {
               ? `/buttons/button_homepage_cn_${s.buttonIndex}.png`
               : `/buttons/button_homepage_en_${s.buttonIndex}.png`;
           return (
-            <EnterButton key={s.href} delayMs={baseA + STAGGER_MS * pos} fromX={vecA[pos]?.x || 0} fromY={vecA[pos]?.y || 0}>
+            <EnterButton key={s.href} delayMs={baseA + STAGGER_MS * pos} fromX={vecA[pos]?.x || 0} fromY={vecA[pos]?.y || 0} imagesLoaded={!isLoading}>
               <Link href={s.href}>
                 <Image
                   src={buttonImage}
@@ -298,7 +407,7 @@ export default function HomePage() {
           minWidth: 0,
         }}
       >
-        <EnterLogo delayMs={baseLogo}>
+        <EnterLogo delayMs={baseLogo} imagesLoaded={!isLoading}>
           <Image
             src={language === 'zh-CN' ? '/logos/logo_cn.png' : '/logos/logo_en.png'}
             alt={language === 'zh-CN' ? '小猴同学作品集' : "Joey Hou's Gallery"}
@@ -341,7 +450,7 @@ export default function HomePage() {
               ? `/buttons/button_homepage_cn_${s.buttonIndex}.png`
               : `/buttons/button_homepage_en_${s.buttonIndex}.png`;
           return (
-            <EnterButton key={s.href} delayMs={baseB + STAGGER_MS * pos} fromX={vecB[pos]?.x || 0} fromY={vecB[pos]?.y || 0}>
+            <EnterButton key={s.href} delayMs={baseB + STAGGER_MS * pos} fromX={vecB[pos]?.x || 0} fromY={vecB[pos]?.y || 0} imagesLoaded={!isLoading}>
               <Link href={s.href}>
                 <Image
                   src={buttonImage}

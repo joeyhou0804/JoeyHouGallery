@@ -44,7 +44,8 @@ export const translations = {
       downloadVolume: 'Download Volume of CityU',
       visitSite: 'Visit Site',
       goToGitHub: 'Go to my GitHub',
-      defaultAlt: 'Art {number}'
+      defaultAlt: 'Art {number}',
+      loading: 'Loading...'
     },
 
     // Page content translations
@@ -265,7 +266,8 @@ export const translations = {
       downloadVolume: '下载城大版本',
       visitSite: '访问网站',
       goToGitHub: '访问我的GitHub',
-      defaultAlt: '艺术作品 {number}'
+      defaultAlt: '艺术作品 {number}',
+      loading: '加载中...'
     },
 
     // Page content translations - ADD YOUR CHINESE TRANSLATIONS HERE
