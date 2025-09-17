@@ -47,8 +47,8 @@ export default function HandbooksPage() {
     type: 'intro' as const,
     title: t('pages.handbooks.simplifiedTitle'),
     links: [
-      { label: t('pages.handbooks.downloadCityU'), href: "https://40a431a6-5c85-45f3-b955-58c8e40d7db4.filesusr.com/ugd/6a9383_014e1a0451a1438a8f1b090e55967da3.pdf" },
-      { label: t('pages.handbooks.downloadColumbia'), href: "https://40a431a6-5c85-45f3-b955-58c8e40d7db4.filesusr.com/ugd/6a9383_6581e003ac7e47429655508e49198406.pdf" }
+      { label: t('pages.handbooks.downloadCityU'), href: "/volume_cityu_2019_zh_cn.pdf" },
+      { label: t('pages.handbooks.downloadColumbia'), href: "/volume_columbia_2019_zh_cn.pdf" }
     ]
   };
 
@@ -56,8 +56,8 @@ export default function HandbooksPage() {
     type: 'intro' as const,
     title: t('pages.handbooks.traditionalTitle'),
     links: [
-      { label: t('pages.handbooks.downloadCityU'), href: "https://40a431a6-5c85-45f3-b955-58c8e40d7db4.filesusr.com/ugd/6a9383_7eb71bbd629145ffbe84c3c0754bb7bc.pdf" },
-      { label: t('pages.handbooks.downloadColumbia'), href: "https://40a431a6-5c85-45f3-b955-58c8e40d7db4.filesusr.com/ugd/6a9383_e9f8a4b95f7146c2a0fa3b5ba9d56502.pdf" }
+      { label: t('pages.handbooks.downloadCityU'), href: "/volume_cityu_2019_zh_hk.pdf" },
+      { label: t('pages.handbooks.downloadColumbia'), href: "/volume_columbia_2019_zh_hk.pdf" }
     ]
   };
 
@@ -65,7 +65,7 @@ export default function HandbooksPage() {
     type: 'intro' as const,
     title: t('pages.handbooks.englishTitle'),
     links: [
-      { label: t('pages.handbooks.downloadCityU'), href: "https://40a431a6-5c85-45f3-b955-58c8e40d7db4.filesusr.com/ugd/6a9383_b59f2b2b34854d32bce83b1f0c2dd6c2.pdf" }
+      { label: t('pages.handbooks.downloadCityU'), href: "/volume_cityu_2019_en.pdf" }
     ]
   };
 
@@ -75,7 +75,7 @@ export default function HandbooksPage() {
     body: t('pages.handbooks.musicDescription'),
     time: '2018.06',
     links: [
-      { label: t('pages.handbooks.downloadTextbook'), href: "https://40a431a6-5c85-45f3-b955-58c8e40d7db4.filesusr.com/ugd/6a9383_22eb6cd3c73a43ef8a4b89df506e82f9.pdf" }
+      { label: t('pages.handbooks.downloadTextbook'), href: "/Music Reading Tutorial.pdf" }
     ],
     images: [
       "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638423030/joeyhougallery/handbooks/Music/IMG_4255_rwycth.jpg",
@@ -147,15 +147,12 @@ export default function HandbooksPage() {
       customColor="red"
     >
       <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ justifyContent: 'center' }}>
-        {simplifiedSection?.links?.slice(1).map((l: any) => (
-          <GlowPillButton
-            key={l.href}
-            href={l.href}
-            rel="noreferrer"
-          >
-            {l.label}
-          </GlowPillButton>
-        ))}
+        <GlowPillButton
+          href="/volume_columbia_2025_zh_cn.pdf"
+          rel="noreferrer"
+        >
+          {t('pages.handbooks.downloadColumbia')}
+        </GlowPillButton>
       </Stack>
     </Subsection>,
 

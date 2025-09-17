@@ -15,7 +15,8 @@ import { languageAtom, Language } from '@joey/atoms';
 import { useEffect, useRef, useState } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
 import { usePageLoading } from '@/hooks/usePageLoading';
-import LoadingSpinner from '@/components/LoadingSpinner';
+import PageLoadingScreen from '@/components/PageLoadingScreen';
+import confetti from 'canvas-confetti';
 
 // ------------------------------
 // Config
@@ -186,6 +187,26 @@ export default function HomePage() {
     setLanguage(newLanguage);
   };
 
+  const handleLogoClick = () => {
+    // Create a burst of confetti from the center
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ['#BB8F43', '#DFBF23', '#F5D76E', '#FFE599', '#FFF2CC']
+    });
+
+    // Add a second burst with different settings for more effect
+    setTimeout(() => {
+      confetti({
+        particleCount: 50,
+        spread: 120,
+        origin: { y: 0.7 },
+        colors: ['#432F2F', '#8B7355', '#D4B896']
+      });
+    }, 200);
+  };
+
   // Decide which cluster is "A" (enters first) vs "B" (after logo)
   // Horizontal: A = left,  B = right
   // Vertical:   A = top,   B = bottom
@@ -201,57 +222,7 @@ export default function HomePage() {
 
   // Show loading screen while images are loading
   if (isLoading) {
-    return (
-      <Box
-        sx={{
-          minHeight: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: '#f5f5f5',
-          gap: 3,
-        }}
-      >
-        <LoadingSpinner size={60} variant="circular" />
-        <Typography
-          sx={{
-            color: '#432F2F',
-            fontSize: '1.2rem',
-            fontWeight: 500,
-            textAlign: 'center',
-          }}
-        >
-          {t('ui.loading') || 'Loading...'}
-        </Typography>
-        <Box
-          sx={{
-            width: 200,
-            height: 4,
-            backgroundColor: '#e0e0e0',
-            borderRadius: 2,
-            overflow: 'hidden',
-          }}
-        >
-          <Box
-            sx={{
-              width: `${progress}%`,
-              height: '100%',
-              backgroundColor: '#BB8F43',
-              transition: 'width 0.3s ease',
-            }}
-          />
-        </Box>
-        <Typography
-          sx={{
-            color: '#666',
-            fontSize: '0.9rem',
-          }}
-        >
-          {progress}%
-        </Typography>
-      </Box>
-    );
+    return <PageLoadingScreen progress={progress} title={t('pages.home.title')} />;
   }
 
   return (
@@ -371,19 +342,35 @@ export default function HomePage() {
         }}
       >
         <EnterLogo delayMs={baseLogo} imagesLoaded={!isLoading}>
-          <Image
-            src={language === 'zh-CN' ? '/logos/logo_cn.png' : '/logos/logo_en.png'}
-            alt={language === 'zh-CN' ? '小猴同学作品集' : "Joey Hou's Gallery"}
-            width={0}
-            height={0}
-            sizes="100vw"
-            style={{
+          <Box
+            onClick={handleLogoClick}
+            sx={{
+              cursor: 'pointer',
               width: '100%',
               height: '100%',
-              maxWidth: '100%',
-              objectFit: 'contain',
+              transition: 'transform 0.2s ease',
+              '&:hover': {
+                transform: 'scale(1.05)',
+              },
+              '&:active': {
+                transform: 'scale(0.95)',
+              }
             }}
-          />
+          >
+            <Image
+              src={language === 'zh-CN' ? '/logos/logo_cn.png' : '/logos/logo_en.png'}
+              alt={language === 'zh-CN' ? '小猴同学作品集' : "Joey Hou's Gallery"}
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{
+                width: '100%',
+                height: '100%',
+                maxWidth: '100%',
+                objectFit: 'contain',
+              }}
+            />
+          </Box>
         </EnterLogo>
       </Box>
 
