@@ -74,6 +74,37 @@ export default function WebsitesPage() {
       "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1663660205/joeyhougallery/websites/%E6%88%AA%E5%B1%8F2022-09-17_%E4%B8%8B%E5%8D%889.29.37_djjaki.png"
     ]
   };
+
+  const ccfIntroSection = {
+    type: 'intro' as const,
+    time: '2022.04',
+    title: 'Columbia China Forum',
+    body: [
+      'Columbia China Forum (CCF) is Columbia\'s undergraduate-led, China-focused Forum.',
+      'I built the official website for CCF as their first website.',
+      'It contains the forum introduction, schedules, and contact infos.',
+      'You can visit the archived website on Wix.com below.'
+    ],
+    links: [
+      { label: 'Archived website on Wix.com', href: "https://cityucolumbiaresou.wixsite.com/website-copy" }
+    ]
+  };
+
+  const ccfGallerySection = {
+    type: 'gallery' as const,
+    title: 'Screenshots — Columbia China Forum',
+    images: [
+      "/websites/ccf/ccf-1.png",
+      "/websites/ccf/ccf-2.png",
+      "/websites/ccf/ccf-3.png",
+      "/websites/ccf/ccf-4.png",
+      "/websites/ccf/ccf-5.png",
+      "/websites/ccf/ccf-6.png",
+      "/websites/ccf/ccf-7.png",
+      "/websites/ccf/ccf-8.png",
+      "/websites/ccf/ccf-9.png"
+    ]
+  };
   
   return (
     <PageHeader pageKey="websites">
@@ -87,6 +118,12 @@ export default function WebsitesPage() {
       <MainSection section={musicIntroSection} time={musicIntroSection.time} backgroundType="full" />
       <Section>
         <Carousel images={musicGallerySection.images} />
+      </Section>
+
+      {/* Columbia China Forum Section */}
+      <MainSection section={ccfIntroSection} time={ccfIntroSection.time} backgroundType="top-only" />
+      <Section>
+        <Carousel images={ccfGallerySection.images} />
       </Section>
 
       <PageFooter />
