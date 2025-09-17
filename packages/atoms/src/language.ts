@@ -50,6 +50,9 @@ export const translations = {
 
     // Page content translations
     pages: {
+      home: {
+        title: "Welcome to Joey Hou's Gallery"
+      },
       applications: {
         title: 'Apps',
         stickyarTitle: 'StickyAR - An iOS AR App',
@@ -272,6 +275,9 @@ export const translations = {
 
     // Page content translations - ADD YOUR CHINESE TRANSLATIONS HERE
     pages: {
+      home: {
+        title: "欢迎光临小猴同学作品集"
+      },
       apps: {
         title: '程序',
         stickyarTitle: 'StickyAR - AR手机程序',
