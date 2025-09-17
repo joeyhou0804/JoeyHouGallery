@@ -6,10 +6,17 @@ import MainSection from '@/components/MainSection';
 import SubsectionBox from '@/components/SubsectionBox';
 import Carousel from '@/components/Carousel';
 import PageFooter from '@/components/PageFooter';
+import PageLoadingScreen from '@/components/PageLoadingScreen';
 import { useTranslation } from '@/hooks/useTranslation';
+import { usePageLoading } from '@/hooks/usePageLoading';
 
 export default function ApplicationsPage() {
   const { t, language } = useTranslation();
+  const { isLoading, progress } = usePageLoading({ duration: 1200 });
+
+  if (isLoading) {
+    return <PageLoadingScreen progress={progress} title={t('applications')} />;
+  }
   
 
   // Create translated content structure

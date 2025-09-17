@@ -14,10 +14,17 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { GlowPillButton } from '../apps/GlowPillButton';
 import PageFooter from '@/components/PageFooter';
+import PageLoadingScreen from '@/components/PageLoadingScreen';
 import { useTranslation } from '@/hooks/useTranslation';
+import { usePageLoading } from '@/hooks/usePageLoading';
 
 export default function HandbooksPage() {
   const { t } = useTranslation();
+  const { isLoading, progress } = usePageLoading({ duration: 1100 });
+
+  if (isLoading) {
+    return <PageLoadingScreen progress={progress} title={t('handbooks')} />;
+  }
   
   // Create translated content structure
   const admissionSection = {

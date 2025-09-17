@@ -12,10 +12,17 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import PageLoadingScreen from '@/components/PageLoadingScreen';
 import { useTranslation } from '@/hooks/useTranslation';
+import { usePageLoading } from '@/hooks/usePageLoading';
 
 export default function WebsitesPage() {
   const { t } = useTranslation();
+  const { isLoading, progress } = usePageLoading({ duration: 1300 });
+
+  if (isLoading) {
+    return <PageLoadingScreen progress={progress} title={t('websites')} />;
+  }
   
   // Create translated content structure
   const blackBoxIntroSection = {

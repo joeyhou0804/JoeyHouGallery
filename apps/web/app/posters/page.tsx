@@ -5,10 +5,17 @@ import PageHeader from '@/components/PageHeader';
 import MainSection from '@/components/MainSection';
 import SubsectionBox from '@/components/SubsectionBox';
 import PageFooter from '@/components/PageFooter';
+import PageLoadingScreen from '@/components/PageLoadingScreen';
 import { useTranslation } from '@/hooks/useTranslation';
+import { usePageLoading } from '@/hooks/usePageLoading';
 
 export default function PostersPage() {
   const { t } = useTranslation();
+  const { isLoading, progress } = usePageLoading({ duration: 1000 });
+
+  if (isLoading) {
+    return <PageLoadingScreen progress={progress} title={t('posters')} />;
+  }
 
   // Create translated content structure
   const capstoneSection = {

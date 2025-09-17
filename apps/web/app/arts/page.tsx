@@ -8,10 +8,17 @@ import ArtCardGrid from '@/components/ArtCardGrid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import PageFooter from '@/components/PageFooter';
+import PageLoadingScreen from '@/components/PageLoadingScreen';
 import { useTranslation } from '@/hooks/useTranslation';
+import { usePageLoading } from '@/hooks/usePageLoading';
 
 export default function ArtsPage() {
   const { t, language } = useTranslation();
+  const { isLoading, progress } = usePageLoading({ duration: 1300 });
+
+  if (isLoading) {
+    return <PageLoadingScreen progress={progress} title={t('arts')} />;
+  }
   
   // Create translated content structure
   const chineseCharactersSection = {
