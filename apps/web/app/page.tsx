@@ -14,7 +14,7 @@ import { useAtom } from 'jotai';
 import { languageAtom, Language } from '@joey/atoms';
 import { useEffect, useRef, useState } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
-import { useImagePreloader } from '@/hooks/useImagePreloader';
+import { usePageLoading } from '@/hooks/usePageLoading';
 import LoadingSpinner from '@/components/LoadingSpinner';
 
 // ------------------------------
@@ -178,45 +178,8 @@ export default function HomePage() {
   const theme = useTheme();
   const isVertical = useMediaQuery(theme.breakpoints.down('md')); // stacked layout trigger
 
-  // Generate all image URLs that need to be preloaded (memoize to prevent re-creation)
-  const imagesToPreload = useState(() => [
-    // Background image
-    '/backgrounds/homepage_background.png',
-    // Logo images
-    '/logos/logo_en.png',
-    '/logos/logo_cn.png',
-    // Language switch buttons
-    '/buttons/button_homepage_en_8.png',
-    '/buttons/button_homepage_cn_8.png',
-    // All section buttons (English)
-    ...sections.map(s => `/buttons/button_homepage_en_${s.buttonIndex}.png`),
-    // All section buttons (Chinese)
-    ...sections.map(s => `/buttons/button_homepage_cn_${s.buttonIndex}.png`),
-  ])[0];
-
-  // Simplified loading state with animated progress
-  const [isLoading, setIsLoading] = useState(true);
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    // Animate progress over 2 seconds
-    const progressTimer = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 100) return 100;
-        return prev + 2;
-      });
-    }, 40);
-
-    const loadingTimer = setTimeout(() => {
-      setProgress(100);
-      setTimeout(() => setIsLoading(false), 200);
-    }, 2000);
-
-    return () => {
-      clearInterval(progressTimer);
-      clearTimeout(loadingTimer);
-    };
-  }, []);
+  // Use the same loading pattern as other pages
+  const { isLoading, progress } = usePageLoading({ duration: 2000, minLoadingTime: 1500 });
 
   const handleLanguageSwitch = () => {
     const newLanguage: Language = currentLanguage === 'en' ? 'zh-CN' : 'en';
