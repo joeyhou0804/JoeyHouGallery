@@ -11,7 +11,7 @@ interface PageLoadingScreenProps {
 }
 
 export default function PageLoadingScreen({ progress, title }: PageLoadingScreenProps) {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   return (
     <Box
@@ -58,9 +58,9 @@ export default function PageLoadingScreen({ progress, title }: PageLoadingScreen
             sx={{
               color: '#432F2F',
               fontSize: '1.4rem',
-              fontWeight: 600,
+              fontWeight: 'normal',
               textAlign: 'center',
-              fontFamily: 'Mario, sans-serif',
+              fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
             }}
           >
             {title}
