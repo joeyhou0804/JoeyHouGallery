@@ -121,7 +121,7 @@ export default function WebsitesPage() {
       </Section>
 
       {/* Columbia China Forum Section */}
-      <MainSection section={ccfIntroSection} time={ccfIntroSection.time} backgroundType="top-only" />
+      <MainSection section={ccfIntroSection} time={ccfIntroSection.time} backgroundType="full" />
       <Section>
         <Carousel images={ccfGallerySection.images} />
       </Section>
