@@ -20,7 +20,17 @@ import { usePageLoading } from '@/hooks/usePageLoading';
 
 export default function HandbooksPage() {
   const { t } = useTranslation();
-  const { isLoading, progress } = usePageLoading({ duration: 1100 });
+
+  // Critical images to preload (first images from key sections)
+  const criticalImages = [
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638409686/joeyhougallery/handbooks/Admission-pedia/%E7%AE%80%E4%BD%93/IMG_7695.PNG_h0fnln.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638423030/joeyhougallery/handbooks/Music/IMG_4255_rwycth.jpg"
+  ];
+
+  const { isLoading, progress } = usePageLoading({
+    duration: 1100,
+    images: criticalImages
+  });
 
   if (isLoading) {
     return <PageLoadingScreen progress={progress} title={t('handbooks')} />;

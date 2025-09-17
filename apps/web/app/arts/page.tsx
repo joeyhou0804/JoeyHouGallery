@@ -14,7 +14,19 @@ import { usePageLoading } from '@/hooks/usePageLoading';
 
 export default function ArtsPage() {
   const { t, language } = useTranslation();
-  const { isLoading, progress } = usePageLoading({ duration: 1300 });
+
+  // Critical images to preload (first few from each section)
+  const criticalImages = [
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638399168/joeyhougallery/arts/1597601129319_obvqqm.jpg",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638399153/joeyhougallery/arts/1597601129623_xu5gy3.jpg",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638406455/joeyhougallery/arts/Trip%202017/IMG_0661_dizzso.jpg",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638406455/joeyhougallery/arts/Trip%202017/IMG_0662_sjlnsx.jpg"
+  ];
+
+  const { isLoading, progress } = usePageLoading({
+    duration: 1300,
+    images: criticalImages
+  });
 
   if (isLoading) {
     return <PageLoadingScreen progress={progress} title={t('arts')} />;

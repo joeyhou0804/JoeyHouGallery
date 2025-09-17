@@ -12,7 +12,18 @@ import { usePageLoading } from '@/hooks/usePageLoading';
 
 export default function ApplicationsPage() {
   const { t, language } = useTranslation();
-  const { isLoading, progress } = usePageLoading({ duration: 1200 });
+
+  // Critical images to preload (first few that appear above the fold)
+  const criticalImages = [
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1663653460/joeyhougallery/applications/%E6%88%AA%E5%B1%8F2022-09-19_%E4%B8%8B%E5%8D%8810.54.23_pv2ni6.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1663653460/joeyhougallery/applications/%E6%88%AA%E5%B1%8F2022-09-19_%E4%B8%8B%E5%8D%8810.54.33_upkbhu.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1663653461/joeyhougallery/applications/%E6%88%AA%E5%B1%8F2022-09-19_%E4%B8%8B%E5%8D%8810.55.00_lmwf4y.png"
+  ];
+
+  const { isLoading, progress } = usePageLoading({
+    duration: 1200,
+    images: criticalImages
+  });
 
   if (isLoading) {
     return <PageLoadingScreen progress={progress} title={t('applications')} />;
