@@ -82,6 +82,9 @@ export default function VideosPage() {
       }
     ]
   };
+  // Track VideoCard color index across all sections
+  let globalVideoIndex = 0;
+
   return (
     <PageHeader pageKey="videos">
       {data.sections.map((section, i) => (
@@ -118,7 +121,9 @@ export default function VideosPage() {
                   // 2021 Episode 2: add top spaces
                   sx = { mt: 4 };
                 }
-                
+
+                const currentColorIndex = globalVideoIndex++;
+
                 return (
                   <VideoCard
                     key={v.youtubeId}
@@ -126,7 +131,7 @@ export default function VideosPage() {
                     youtubeId={v.youtubeId}
                     description={v.description}
                     body={v.body}
-                    colorIndex={idx}
+                    colorIndex={currentColorIndex}
                     sx={sx}
                   />
                 );
