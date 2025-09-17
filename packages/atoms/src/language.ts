@@ -193,7 +193,18 @@ export const translations = {
         episode1Title: '2020 - Episode 1',
         qaLabel: "Joey's Question & Answer",
         episode2Body: 'This is for the orientation session in 2021.',
-        episode1Body: 'This is for the orientation session in 2020.'
+        episode1Body: 'This is for the orientation session in 2020.',
+        courseCreativeTitle: 'Course Creative Project',
+        courseCreativeDescription: [
+          'I took a required music course at Columbia University.',
+          'It\'s called Masterpieces of Western Music.',
+          'It provides a creative way of finishing its final interdisciplinary project.',
+          'I made this video as this project.',
+          'This video was inspired by the game Just Shapes & Beats (JSAB).'
+        ],
+        courseCreativeVideoTitle: 'Course Creative Project',
+        courseCreativeVideoDescription: 'The Visualization of MUSIC',
+        courseCreativeVideoBody: 'The video includes three musical works.\nThey are from the Medieval period, the Classical period, and European Modernism.'
       },
       websites: {
         title: 'Websites',
@@ -388,7 +399,18 @@ export const translations = {
         episode1Title: '2020年 - 第一集',
         qaLabel: '小猴同学问与答',
         episode2Body: '2021年行前说明会',
-        episode1Body: '2020年行前说明会'
+        episode1Body: '2020年行前说明会',
+        courseCreativeTitle: '音乐课创意项目',
+        courseCreativeDescription: [
+          '我在哥伦比亚大学选修了一门必修音乐课。',
+          '这门课叫《西方音乐名作》。',
+          '课程提供了一个创造性的方式来完成期末跨学科项目。',
+          '我制作了这个视频作为项目作品。',
+          '这个视频的灵感来自游戏《Just Shapes & Beats (JSAB)》。'
+        ],
+        courseCreativeVideoTitle: '音乐课创意项目',
+        courseCreativeVideoDescription: '音乐的可视化',
+        courseCreativeVideoBody: '视频包含三首音乐作品。\n分别来自中世纪时期、古典主义时期和欧洲现代主义时期。'
       },
       websites: {
         title: '网站',

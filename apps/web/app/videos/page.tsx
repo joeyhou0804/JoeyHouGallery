@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import { useTranslation } from '@/hooks/useTranslation';
 
 export default function VideosPage() {
@@ -60,6 +61,24 @@ export default function VideosPage() {
             body: t('pages.videos.episode1Body')
           }
         ]
+      },
+      {
+        type: 'intro' as const,
+        title: t('pages.videos.courseCreativeTitle'),
+        time: '2020.08',
+        body: t('pages.videos.courseCreativeDescription')
+      },
+      {
+        type: 'videos' as const,
+        title: t('pages.videos.courseCreativeTitle'),
+        items: [
+          {
+            title: t('pages.videos.courseCreativeVideoTitle'),
+            youtubeId: "hPJm2Xb1Wd0",
+            description: t('pages.videos.courseCreativeVideoDescription'),
+            body: t('pages.videos.courseCreativeVideoBody')
+          }
+        ]
       }
     ]
   };
@@ -67,15 +86,27 @@ export default function VideosPage() {
     <PageHeader pageKey="videos">
       {data.sections.map((section, i) => (
         section.type === 'intro' ? (
-          <MainSection 
-            key={i}
-            section={section as Extract<typeof section, { type: 'intro' }>}
-            time={section.time}
-            backgroundType={section.title === t('pages.videos.orientationTitle') ? 'full' : 'bottom-only'}
-          />
+          section.title === t('pages.videos.courseCreativeTitle') ? (
+            <Box key={i} sx={{ mt: 8 }}>
+              <MainSection
+                section={section as Extract<typeof section, { type: 'intro' }>}
+                time={section.time}
+                backgroundType="full"
+                extraTopPadding={0}
+              />
+            </Box>
+          ) : (
+            <MainSection
+              key={i}
+              section={section as Extract<typeof section, { type: 'intro' }>}
+              time={section.time}
+              backgroundType={section.title === t('pages.videos.orientationTitle') ? 'full' : 'bottom-only'}
+              extraTopPadding={0}
+            />
+          )
         ) : (
           <Section key={i}>
-            {section.title === t('pages.videos.videoEssayTitle') || section.title === 'Columbia & CityU HK JBDP Pre-departure Orientation Session' ? (
+            {section.title === t('pages.videos.videoEssayTitle') || section.title === 'Columbia & CityU HK JBDP Pre-departure Orientation Session' || section.title === t('pages.videos.courseCreativeTitle') ? (
               // Use VideoCard for Video Essay and Orientation sections
               section.items.map((v, idx) => {
                 // Add extra spacing for specific videos
