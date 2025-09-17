@@ -2,22 +2,6 @@
 
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
-import { keyframes } from '@mui/system';
-
-const pulse = keyframes`
-  0% {
-    opacity: 0.6;
-    transform: scale(0.8);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0.6;
-    transform: scale(0.8);
-  }
-`;
 
 interface LoadingSpinnerProps {
   size?: number;
@@ -38,7 +22,21 @@ export default function LoadingSpinner({
           height: size,
           borderRadius: '50%',
           backgroundColor: color,
-          animation: `${pulse} 1.5s ease-in-out infinite`,
+          '@keyframes pulse': {
+            '0%': {
+              opacity: 0.6,
+              transform: 'scale(0.8)',
+            },
+            '50%': {
+              opacity: 1,
+              transform: 'scale(1)',
+            },
+            '100%': {
+              opacity: 0.6,
+              transform: 'scale(0.8)',
+            },
+          },
+          animation: 'pulse 1.5s ease-in-out infinite',
         }}
       />
     );
