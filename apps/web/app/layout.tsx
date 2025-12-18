@@ -23,7 +23,7 @@ export const metadata = {
     type: 'website',
     locale: 'en_US',
     alternateLocale: 'zh_CN',
-    url: 'https://joeyhougallery.vercel.app',
+    url: 'https://www.joeyhou.gallery',
     siteName: "Joey Hou's Gallery",
     title: "Joey Hou's Gallery",
     description: 'Welcome to my gallery! 欢迎来到小猴同学作品集！',

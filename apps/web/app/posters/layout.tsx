@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Posters - Joey Hou\'s Gallery',
     description: 'View Joey Hou\'s poster designs, including event posters, promotional materials, and graphic design work.',
-    url: 'https://joeyhougallery.vercel.app/posters',
+    url: 'https://www.joeyhou.gallery/posters',
     siteName: 'Joey Hou\'s Gallery',
     type: 'website',
     locale: 'en_US',

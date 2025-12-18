@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Reports - Joey Hou\'s Gallery',
     description: 'Read Joey Hou\'s reports, research papers, and analytical writings.',
-    url: 'https://joeyhougallery.vercel.app/reports',
+    url: 'https://www.joeyhou.gallery/reports',
     siteName: 'Joey Hou\'s Gallery',
     type: 'website',
     locale: 'en_US',
