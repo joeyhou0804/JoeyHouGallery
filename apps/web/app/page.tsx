@@ -208,10 +208,11 @@ export default function HomePage() {
           display: 'grid',
           gridTemplateColumns: { xs: 'repeat(2, min(110px, 18dvh))', sm: 'repeat(2, 160px)' },
           gridTemplateRows: { xs: 'repeat(2, min(110px, 18dvh))', sm: 'repeat(2, 160px)' },
-          gap: { xs: 1, sm: 2 },
+          gap: { xs: 0.5, sm: 2 },
           justifyItems: 'center',
           alignItems: 'center',
           mx: { xs: 'auto', md: 0 },
+          mb: { xs: 2, md: 0 },
           zIndex: 1,
         }}
       >
@@ -338,10 +339,11 @@ export default function HomePage() {
           display: 'grid',
           gridTemplateColumns: { xs: 'repeat(2, min(110px, 18dvh))', sm: 'repeat(2, 160px)' },
           gridTemplateRows: { xs: 'repeat(2, min(110px, 18dvh))', sm: 'repeat(2, 160px)' },
-          gap: { xs: 1, sm: 2 },
+          gap: { xs: 0.5, sm: 2 },
           justifyItems: 'center',
           alignItems: 'center',
           mx: { xs: 'auto', md: 0 },
+          mt: { xs: 2, md: 0 },
           zIndex: 1,
         }}
       >
