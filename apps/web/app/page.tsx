@@ -187,8 +187,9 @@ export default function HomePage() {
         backgroundPosition: 'center',
         color: '#fff',
         minWidth: 0,
-        py: { xs: 2, md: 0 },
-        gap: { xs: 1, md: 0 },
+        pt: { xs: 1, md: 0 },
+        pb: { xs: 4, md: 0 },
+        gap: { xs: 0, md: 0 },
       }}
     >
       {/* Cluster A (Left on desktop, Top on mobile) */}
