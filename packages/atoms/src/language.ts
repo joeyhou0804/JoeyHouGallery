@@ -225,7 +225,7 @@ export const translations = {
           'Then I led a group of 4 at Columbia University to finish this website.',
           'This website is implemented with simple HTML, CSS, and Javascript.'
         ],
-        visitOfficial: 'Visit the official site of The Black Box Institute',
+        visitOfficial: 'Visit the official site',
         codeOnGithub: 'Code on GitHub'
       }
     }
@@ -436,7 +436,7 @@ export const translations = {
           '然后在哥伦比亚大学带领4人小组完成了这个网站。',
           '网站用基本的HTML、CSS和Javascript实现。'
         ],
-        visitOfficial: '前往The Black Box Institute官方网站',
+        visitOfficial: '前往官方网站',
         codeOnGithub: 'GitHub上的代码'
       }
     }
