@@ -150,13 +150,22 @@ export default function HomePage() {
 
   // Show loading screen while images are loading
   if (isLoading) {
-    return <PageLoadingScreen progress={progress} title={t('pages.home.title')} />;
+    return (
+      <PageLoadingScreen
+        progress={progress}
+        title={language === 'zh-CN' ? '欢迎来到' : 'Welcome to'}
+        subtitle={language === 'zh-CN' ? '小猴同学作品集' : "Joey Hou's Gallery"}
+      />
+    );
   }
 
   return (
     <Box
       sx={{
-        minHeight: '100vh',
+        minHeight: { xs: '100vh', md: '100vh' },
+        height: { xs: '100vh', md: 'auto' },
+        maxHeight: { xs: '100vh', md: 'none' },
+        overflow: { xs: 'hidden', md: 'visible' },
         display: 'grid',
         gridTemplateColumns: {
           xs: '1fr',
@@ -170,12 +179,16 @@ export default function HomePage() {
             minmax(${EDGE_MIN}px, 1fr)
           `,
         },
+        gridTemplateRows: { xs: 'auto auto auto', md: 'auto' },
         alignItems: 'center',
+        justifyContent: { xs: 'center', md: 'initial' },
         backgroundImage: `url(/backgrounds/homepage_background.png)`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         color: '#fff',
         minWidth: 0,
+        py: { xs: 0, md: 0 },
+        pt: { xs: 4, md: 0 },
       }}
     >
       {/* Cluster A (Left on desktop, Top on mobile) */}
@@ -184,30 +197,31 @@ export default function HomePage() {
           gridColumn: { xs: '1', md: '2' },
           gridRow:     { xs: '1', md: 'auto' },
           justifySelf: 'center',
+          alignSelf: { xs: 'end', md: 'center' },
           display: 'grid',
-          gridTemplateColumns: 'repeat(2, 160px)',
-          gridTemplateRows: 'repeat(2, 160px)',
-          width: 336,
-          height: 336,
-          gap: 2,
+          gridTemplateColumns: { xs: 'repeat(2, 110px)', sm: 'repeat(2, 160px)' },
+          gridTemplateRows: { xs: 'repeat(2, 110px)', sm: 'repeat(2, 160px)' },
+          width: { xs: 236, sm: 336 },
+          height: { xs: 236, sm: 336 },
+          gap: { xs: 1, sm: 2 },
           justifyItems: 'center',
           alignItems: 'center',
-          transform: { xs: 'scale(0.9)', sm: 'scale(1)' },
-          my: { xs: 3, md: 0 },
+          mb: { xs: 0, md: 0 },
         }}
       >
         {/* Slot 0 (TL): Language switch */}
         <EnterButton delayMs={baseA + STAGGER_MS * 0} fromX={vecA[0]?.x || 0} fromY={vecA[0]?.y || 0} imagesLoaded={!isLoading}>
-          <Box onClick={handleLanguageSwitch} sx={{ cursor: 'pointer' }}>
+          <Box onClick={handleLanguageSwitch} sx={{ cursor: 'pointer', height: { xs: '110px', sm: '160px' } }}>
             <Image
               src={language === 'zh-CN' ? '/buttons/button_homepage_cn_8.png' : '/buttons/button_homepage_en_8.png'}
               alt={language === 'zh-CN' ? '切换到英文' : 'Switch to Chinese'}
               width={0}
               height={0}
               sizes="100vw"
+              className="homepage-button"
               style={{
                 width: 'auto',
-                height: '160px',
+                height: '100%',
                 maxWidth: '480px',
                 cursor: 'pointer',
                 transition: 'transform 0.2s ease, opacity 0.2s ease',
@@ -228,24 +242,27 @@ export default function HomePage() {
               : `/buttons/button_homepage_en_${s.buttonIndex}.png`;
           return (
             <EnterButton key={s.href} delayMs={baseA + STAGGER_MS * pos} fromX={vecA[pos]?.x || 0} fromY={vecA[pos]?.y || 0} imagesLoaded={!isLoading}>
-              <Link href={s.href}>
-                <Image
-                  src={buttonImage}
-                  alt={t(s.labelKey)}
-                  width={0}
-                  height={0}
-                  sizes="100vw"
-                  style={{
-                    width: 'auto',
-                    height: '160px',
-                    maxWidth: '480px',
-                    cursor: 'pointer',
-                    transition: 'transform 0.2s ease, opacity 0.2s ease',
-                    flexShrink: 1,
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
-                  onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-                />
+              <Link href={s.href} style={{ height: 'inherit' }}>
+                <Box sx={{ height: { xs: '110px', sm: '160px' } }}>
+                  <Image
+                    src={buttonImage}
+                    alt={t(s.labelKey)}
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                    className="homepage-button"
+                    style={{
+                      width: 'auto',
+                      height: '100%',
+                      maxWidth: '480px',
+                      cursor: 'pointer',
+                      transition: 'transform 0.2s ease, opacity 0.2s ease',
+                      flexShrink: 1,
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                  />
+                </Box>
               </Link>
             </EnterButton>
           );
@@ -259,13 +276,14 @@ export default function HomePage() {
           gridRow:     { xs: '2', md: 'auto' },
           justifySelf: 'center',
           alignSelf: 'center',
-          width: { xs: language === 'zh-CN' ? '80%' : '95%', md: '100%' },
-          maxWidth: { xs: LOGO_MAX, md: LOGO_MAX },
-          height: { xs: language === 'zh-CN' ? 350 : 300, sm: 450, md: 500 },
+          width: { xs: language === 'zh-CN' ? '70%' : '85%', sm: language === 'zh-CN' ? '80%' : '95%', md: '100%' },
+          maxWidth: { xs: 350, sm: LOGO_MAX, md: LOGO_MAX },
+          height: { xs: 'auto', sm: 450, md: 500 },
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          my: { xs: 1, md: 0 },
+          my: { xs: 0, md: 0 },
+          py: { xs: 1, md: 0 },
           minWidth: 0,
         }}
       >
@@ -308,16 +326,16 @@ export default function HomePage() {
           gridColumn: { xs: '1', md: '6' },
           gridRow:     { xs: '3', md: 'auto' },
           justifySelf: 'center',
+          alignSelf: { xs: 'start', md: 'center' },
           display: 'grid',
-          gridTemplateColumns: 'repeat(2, 160px)',
-          gridTemplateRows: 'repeat(2, 160px)',
-          width: 336,
-          height: 336,
-          gap: 2,
+          gridTemplateColumns: { xs: 'repeat(2, 110px)', sm: 'repeat(2, 160px)' },
+          gridTemplateRows: { xs: 'repeat(2, 110px)', sm: 'repeat(2, 160px)' },
+          width: { xs: 236, sm: 336 },
+          height: { xs: 236, sm: 336 },
+          gap: { xs: 1, sm: 2 },
           justifyItems: 'center',
           alignItems: 'center',
-          transform: { xs: 'scale(0.9)', sm: 'scale(1)' },
-          my: { xs: 3, md: 0 },
+          mt: { xs: 0, md: 0 },
         }}
       >
         {/* Posters, Reports, Videos, Websites */}
@@ -329,24 +347,27 @@ export default function HomePage() {
               : `/buttons/button_homepage_en_${s.buttonIndex}.png`;
           return (
             <EnterButton key={s.href} delayMs={baseB + STAGGER_MS * pos} fromX={vecB[pos]?.x || 0} fromY={vecB[pos]?.y || 0} imagesLoaded={!isLoading}>
-              <Link href={s.href}>
-                <Image
-                  src={buttonImage}
-                  alt={t(s.labelKey)}
-                  width={0}
-                  height={0}
-                  sizes="100vw"
-                  style={{
-                    width: 'auto',
-                    height: '160px',
-                    maxWidth: '480px',
-                    cursor: 'pointer',
-                    transition: 'transform 0.2s ease, opacity 0.2s ease',
-                    flexShrink: 1,
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
-                  onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-                />
+              <Link href={s.href} style={{ height: 'inherit' }}>
+                <Box sx={{ height: { xs: '110px', sm: '160px' } }}>
+                  <Image
+                    src={buttonImage}
+                    alt={t(s.labelKey)}
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                    className="homepage-button"
+                    style={{
+                      width: 'auto',
+                      height: '100%',
+                      maxWidth: '480px',
+                      cursor: 'pointer',
+                      transition: 'transform 0.2s ease, opacity 0.2s ease',
+                      flexShrink: 1,
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                  />
+                </Box>
               </Link>
             </EnterButton>
           );

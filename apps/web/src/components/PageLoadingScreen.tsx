@@ -8,9 +8,10 @@ import { useTranslation } from '@/hooks/useTranslation';
 interface PageLoadingScreenProps {
   progress: number;
   title?: string;
+  subtitle?: string;
 }
 
-export default function PageLoadingScreen({ progress, title }: PageLoadingScreenProps) {
+export default function PageLoadingScreen({ progress, title, subtitle }: PageLoadingScreenProps) {
   const { t, language } = useTranslation();
 
   return (
@@ -44,18 +45,36 @@ export default function PageLoadingScreen({ progress, title }: PageLoadingScreen
       >
         <LoadingSpinner size={50} variant="circular" />
 
-        {title && (
-          <Typography
-            sx={{
-              color: '#432F2F',
-              fontSize: '1.4rem',
-              fontWeight: 'normal',
-              textAlign: 'center',
-              fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
-            }}
-          >
-            {title}
-          </Typography>
+        {(title || subtitle) && (
+          <Box sx={{ textAlign: 'center' }}>
+            {title && (
+              <Typography
+                sx={{
+                  color: '#432F2F',
+                  fontSize: '1.2rem',
+                  fontWeight: 'normal',
+                  textAlign: 'center',
+                  fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
+                }}
+              >
+                {title}
+              </Typography>
+            )}
+            {subtitle && (
+              <Typography
+                sx={{
+                  color: '#432F2F',
+                  fontSize: '1.6rem',
+                  fontWeight: 'normal',
+                  textAlign: 'center',
+                  fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
+                  mt: 0.5,
+                }}
+              >
+                {subtitle}
+              </Typography>
+            )}
+          </Box>
         )}
 
         <Typography
