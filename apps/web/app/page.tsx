@@ -196,7 +196,7 @@ export default function HomePage() {
         sx={{
           gridColumn: { xs: 'unset', md: '2' },
           gridRow: { xs: 'unset', md: 'auto' },
-          justifySelf: 'center',
+          justifySelf: { xs: 'center', md: 'center' },
           alignSelf: { xs: 'flex-end', md: 'center' },
           display: 'grid',
           gridTemplateColumns: { xs: 'repeat(2, min(110px, 18dvh))', sm: 'repeat(2, 160px)' },
@@ -204,6 +204,7 @@ export default function HomePage() {
           gap: { xs: 1, sm: 2 },
           justifyItems: 'center',
           alignItems: 'center',
+          mx: { xs: 'auto', md: 0 },
         }}
       >
         {/* Slot 0 (TL): Language switch */}
@@ -282,6 +283,7 @@ export default function HomePage() {
           justifyContent: 'center',
           flexShrink: 0,
           minWidth: 0,
+          mx: { xs: 'auto', md: 0 },
         }}
       >
         <EnterLogo delayMs={baseLogo} imagesLoaded={!isLoading}>
@@ -322,7 +324,7 @@ export default function HomePage() {
         sx={{
           gridColumn: { xs: 'unset', md: '6' },
           gridRow: { xs: 'unset', md: 'auto' },
-          justifySelf: 'center',
+          justifySelf: { xs: 'center', md: 'center' },
           alignSelf: { xs: 'flex-start', md: 'center' },
           display: 'grid',
           gridTemplateColumns: { xs: 'repeat(2, min(110px, 18dvh))', sm: 'repeat(2, 160px)' },
@@ -330,6 +332,7 @@ export default function HomePage() {
           gap: { xs: 1, sm: 2 },
           justifyItems: 'center',
           alignItems: 'center',
+          mx: { xs: 'auto', md: 0 },
         }}
       >
         {/* Posters, Reports, Videos, Websites */}
