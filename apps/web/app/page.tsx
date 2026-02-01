@@ -166,7 +166,8 @@ export default function HomePage() {
         height: { xs: '100dvh', md: 'auto' },
         maxHeight: { xs: '100dvh', md: 'none' },
         overflow: { xs: 'hidden', md: 'visible' },
-        display: 'grid',
+        display: { xs: 'flex', md: 'grid' },
+        flexDirection: { xs: 'column', md: 'unset' },
         gridTemplateColumns: {
           xs: '1fr',
           md: `
@@ -179,7 +180,6 @@ export default function HomePage() {
             minmax(${EDGE_MIN}px, 1fr)
           `,
         },
-        gridTemplateRows: { xs: 'auto auto auto', md: 'auto' },
         alignItems: 'center',
         justifyContent: { xs: 'center', md: 'initial' },
         backgroundImage: `url(/backgrounds/homepage_background.png)`,
@@ -187,31 +187,28 @@ export default function HomePage() {
         backgroundPosition: 'center',
         color: '#fff',
         minWidth: 0,
-        py: { xs: 0, md: 0 },
-        pt: { xs: 4, md: 0 },
+        py: { xs: 2, md: 0 },
+        gap: { xs: 1, md: 0 },
       }}
     >
       {/* Cluster A (Left on desktop, Top on mobile) */}
       <Box
         sx={{
-          gridColumn: { xs: '1', md: '2' },
-          gridRow:     { xs: '1', md: 'auto' },
+          gridColumn: { xs: 'unset', md: '2' },
+          gridRow: { xs: 'unset', md: 'auto' },
           justifySelf: 'center',
-          alignSelf: { xs: 'end', md: 'center' },
+          alignSelf: { xs: 'flex-end', md: 'center' },
           display: 'grid',
-          gridTemplateColumns: { xs: 'repeat(2, 110px)', sm: 'repeat(2, 160px)' },
-          gridTemplateRows: { xs: 'repeat(2, 110px)', sm: 'repeat(2, 160px)' },
-          width: { xs: 236, sm: 336 },
-          height: { xs: 236, sm: 336 },
+          gridTemplateColumns: { xs: 'repeat(2, min(110px, 18dvh))', sm: 'repeat(2, 160px)' },
+          gridTemplateRows: { xs: 'repeat(2, min(110px, 18dvh))', sm: 'repeat(2, 160px)' },
           gap: { xs: 1, sm: 2 },
           justifyItems: 'center',
           alignItems: 'center',
-          mb: { xs: 0, md: 0 },
         }}
       >
         {/* Slot 0 (TL): Language switch */}
         <EnterButton delayMs={baseA + STAGGER_MS * 0} fromX={vecA[0]?.x || 0} fromY={vecA[0]?.y || 0} imagesLoaded={!isLoading}>
-          <Box onClick={handleLanguageSwitch} sx={{ cursor: 'pointer', height: { xs: '110px', sm: '160px' } }}>
+          <Box onClick={handleLanguageSwitch} sx={{ cursor: 'pointer', height: { xs: 'min(110px, 18dvh)', sm: '160px' } }}>
             <Image
               src={language === 'zh-CN' ? '/buttons/button_homepage_cn_8.png' : '/buttons/button_homepage_en_8.png'}
               alt={language === 'zh-CN' ? '切换到英文' : 'Switch to Chinese'}
@@ -243,7 +240,7 @@ export default function HomePage() {
           return (
             <EnterButton key={s.href} delayMs={baseA + STAGGER_MS * pos} fromX={vecA[pos]?.x || 0} fromY={vecA[pos]?.y || 0} imagesLoaded={!isLoading}>
               <Link href={s.href} style={{ height: 'inherit' }}>
-                <Box sx={{ height: { xs: '110px', sm: '160px' } }}>
+                <Box sx={{ height: { xs: 'min(110px, 18dvh)', sm: '160px' } }}>
                   <Image
                     src={buttonImage}
                     alt={t(s.labelKey)}
@@ -272,18 +269,18 @@ export default function HomePage() {
       {/* Center logo (breathes in between clusters) */}
       <Box
         sx={{
-          gridColumn: { xs: '1', md: '4' },
-          gridRow:     { xs: '2', md: 'auto' },
+          gridColumn: { xs: 'unset', md: '4' },
+          gridRow: { xs: 'unset', md: 'auto' },
           justifySelf: 'center',
           alignSelf: 'center',
-          width: { xs: language === 'zh-CN' ? '70%' : '85%', sm: language === 'zh-CN' ? '80%' : '95%', md: '100%' },
-          maxWidth: { xs: 350, sm: LOGO_MAX, md: LOGO_MAX },
+          width: { xs: language === 'zh-CN' ? '60%' : '75%', sm: language === 'zh-CN' ? '80%' : '95%', md: '100%' },
+          maxWidth: { xs: 300, sm: LOGO_MAX, md: LOGO_MAX },
           height: { xs: 'auto', sm: 450, md: 500 },
+          maxHeight: { xs: '22dvh', sm: 450, md: 500 },
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          my: { xs: 0, md: 0 },
-          py: { xs: 1, md: 0 },
+          flexShrink: 0,
           minWidth: 0,
         }}
       >
@@ -323,19 +320,16 @@ export default function HomePage() {
       {/* Cluster B (Right on desktop, Bottom on mobile) */}
       <Box
         sx={{
-          gridColumn: { xs: '1', md: '6' },
-          gridRow:     { xs: '3', md: 'auto' },
+          gridColumn: { xs: 'unset', md: '6' },
+          gridRow: { xs: 'unset', md: 'auto' },
           justifySelf: 'center',
-          alignSelf: { xs: 'start', md: 'center' },
+          alignSelf: { xs: 'flex-start', md: 'center' },
           display: 'grid',
-          gridTemplateColumns: { xs: 'repeat(2, 110px)', sm: 'repeat(2, 160px)' },
-          gridTemplateRows: { xs: 'repeat(2, 110px)', sm: 'repeat(2, 160px)' },
-          width: { xs: 236, sm: 336 },
-          height: { xs: 236, sm: 336 },
+          gridTemplateColumns: { xs: 'repeat(2, min(110px, 18dvh))', sm: 'repeat(2, 160px)' },
+          gridTemplateRows: { xs: 'repeat(2, min(110px, 18dvh))', sm: 'repeat(2, 160px)' },
           gap: { xs: 1, sm: 2 },
           justifyItems: 'center',
           alignItems: 'center',
-          mt: { xs: 0, md: 0 },
         }}
       >
         {/* Posters, Reports, Videos, Websites */}
@@ -348,7 +342,7 @@ export default function HomePage() {
           return (
             <EnterButton key={s.href} delayMs={baseB + STAGGER_MS * pos} fromX={vecB[pos]?.x || 0} fromY={vecB[pos]?.y || 0} imagesLoaded={!isLoading}>
               <Link href={s.href} style={{ height: 'inherit' }}>
-                <Box sx={{ height: { xs: '110px', sm: '160px' } }}>
+                <Box sx={{ height: { xs: 'min(110px, 18dvh)', sm: '160px' } }}>
                   <Image
                     src={buttonImage}
                     alt={t(s.labelKey)}
