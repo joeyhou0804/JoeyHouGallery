@@ -162,10 +162,14 @@ export default function HomePage() {
   return (
     <Box
       sx={{
-        position: 'relative',
-        minHeight: { xs: '100dvh', md: '100vh' },
-        height: { xs: '100dvh', md: 'auto' },
-        maxHeight: { xs: '100dvh', md: 'none' },
+        position: { xs: 'fixed', md: 'relative' },
+        top: { xs: 0, md: 'auto' },
+        left: { xs: 0, md: 'auto' },
+        right: { xs: 0, md: 'auto' },
+        bottom: { xs: 0, md: 'auto' },
+        minHeight: { xs: 'auto', md: '100vh' },
+        height: { xs: '100%', md: 'auto' },
+        maxHeight: { xs: '100%', md: 'none' },
         overflow: 'hidden',
         display: { xs: 'flex', md: 'grid' },
         flexDirection: { xs: 'column', md: 'unset' },
