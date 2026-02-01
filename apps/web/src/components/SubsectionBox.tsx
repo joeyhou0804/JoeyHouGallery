@@ -45,24 +45,24 @@ function SubsectionTitle({
         <Box
           sx={{
             position: 'absolute',
-            top: { xs: -14, sm: -16, md: -18 },
+            top: { xs: -10, sm: -16, md: -18 },
             left: '50%',
             transform: 'translateX(-50%)',
             backgroundColor: 'white',
-            border: { xs: `1.5px solid ${rightColor}`, sm: `2px solid ${rightColor}` },
-            borderRadius: { xs: '14px', sm: '18px', md: '20px' },
-            padding: { xs: '2px 10px', sm: '3px 14px', md: '4px 16px' },
+            border: { xs: `1px solid ${rightColor}`, sm: `2px solid ${rightColor}` },
+            borderRadius: { xs: '10px', sm: '18px', md: '20px' },
+            padding: { xs: '1px 6px', sm: '3px 14px', md: '4px 16px' },
             display: 'flex',
             alignItems: 'center',
-            gap: { xs: 0.5, sm: 0.75, md: 1 },
+            gap: { xs: 0.25, sm: 0.75, md: 1 },
             zIndex: 1,
           }}
         >
-          <Typography sx={{ color: rightColor, fontSize: { xs: '0.55rem', sm: '0.7rem', md: '0.9rem' }, pt: '2px' }}>★</Typography>
-          <Typography sx={{ color: rightColor, fontWeight: 'bold', fontSize: { xs: '0.7rem', sm: '1rem', md: '1.2rem' }, pt: '2px', whiteSpace: 'nowrap' }}>
+          <Typography sx={{ color: rightColor, fontSize: { xs: '0.45rem', sm: '0.7rem', md: '0.9rem' }, pt: '1px' }}>★</Typography>
+          <Typography sx={{ color: rightColor, fontWeight: 'bold', fontSize: { xs: '0.55rem', sm: '1rem', md: '1.2rem' }, pt: '1px', whiteSpace: 'nowrap' }}>
             {year}
           </Typography>
-          <Typography sx={{ color: rightColor, fontSize: { xs: '0.55rem', sm: '0.7rem', md: '0.9rem' }, pt: '2px' }}>★</Typography>
+          <Typography sx={{ color: rightColor, fontSize: { xs: '0.45rem', sm: '0.7rem', md: '0.9rem' }, pt: '1px' }}>★</Typography>
         </Box>
       )}
 
