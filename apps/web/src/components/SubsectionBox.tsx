@@ -59,7 +59,7 @@ function SubsectionTitle({
           }}
         >
           <Typography sx={{ color: rightColor, fontSize: { xs: '0.7rem', sm: '0.8rem', md: '0.9rem' }, pt: '2px' }}>★</Typography>
-          <Typography sx={{ color: rightColor, fontWeight: 'bold', fontSize: { xs: '0.9rem', sm: '1.1rem', md: '1.2rem' }, pt: '2px' }}>
+          <Typography sx={{ color: rightColor, fontWeight: 'bold', fontSize: { xs: '0.9rem', sm: '1.1rem', md: '1.2rem' }, pt: '2px', whiteSpace: 'nowrap' }}>
             {year}
           </Typography>
           <Typography sx={{ color: rightColor, fontSize: { xs: '0.7rem', sm: '0.8rem', md: '0.9rem' }, pt: '2px' }}>★</Typography>
