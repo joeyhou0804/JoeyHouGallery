@@ -378,14 +378,14 @@ export default function HomePage() {
       <Box
         sx={{
           position: 'absolute',
-          top: { xs: 0, md: 'auto' },
-          bottom: { xs: 'auto', md: 0 },
+          top: 'auto',
+          bottom: 0,
           left: 0,
           right: 0,
           display: 'flex',
           justifyContent: 'center',
-          pt: { xs: 1, md: 0 },
-          pb: { xs: 0, md: 3 },
+          pt: { xs: 0, md: 0 },
+          pb: { xs: 1, md: 3 },
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
