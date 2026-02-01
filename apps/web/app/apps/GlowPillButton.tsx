@@ -48,10 +48,11 @@ const CtaButton = styled(Button)(({ theme }) => ({
   },
 
   [theme.breakpoints.down('sm')]: {
-    fontSize: 18,
-    padding: '12px 20px',
-    '& .cta-circle': { width: 36, height: 36 },
-    '& .cta-arrow': { fontSize: 22 },
+    fontSize: 14,
+    padding: '8px 14px',
+    '& .MuiButton-endIcon': { marginLeft: 8 },
+    '& .cta-circle': { width: 28, height: 28 },
+    '& .cta-arrow': { fontSize: 16 },
   },
 }));
 
