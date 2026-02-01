@@ -200,8 +200,8 @@ export default function HomePage() {
           justifySelf: { xs: 'center', md: 'center' },
           alignSelf: { xs: 'flex-end', md: 'center' },
           display: 'grid',
-          gridTemplateColumns: { xs: 'repeat(2, min(100px, 16dvh))', sm: 'repeat(2, 160px)' },
-          gridTemplateRows: { xs: 'repeat(2, min(100px, 16dvh))', sm: 'repeat(2, 160px)' },
+          gridTemplateColumns: { xs: 'repeat(2, min(110px, 18dvh))', sm: 'repeat(2, 160px)' },
+          gridTemplateRows: { xs: 'repeat(2, min(110px, 18dvh))', sm: 'repeat(2, 160px)' },
           gap: { xs: 1, sm: 2 },
           justifyItems: 'center',
           alignItems: 'center',
@@ -211,7 +211,7 @@ export default function HomePage() {
       >
         {/* Slot 0 (TL): Language switch */}
         <EnterButton delayMs={baseA + STAGGER_MS * 0} fromX={vecA[0]?.x || 0} fromY={vecA[0]?.y || 0} imagesLoaded={!isLoading}>
-          <Box onClick={handleLanguageSwitch} sx={{ cursor: 'pointer', height: { xs: 'min(100px, 16dvh)', sm: '160px' } }}>
+          <Box onClick={handleLanguageSwitch} sx={{ cursor: 'pointer', height: { xs: 'min(110px, 18dvh)', sm: '160px' } }}>
             <Image
               src={language === 'zh-CN' ? '/buttons/button_homepage_cn_8.png' : '/buttons/button_homepage_en_8.png'}
               alt={language === 'zh-CN' ? '切换到英文' : 'Switch to Chinese'}
@@ -243,7 +243,7 @@ export default function HomePage() {
           return (
             <EnterButton key={s.href} delayMs={baseA + STAGGER_MS * pos} fromX={vecA[pos]?.x || 0} fromY={vecA[pos]?.y || 0} imagesLoaded={!isLoading}>
               <Link href={s.href} style={{ height: 'inherit' }}>
-                <Box sx={{ height: { xs: 'min(100px, 16dvh)', sm: '160px' } }}>
+                <Box sx={{ height: { xs: 'min(110px, 18dvh)', sm: '160px' } }}>
                   <Image
                     src={buttonImage}
                     alt={t(s.labelKey)}
@@ -279,7 +279,7 @@ export default function HomePage() {
           width: { xs: language === 'zh-CN' ? '60%' : '75%', sm: language === 'zh-CN' ? '80%' : '95%', md: '100%' },
           maxWidth: { xs: 300, sm: LOGO_MAX, md: LOGO_MAX },
           height: { xs: 'auto', sm: 450, md: 500 },
-          maxHeight: { xs: '20dvh', sm: 450, md: 500 },
+          maxHeight: { xs: '22dvh', sm: 450, md: 500 },
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -330,8 +330,8 @@ export default function HomePage() {
           justifySelf: { xs: 'center', md: 'center' },
           alignSelf: { xs: 'flex-start', md: 'center' },
           display: 'grid',
-          gridTemplateColumns: { xs: 'repeat(2, min(100px, 16dvh))', sm: 'repeat(2, 160px)' },
-          gridTemplateRows: { xs: 'repeat(2, min(100px, 16dvh))', sm: 'repeat(2, 160px)' },
+          gridTemplateColumns: { xs: 'repeat(2, min(110px, 18dvh))', sm: 'repeat(2, 160px)' },
+          gridTemplateRows: { xs: 'repeat(2, min(110px, 18dvh))', sm: 'repeat(2, 160px)' },
           gap: { xs: 1, sm: 2 },
           justifyItems: 'center',
           alignItems: 'center',
@@ -349,7 +349,7 @@ export default function HomePage() {
           return (
             <EnterButton key={s.href} delayMs={baseB + STAGGER_MS * pos} fromX={vecB[pos]?.x || 0} fromY={vecB[pos]?.y || 0} imagesLoaded={!isLoading}>
               <Link href={s.href} style={{ height: 'inherit' }}>
-                <Box sx={{ height: { xs: 'min(100px, 16dvh)', sm: '160px' } }}>
+                <Box sx={{ height: { xs: 'min(110px, 18dvh)', sm: '160px' } }}>
                   <Image
                     src={buttonImage}
                     alt={t(s.labelKey)}
