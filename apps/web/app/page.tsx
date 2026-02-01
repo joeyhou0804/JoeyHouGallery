@@ -162,9 +162,9 @@ export default function HomePage() {
   return (
     <Box
       sx={{
-        minHeight: { xs: '100vh', md: '100vh' },
-        height: { xs: '100vh', md: 'auto' },
-        maxHeight: { xs: '100vh', md: 'none' },
+        minHeight: { xs: '100dvh', md: '100vh' },
+        height: { xs: '100dvh', md: 'auto' },
+        maxHeight: { xs: '100dvh', md: 'none' },
         overflow: { xs: 'hidden', md: 'visible' },
         display: 'grid',
         gridTemplateColumns: {
