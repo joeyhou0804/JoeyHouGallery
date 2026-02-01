@@ -205,6 +205,7 @@ export default function HomePage() {
           justifyItems: 'center',
           alignItems: 'center',
           mx: { xs: 'auto', md: 0 },
+          zIndex: 1,
         }}
       >
         {/* Slot 0 (TL): Language switch */}
@@ -284,6 +285,7 @@ export default function HomePage() {
           flexShrink: 0,
           minWidth: 0,
           mx: { xs: 'auto', md: 0 },
+          zIndex: 0,
         }}
       >
         <EnterLogo delayMs={baseLogo} imagesLoaded={!isLoading}>
@@ -333,6 +335,7 @@ export default function HomePage() {
           justifyItems: 'center',
           alignItems: 'center',
           mx: { xs: 'auto', md: 0 },
+          zIndex: 1,
         }}
       >
         {/* Posters, Reports, Videos, Websites */}
