@@ -248,7 +248,7 @@ export default function HomePage() {
               ? `/buttons/button_homepage_cn_${s.buttonIndex}.png`
               : `/buttons/button_homepage_en_${s.buttonIndex}.png`;
           // Add extra spacing for second row (Arts=i:1, Handbooks=i:2)
-          const extraMargin = i === 1 ? { mr: { xs: 'min(55px, 9dvh)', sm: 0 } } : i === 2 ? { ml: { xs: 'min(55px, 9dvh)', sm: 0 } } : {};
+          const extraMargin = i === 1 ? { mr: { xs: 'min(80px, 14dvh)', sm: 0 } } : i === 2 ? { ml: { xs: 'min(80px, 14dvh)', sm: 0 } } : {};
           return (
             <EnterButton key={s.href} delayMs={baseA + STAGGER_MS * pos} fromX={vecA[pos]?.x || 0} fromY={vecA[pos]?.y || 0} imagesLoaded={!isLoading}>
               <Link href={s.href} style={{ height: 'inherit' }}>
@@ -357,7 +357,7 @@ export default function HomePage() {
               ? `/buttons/button_homepage_cn_${s.buttonIndex}.png`
               : `/buttons/button_homepage_en_${s.buttonIndex}.png`;
           // Add extra spacing for first row (Posters=i:0, Reports=i:1)
-          const extraMargin = i === 0 ? { mr: { xs: 'min(55px, 9dvh)', sm: 0 } } : i === 1 ? { ml: { xs: 'min(55px, 9dvh)', sm: 0 } } : {};
+          const extraMargin = i === 0 ? { mr: { xs: 'min(80px, 14dvh)', sm: 0 } } : i === 1 ? { ml: { xs: 'min(80px, 14dvh)', sm: 0 } } : {};
           return (
             <EnterButton key={s.href} delayMs={baseB + STAGGER_MS * pos} fromX={vecB[pos]?.x || 0} fromY={vecB[pos]?.y || 0} imagesLoaded={!isLoading}>
               <Link href={s.href} style={{ height: 'inherit' }}>
