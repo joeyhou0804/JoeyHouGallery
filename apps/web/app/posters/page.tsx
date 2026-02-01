@@ -95,7 +95,7 @@ export default function PostersPage() {
         }
 
         return (
-          <Section key={i}>
+          <Section key={i} sx={{ py: { xs: 1, sm: 1.5, md: 2 } }}>
             <SubsectionBox section={s} index={i} imageLayout={imageLayout} />
           </Section>
         );
