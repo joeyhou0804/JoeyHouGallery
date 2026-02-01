@@ -162,12 +162,14 @@ export default function HomePage() {
   return (
     <Box
       sx={{
+        position: 'relative',
         minHeight: { xs: '100dvh', md: '100vh' },
         height: { xs: '100dvh', md: 'auto' },
         maxHeight: { xs: '100dvh', md: 'none' },
-        overflow: { xs: 'hidden', md: 'visible' },
+        overflow: 'hidden',
         display: { xs: 'flex', md: 'grid' },
         flexDirection: { xs: 'column', md: 'unset' },
+        boxSizing: 'border-box',
         gridTemplateColumns: {
           xs: '1fr',
           md: `
