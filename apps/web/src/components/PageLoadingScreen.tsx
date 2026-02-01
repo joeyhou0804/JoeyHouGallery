@@ -21,24 +21,15 @@ export default function PageLoadingScreen({ progress, title }: PageLoadingScreen
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#f8f9fa',
+        backgroundImage: 'url(/backgrounds/section_background.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
         gap: 3,
         position: 'relative',
         overflow: 'hidden',
       }}
     >
-      {/* Subtle background gradient */}
-      <Box
-        sx={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
-          opacity: 0.8,
-        }}
-      />
 
       {/* Content */}
       <Box
@@ -76,38 +67,6 @@ export default function PageLoadingScreen({ progress, title }: PageLoadingScreen
           }}
         >
           {t('ui.loading')}
-        </Typography>
-
-        {/* Progress bar */}
-        <Box
-          sx={{
-            width: 240,
-            height: 6,
-            backgroundColor: '#e0e0e0',
-            borderRadius: 3,
-            overflow: 'hidden',
-            boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.1)',
-          }}
-        >
-          <Box
-            sx={{
-              width: `${progress}%`,
-              height: '100%',
-              background: 'linear-gradient(90deg, #BB8F43, #DFBF23)',
-              transition: 'width 0.2s ease',
-              borderRadius: 3,
-            }}
-          />
-        </Box>
-
-        <Typography
-          sx={{
-            color: '#888',
-            fontSize: '0.9rem',
-            fontWeight: 500,
-          }}
-        >
-          {Math.round(progress)}%
         </Typography>
       </Box>
     </Box>

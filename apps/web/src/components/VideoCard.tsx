@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import { useMediaQuery, useTheme } from '@mui/material';
-import { useEffect, useState, useRef } from 'react';
 import YouTubeEmbed from './YouTubeEmbed';
 import { useTranslation } from '@/hooks/useTranslation';
 
@@ -30,47 +29,6 @@ export default function VideoCard({
   const { language } = useTranslation();
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.down('sm')); // xs screens only
-  const [isVisible, setIsVisible] = useState(false);
-  const [hasAnimated, setHasAnimated] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  // Intersection Observer for viewport-based animation
-  useEffect(() => {
-    const node = cardRef.current;
-    if (!node || hasAnimated) return;
-
-    const prefersReduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) {
-      setIsVisible(true);
-      setHasAnimated(true);
-      return;
-    }
-
-    let timeoutId: number | undefined;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            timeoutId = window.setTimeout(() => {
-              setIsVisible(true);
-              setHasAnimated(true);
-            }, colorIndex * 150); // 150ms delay between each video card
-            observer.unobserve(node);
-          }
-        });
-      },
-      {
-        threshold: 0,
-        rootMargin: '0px 0px -10% 0px',
-      }
-    );
-
-    observer.observe(node);
-    return () => {
-      if (timeoutId) window.clearTimeout(timeoutId);
-      observer.disconnect();
-    };
-  }, [colorIndex, hasAnimated]);
 
   const gradients = [
     'linear-gradient(to right, #75C5EB, #297BC8)',
@@ -93,7 +51,6 @@ export default function VideoCard({
 
   return (
     <Box
-      ref={cardRef}
       sx={{
         backgroundImage: `url(/backgrounds/section_background.png)`,
         backgroundSize: 'cover',
@@ -105,17 +62,13 @@ export default function VideoCard({
         overflow: 'hidden',
         mb: 4,
         position: 'relative',
-        transform: isVisible ? 'translateY(0)' : 'translateY(40px)',
-        opacity: isVisible ? 1 : 0,
-        transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
-        willChange: 'transform, opacity',
         ...sx,
       }}
     >
       {isXs ? (
         // Mobile layout: vertical stack
-        <Box sx={{ p: { xs: 1, sm: 3 } }}>
-          <Stack spacing={3} alignItems="center">
+        <Box sx={{ p: 1 }}>
+          <Stack spacing={1.5} alignItems="center">
             {/* Video */}
             <Box
               sx={{
@@ -133,9 +86,9 @@ export default function VideoCard({
             {/* Colored stripe with title */}
             <Box
               sx={{
-                width: 'calc(100% + 48px)', // Extend beyond the padding
-                marginLeft: '-24px',
-                marginRight: '-24px',
+                width: 'calc(100% + 16px)', // Extend beyond the padding
+                marginLeft: '-8px',
+                marginRight: '-8px',
                 height: STRIPE_HEIGHT,
                 backgroundImage: backgroundGradient,
                 display: 'flex',

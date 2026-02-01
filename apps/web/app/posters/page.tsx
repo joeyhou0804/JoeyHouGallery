@@ -11,7 +11,15 @@ import { usePageLoading } from '@/hooks/usePageLoading';
 
 export default function PostersPage() {
   const { t } = useTranslation();
-  const { isLoading, progress } = usePageLoading({ duration: 1000 });
+
+  // Critical images to preload
+  const criticalImages = [
+    '/181B-poster.png',
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638407917/joeyhougallery/posters/IMG_0949_wm7cwx.jpg",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1638407917/joeyhougallery/posters/IMG_0953_vuilc2.jpg"
+  ];
+
+  const { isLoading, progress } = usePageLoading({ duration: 1000, images: criticalImages });
 
   if (isLoading) {
     return <PageLoadingScreen progress={progress} title={t('posters')} />;

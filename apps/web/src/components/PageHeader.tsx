@@ -118,17 +118,17 @@ export default function PageHeader({ pageKey, children }: PageHeaderProps) {
           };
         }}
       >
-        <Container maxWidth="xl" sx={{ position: 'relative', height: { xs: '160px', sm: '200px', md: '300px' } }}>
-          {/* Centered container for character and title */}
-          <Box 
-            sx={{ 
+        <Container maxWidth="xl" sx={{ position: 'relative', height: { xs: '180px', sm: '200px', md: '300px' } }}>
+          {/* Container for character and title - left aligned on mobile, centered on larger screens */}
+          <Box
+            sx={{
               position: 'absolute',
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
               display: 'flex',
               alignItems: 'center',
-              gap: { xs: 1, sm: 2, md: 3, lg: 4 },
+              gap: { xs: 1.5, sm: 2, md: 3, lg: 4 },
               zIndex: 2
             }}
           >
@@ -142,22 +142,22 @@ export default function PageHeader({ pageKey, children }: PageHeaderProps) {
                 sizes="100vw"
                 style={{
                   width: 'auto',
-                  height: 'clamp(120px, 18vw, 240px)',
-                  maxWidth: 'clamp(150px, 22vw, 400px)',
+                  height: 'clamp(140px, 20vw, 240px)',
+                  maxWidth: 'clamp(180px, 24vw, 400px)',
                   objectFit: 'contain',
                 }}
               />
             </Box>
 
-            {/* Title on the right - center aligned */}
+            {/* Title on the right */}
             <Box>
-              <Typography 
-                variant="h1" 
-                sx={{ 
+              <Typography
+                variant="h1"
+                sx={{
                   color: 'white',
                   fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
                   textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3), 0px 0px 1px rgba(0, 0, 0, 0.5)',
-                  fontSize: { xs: '2rem', sm: '2.8rem', md: '4.5rem', lg: '5.5rem' },
+                  fontSize: { xs: '2.5rem', sm: '2.8rem', md: '4.5rem', lg: '5.5rem' },
                   textAlign: 'left',
                   lineHeight: 1,
                   whiteSpace: 'nowrap',

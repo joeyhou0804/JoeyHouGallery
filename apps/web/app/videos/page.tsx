@@ -18,7 +18,15 @@ import { usePageLoading } from '@/hooks/usePageLoading';
 
 export default function VideosPage() {
   const { t } = useTranslation();
-  const { isLoading, progress } = usePageLoading({ duration: 1400 });
+
+  // Preload YouTube thumbnails
+  const criticalImages = [
+    'https://img.youtube.com/vi/Xz08rpOaU0M/maxresdefault.jpg',
+    'https://img.youtube.com/vi/8d3AIE3-kQA/maxresdefault.jpg',
+    'https://img.youtube.com/vi/DNJFN6HK7MQ/maxresdefault.jpg'
+  ];
+
+  const { isLoading, progress } = usePageLoading({ duration: 1400, images: criticalImages });
 
   if (isLoading) {
     return <PageLoadingScreen progress={progress} title={t('videos')} />;

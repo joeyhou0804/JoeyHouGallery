@@ -146,7 +146,7 @@ export default function HandbooksPage() {
       zIndex={4}
       customColor="red"
     >
-      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ justifyContent: 'center' }}>
+      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 1, sm: 2 }} sx={{ justifyContent: 'center', my: { xs: 2, sm: 0 } }}>
         <GlowPillButton
           href="/volume_columbia_2025_zh_cn.pdf"
           rel="noreferrer"
@@ -169,7 +169,7 @@ export default function HandbooksPage() {
       zIndex={3}
       customColor="blue"
     >
-      <Box sx={{ textAlign: 'center' }}>
+      <Box sx={{ textAlign: 'center', my: { xs: 2, sm: 0 } }}>
         {englishSection?.links?.[0] && (
           <GlowPillButton
             href={englishSection.links[0].href}
@@ -194,7 +194,7 @@ export default function HandbooksPage() {
       zIndex={2}
       customColor="green"
     >
-      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ justifyContent: 'center' }}>
+      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 1, sm: 2 }} sx={{ justifyContent: 'center', my: { xs: 2, sm: 0 } }}>
         {traditionalSection?.links?.map((l: any) => (
           <GlowPillButton
             key={l.href}
@@ -219,7 +219,7 @@ export default function HandbooksPage() {
       zIndex={1}
       customColor="red"
     >
-      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ justifyContent: 'center' }}>
+      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 1, sm: 2 }} sx={{ justifyContent: 'center', my: { xs: 2, sm: 0 } }}>
         {simplifiedSection?.links?.map((l: any) => (
           <GlowPillButton
             key={l.href}

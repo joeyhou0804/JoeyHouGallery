@@ -10,7 +10,15 @@ import { usePageLoading } from '@/hooks/usePageLoading';
 
 export default function ReportsPage() {
   const { t } = useTranslation();
-  const { isLoading, progress } = usePageLoading({ duration: 1200 });
+
+  // Critical images to preload
+  const criticalImages = [
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639372416/joeyhougallery/reports/IMG_8757_bkgvdc.jpg",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639376152/joeyhougallery/reports/Hungarian/IMG_8767_jdqdw4.jpg",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1639373173/joeyhougallery/reports/CS%20Theory/IMG_8763_hjk0om.jpg"
+  ];
+
+  const { isLoading, progress } = usePageLoading({ duration: 1200, images: criticalImages });
 
   if (isLoading) {
     return <PageLoadingScreen progress={progress} title={t('reports')} />;

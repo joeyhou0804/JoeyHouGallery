@@ -12,7 +12,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useAtom } from 'jotai';
 import { languageAtom, Language } from '@joey/atoms';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
 import { usePageLoading } from '@/hooks/usePageLoading';
 import PageLoadingScreen from '@/components/PageLoadingScreen';
@@ -38,77 +38,14 @@ const LOGO_MAX = 600;
 const EDGE_MIN = 80;
 const INNER_MAX = 'clamp(8px, 2vw, 40px)';
 
-// Animation tunables
-const DURATION_MS = 520;
+// Layout stagger (kept for button timing logic)
 const STAGGER_MS = 90;
-const EASE = 'cubic-bezier(.2,.7,.2,1)';
 
 // ------------------------------
-// Prefers-reduced-motion + reveal-once
-// ------------------------------
-function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const update = () => setReduced(mq.matches);
-    update();
-    mq.addEventListener?.('change', update);
-    return () => mq.removeEventListener?.('change', update);
-  }, []);
-  return reduced;
-}
-
-function useRevealOnce<T extends HTMLElement>(options?: IntersectionObserverInit & { imagesLoaded?: boolean }) {
-  const ref = useRef<T | null>(null);
-  const [visible, setVisible] = useState(false);
-  const imagesLoaded = options?.imagesLoaded ?? true;
-
-  useEffect(() => {
-    if (!ref.current || !imagesLoaded) return;
-    const el = ref.current;
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            setVisible(true);
-            io.unobserve(el);
-          }
-        });
-      },
-      { rootMargin: '0px 0px -10% 0px', threshold: 0.15, ...(options || {}) }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [options, imagesLoaded]);
-  return { ref, visible };
-}
-
-function enterSx(visible: boolean, reduced: boolean, opts: {
-  fromX?: number; fromY?: number; delayMs?: number; scaleFrom?: number;
-} = {}) {
-  const { fromX = 0, fromY = 0, delayMs = 0, scaleFrom = 1 } = opts;
-  if (reduced) return { opacity: 1, transform: 'translate3d(0,0,0) scale(1)' };
-  return {
-    opacity: visible ? 1 : 0,
-    transform: visible
-      ? 'translate3d(0,0,0) scale(1)'
-      : `translate3d(${fromX}px, ${fromY}px, 0) scale(${scaleFrom})`,
-    transition: `opacity ${DURATION_MS}ms ${EASE}, transform ${DURATION_MS}ms ${EASE}, filter ${DURATION_MS}ms ${EASE}`,
-    transitionDelay: `${delayMs}ms`,
-    willChange: 'transform, opacity, filter',
-    filter: visible ? 'blur(0px)' : 'blur(2px)',
-  } as const;
-}
-
-// ------------------------------
-// Button + Logo entrances
+// Simple wrapper components (animations removed)
 // ------------------------------
 function EnterButton({
   children,
-  delayMs = 0,
-  fromX = 0,
-  fromY = 0,
-  imagesLoaded = true,
 }: {
   children: React.ReactNode;
   delayMs?: number;
@@ -116,37 +53,17 @@ function EnterButton({
   fromY?: number;
   imagesLoaded?: boolean;
 }) {
-  const reduced = usePrefersReducedMotion();
-  const { ref, visible } = useRevealOnce<HTMLDivElement>({ imagesLoaded });
-  return (
-    <Box ref={ref} sx={{ ...enterSx(visible, reduced, { fromX, fromY, delayMs, scaleFrom: 0.98 }) }}>
-      {children}
-    </Box>
-  );
+  return <Box>{children}</Box>;
 }
 
 function EnterLogo({
-  delayMs = 120,
   children,
-  imagesLoaded = true
 }: {
   delayMs?: number;
   children: React.ReactNode;
   imagesLoaded?: boolean;
 }) {
-  const reduced = usePrefersReducedMotion();
-  const { ref, visible } = useRevealOnce<HTMLDivElement>({ imagesLoaded });
-  return (
-    <Box
-      ref={ref}
-      sx={{
-        ...enterSx(visible, reduced, { delayMs, scaleFrom: 0.94 }),
-        transform: visible ? 'translate3d(0,0,0) scale(1)' : 'translate3d(0, 6px, 0) scale(0.94)',
-      }}
-    >
-      {children}
-    </Box>
-  );
+  return <Box>{children}</Box>;
 }
 
 // ------------------------------
@@ -179,8 +96,19 @@ export default function HomePage() {
   const theme = useTheme();
   const isVertical = useMediaQuery(theme.breakpoints.down('md')); // stacked layout trigger
 
+  // Critical images to preload
+  const criticalImages = [
+    '/logos/logo_cn.png',
+    '/logos/logo_en.png',
+    '/buttons/button_homepage_cn_1.png',
+    '/buttons/button_homepage_cn_2.png',
+    '/buttons/button_homepage_en_1.png',
+    '/buttons/button_homepage_en_2.png',
+    '/backgrounds/homepage_background.png'
+  ];
+
   // Use the same loading pattern as other pages
-  const { isLoading, progress } = usePageLoading({ duration: 2000, minLoadingTime: 1500 });
+  const { isLoading, progress } = usePageLoading({ duration: 2000, minLoadingTime: 1500, images: criticalImages });
 
   const handleLanguageSwitch = () => {
     const newLanguage: Language = currentLanguage === 'en' ? 'zh-CN' : 'en';
@@ -331,9 +259,9 @@ export default function HomePage() {
           gridRow:     { xs: '2', md: 'auto' },
           justifySelf: 'center',
           alignSelf: 'center',
-          width: { xs: '100%', md: '100%' },
+          width: { xs: language === 'zh-CN' ? '80%' : '95%', md: '100%' },
           maxWidth: { xs: LOGO_MAX, md: LOGO_MAX },
-          height: { xs: 300, md: 500 },
+          height: { xs: language === 'zh-CN' ? 350 : 300, sm: 450, md: 500 },
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

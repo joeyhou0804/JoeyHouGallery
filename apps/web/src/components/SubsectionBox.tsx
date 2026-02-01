@@ -7,7 +7,6 @@ import Stack from '@mui/material/Stack';
 import ImageGrid from '@/components/ImageGrid';
 import CloudImage from '@/components/CloudImage';
 import { useTranslation } from '@/hooks/useTranslation';
-import { useEffect, useState, useRef } from 'react';
 import type { Section as SectionType } from '@/content/types';
 
 // SubsectionTitle Component: Colored gradient backgrounds for subsection titles with optional year capsule
@@ -90,15 +89,15 @@ function SubsectionTitle({
             backgroundRepeat: 'repeat, no-repeat',
             backgroundSize: 'auto, 100% 100%',
             backgroundPosition: 'left top, left top',
-            padding: year ? '32px 16px 16px 16px' : 2, // Add extra padding when capsule is present
+            padding: 2, // Consistent padding regardless of capsule
             marginTop: year ? '32px' : 0,
             marginBottom: 0, // Fixed bottom margin
 
             // Responsive margins and zigzag pattern
             [theme.breakpoints.up('xs')]: {
-              marginTop: year ? '32px' : '16px',
-              marginLeft: '16px',
-              marginRight: '16px',
+              marginTop: year ? '24px' : '8px',
+              marginLeft: '8px',
+              marginRight: '8px',
               clipPath: `polygon(0% 0%, 100% 0%, calc(100% - ${depth.xs}px) 25%, 100% 50%, calc(100% - ${depth.xs}px) 75%, 100% 100%, 0% 100%)`,
             },
             [theme.breakpoints.up('sm')]: {
@@ -156,68 +155,19 @@ export default function SubsectionBox({
   sx?: any
 }) {
   const { t, language } = useTranslation();
-  const [isVisible, setIsVisible] = useState(false);
-  const [hasAnimated, setHasAnimated] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   // Use custom title or the section title
   const title = customTitle || section.title;
   const body = section.body;
 
-  // Fade-in + move-up when the *top* reaches 10% from the bottom of the viewport
-  useEffect(() => {
-    const node = containerRef.current;
-    if (!node || hasAnimated) return;
-
-    // Respect reduced motion
-    const prefersReduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) {
-      setIsVisible(true);
-      setHasAnimated(true);
-      return;
-    }
-
-    let timeoutId: number | undefined;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // stagger by index for a cascading effect
-            timeoutId = window.setTimeout(() => {
-              setIsVisible(true);
-              setHasAnimated(true);
-            }, index * 100);
-            observer.unobserve(node);
-          }
-        });
-      },
-      {
-        threshold: 0,
-        // Shrink only the bottom by 10% so it fires as soon as the element's top crosses that line.
-        rootMargin: '0px 0px -10% 0px',
-      }
-    );
-
-    observer.observe(node);
-    return () => {
-      if (timeoutId) window.clearTimeout(timeoutId);
-      observer.disconnect();
-    };
-  }, [index, hasAnimated]);
-
   return (
     <Box
-      ref={containerRef}
       sx={{
         backgroundColor: 'white',
         borderRadius: 2,
         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
         overflow: 'hidden',
         mt: index === 0 ? 6 : 1, // Extra margin top for the first gallery section (Application Idea)
-        transform: isVisible ? 'translateY(0)' : 'translateY(40px)',
-        opacity: isVisible ? 1 : 0,
-        transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
-        willChange: 'transform, opacity',
         ...sx,
       }}
     >
@@ -231,7 +181,7 @@ export default function SubsectionBox({
       />
 
       {/* Body content section */}
-      <Box sx={{ p: { xs: 2, sm: 2.5, md: 3 } }}>
+      <Box sx={{ p: { xs: 1, sm: 2.5, md: 3 } }}>
         {/* Custom children content (like buttons) */}
         {children && (
           <Box sx={{

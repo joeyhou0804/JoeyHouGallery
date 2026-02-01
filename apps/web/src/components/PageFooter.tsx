@@ -183,22 +183,22 @@ export default function PageFooter() {
             }
           }}>
             {/* Language switching button - first */}
-            <Box 
-              onClick={handleLanguageSwitch} 
-              sx={{ 
+            <Box
+              onClick={handleLanguageSwitch}
+              sx={{
                 cursor: 'pointer',
                 // Grid positioning for different layouts
-                gridColumn: { 
+                gridColumn: {
                   xs: '1',
-                  lg: '1', 
-                  md: '1', 
-                  sm: '1' 
+                  lg: '1',
+                  md: '1',
+                  sm: '1'
                 },
-                gridRow: { 
+                gridRow: {
                   xs: '1',
-                  lg: '1', 
-                  md: '1', 
-                  sm: '1' 
+                  lg: '1',
+                  md: '1',
+                  sm: '1'
                 },
                 // Center button within grid cell for all screen sizes
                 display: 'flex',
@@ -206,26 +206,25 @@ export default function PageFooter() {
                 alignItems: 'center'
               }}
             >
-              <Image
-                src={language === 'zh-CN' ? '/buttons/button_homepage_cn_8.png' : '/buttons/button_homepage_en_8.png'}
-                alt={language === 'zh-CN' ? '切换到英文' : 'Switch to Chinese'}
-                width={0}
-                height={0}
-                sizes="100vw"
-                style={{
-                  width: 'auto',
-                  height: '110px',
-                  maxWidth: '300px',
-                  cursor: 'pointer',
-                  transition: 'transform 0.2s ease, opacity 0.2s ease',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'scale(1.05)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'scale(1)';
-                }}
-              />
+              <Box sx={{ position: 'relative', height: { xs: '130px', sm: '110px', md: '100px' }, width: { xs: '130px', sm: '110px', md: '100px' } }}>
+                <Image
+                  src={language === 'zh-CN' ? '/buttons/button_homepage_cn_8.png' : '/buttons/button_homepage_en_8.png'}
+                  alt={language === 'zh-CN' ? '切换到英文' : 'Switch to Chinese'}
+                  fill
+                  sizes="200px"
+                  style={{
+                    objectFit: 'contain',
+                    cursor: 'pointer',
+                    transition: 'transform 0.2s ease, opacity 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'scale(1.05)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)';
+                  }}
+                />
+              </Box>
             </Box>
 
             {/* All section buttons */}
@@ -297,26 +296,25 @@ export default function PageFooter() {
                   }}
                 >
                   <Link href={s.href}>
-                    <Image
-                      src={buttonImage}
-                      alt={t(s.labelKey)}
-                      width={0}
-                      height={0}
-                      sizes="100vw"
-                      style={{
-                        width: 'auto',
-                        height: '110px',
-                        maxWidth: '300px',
-                        cursor: 'pointer',
-                        transition: 'transform 0.2s ease, opacity 0.2s ease',
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'scale(1.05)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'scale(1)';
-                      }}
-                    />
+                    <Box sx={{ position: 'relative', height: { xs: '130px', sm: '110px', md: '100px' }, width: { xs: '130px', sm: '110px', md: '100px' } }}>
+                      <Image
+                        src={buttonImage}
+                        alt={t(s.labelKey)}
+                        fill
+                        sizes="200px"
+                        style={{
+                          objectFit: 'contain',
+                          cursor: 'pointer',
+                          transition: 'transform 0.2s ease, opacity 0.2s ease',
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'scale(1.05)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'scale(1)';
+                        }}
+                      />
+                    </Box>
                   </Link>
                 </Box>
               );

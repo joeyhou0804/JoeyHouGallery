@@ -11,7 +11,7 @@ interface CarouselProps {
   speedPxPerSec?: number; // Optional: constant speed regardless of content width (default 80)
 }
 
-export default function Carousel({ images, speedPxPerSec = 80 }: CarouselProps) {
+export default function Carousel({ images, speedPxPerSec = 40 }: CarouselProps) {
   const midpoint = Math.ceil(images.length / 2);
   const firstHalf = images.slice(0, midpoint);
   const secondHalf = images.slice(midpoint);
@@ -192,16 +192,16 @@ function CarouselRow({
       }}
     >
       {images.map((img, i) => (
-        <Box key={`${i}-${ariaHidden ? 'dup' : 'main'}`} sx={{ 
-          width: { xs: '60vw', sm: 240, md: 280 }, 
+        <Box key={`${i}-${ariaHidden ? 'dup' : 'main'}`} sx={{
+          width: { xs: '60vw', sm: 240, md: 280 },
           maxWidth: { xs: 250, sm: 240, md: 280 },
-          height: { xs: '36vw', sm: 150, md: 180 }, 
+          height: { xs: '36vw', sm: 150, md: 180 },
           maxHeight: { xs: 150, sm: 150, md: 180 },
           minWidth: { xs: 180, sm: 240, md: 280 },
           flexShrink: 0,
           backgroundColor: 'white',
           borderRadius: 2,
-          border: '6px solid white',
+          padding: '6px',
           boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
         }}>
           <img
@@ -211,9 +211,10 @@ function CarouselRow({
             style={{
               width: '100%',
               height: '100%',
-              objectFit: 'contain',
+              objectFit: 'cover',
               maxWidth: '100%',
               maxHeight: '100%',
+              borderRadius: '4px',
             }}
           />
         </Box>
@@ -226,12 +227,12 @@ function CarouselRow({
       ref={viewportRef}
       sx={{
         overflow: 'hidden',
-        width: '100vw',
+        width: { xs: 'calc(100vw - 16px)', sm: '100vw' },
         position: 'relative',
         left: '50%',
         right: '50%',
-        marginLeft: '-50vw',
-        marginRight: '-50vw',
+        marginLeft: { xs: 'calc(-50vw + 8px)', sm: '-50vw' },
+        marginRight: { xs: 'calc(-50vw + 8px)', sm: '-50vw' },
         mb: 2,
         zIndex: 2,
       }}

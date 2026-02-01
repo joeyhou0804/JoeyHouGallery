@@ -18,7 +18,14 @@ import { usePageLoading } from '@/hooks/usePageLoading';
 
 export default function WebsitesPage() {
   const { t } = useTranslation();
-  const { isLoading, progress } = usePageLoading({ duration: 1300 });
+
+  // Critical images to preload
+  const criticalImages = [
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1663659501/joeyhougallery/websites/%E6%88%AA%E5%B1%8F2022-09-20_%E4%B8%8A%E5%8D%8812.36.02_qbr2dx.png",
+    "https://res.cloudinary.com/joey-hou-homepage/image/upload/v1663660204/joeyhougallery/websites/%E6%88%AA%E5%B1%8F2022-09-17_%E4%B8%8B%E5%8D%889.28.17_edxifz.png"
+  ];
+
+  const { isLoading, progress } = usePageLoading({ duration: 1300, images: criticalImages });
 
   if (isLoading) {
     return <PageLoadingScreen progress={progress} title={t('websites')} />;
