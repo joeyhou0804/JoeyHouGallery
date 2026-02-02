@@ -225,6 +225,14 @@ export const translations = {
           'Then I led a group of 4 at Columbia University to finish this website.',
           'This website is implemented with simple HTML, CSS, and Javascript.'
         ],
+        forumTitle: 'Columbia China Forum Website',
+        forumDescription: [
+          "Columbia China Forum (CCF) is Columbia's undergraduate-led, China-focused Forum.",
+          'I built the official website for CCF as their first website.',
+          'It contains the forum introduction, schedules, and contact infos.',
+          'You can visit the archived website on Wix.com below.'
+        ],
+        visitArchived: 'Archived website on Wix.com',
         visitOfficial: 'Visit the official site',
         codeOnGithub: 'Code on GitHub'
       }
@@ -436,6 +444,14 @@ export const translations = {
           '然后在哥伦比亚大学带领了一个4人小组完成了这个网站。',
           '网站是用基本的HTML、CSS和Javascript实现的。'
         ],
+        forumTitle: '哥伦比亚中国论坛网站',
+        forumDescription: [
+          '哥伦比亚中国论坛（CCF）是由哥伦比亚大学本科生主导的、聚焦中国的论坛。',
+          '我搭建了CCF的第一个官方网站。',
+          '网站包含了论坛介绍、日程安排和联系方式。',
+          '点击下方按钮，访问Wix.com上的存档网站。'
+        ],
+        visitArchived: 'Wix.com存档网站',
         visitOfficial: '前往官方网站',
         codeOnGithub: 'GitHub上的代码'
       }
