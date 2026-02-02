@@ -260,7 +260,7 @@ export const translations = {
     // UI Components
     ui: {
       siteTitle: '小猴同学作品集',
-      siteDescription: '小猴同学的摄影、艺术作品及项目展示',
+      siteDescription: '小猴同学的作品及项目展示',
       changeLanguage: '切换语言',
       switchToLight: '切换到明亮模式',
       switchToDark: '切换到深色模式',
@@ -282,16 +282,16 @@ export const translations = {
         title: '程序',
         stickyarTitle: 'StickyAR - AR手机程序',
         stickyarDescription: [
-          '这个iOS手机程序集成了AR（增强现实）技术。',
+          '这个iOS手机程序使用了AR（增强现实）技术。',
           '我和3名哥伦比亚大学同学合作完成了这个小组项目。',
           '请前往我的GitHub查看代码。'
         ],
         applicationIdeaTitle: '创作初衷',
-        applicationIdeaDescription: '这个AR手机程序的创作初衷是在智能手机上再现便利贴的功能。',
+        applicationIdeaDescription: '利用这个AR手机程序，在智能手机上再现便利贴的功能。',
         githubLabel: '前往我的GitHub',
         highLevelOverviewTitle: '程序概览',
         highLevelOverviewDescription: [
-          '程序分为四个部分，大家分工合作。',
+          '程序分为四个部分，大家分工合作完成。',
           '程序功能包括：便利贴的创建、键盘输入、选择、删除、背景更改、便签大小更改。'
         ],
         manipulationTitle: '操作演示'
@@ -301,7 +301,7 @@ export const translations = {
         chineseCharactersTitle: '汉字与西方经典艺术',
         chineseCharactersDescription: '哥伦比亚大学艺术人文个人创作项目',
         travelJournalsTitle: '意大利画图游记',
-        travelJournalsDescription: '有一年夏天，我和妈妈在意大利旅游，每天都在画画图游记。',
+        travelJournalsDescription: '有一年夏天，我和妈妈在意大利旅游，每天都画了画图游记。',
         artStyles: {
           renaissance: '文艺复兴',
           cubism: '立体主义',
@@ -314,9 +314,9 @@ export const translations = {
         // TODO: Add Chinese translations
         admissionPediaTitle: '报读百科',
         admissionPediaDescription: [
-          '在哥伦比亚大学的第一个学期，',
-          '2017级的内地学生合作编写了两卷报读参考手册。',
-          '《报读百科》涵盖了城大-哥大双联学士学位项目的准备步骤。',
+          '2017级的内地学生们，在到达哥伦比亚大学后的第一个学期里',
+          '合作编写了两卷报读流程的参考手册。',
+          '《报读百科》介绍了城大-哥大双联学士学位项目的准备步骤。',
           '手册包括了申请过程的介绍和详细说明，',
           '以及大家的经验和建议。'
         ],
@@ -325,7 +325,7 @@ export const translations = {
         englishTitle: '英文版',
         musicTitle: '合唱团音乐教材',
         musicDescription: [
-          '有一年夏天，我给我所在的合唱团团员编写了一本音乐教材，',
+          '我在合唱团的时候，利用暑假时间给团员们编写了音乐教材，',
           '用来帮助新成员快速学习乐理和读谱。'
         ],
         downloadCityU: '下载城大卷',
@@ -338,8 +338,8 @@ export const translations = {
         capstoneDescription: [
           '在加州大学伯克利分校（伯克利）的时候，',
           '我参加过一个硕士学位项目的毕业设计。',
-          '伯克利硕士项目的一个重要组成部分是要设计海报，',
-          '让没有科学背景的人也能轻松理解我们项目的专业细节。'
+          '伯克利硕士项目的其中一个重要组成部分是海报的设计，',
+          '目标是让没有科学背景的人也能轻松理解硕士项目的专业细节。'
         ],
         projectPosterTitle: '项目海报',
         projectPosterDescription: [
@@ -368,29 +368,29 @@ export const translations = {
         templateTitle: '作业封面模板',
         templateDescription: [
           '这是我给本科作业设计的封面模板。',
-          '文件由Microsoft Publisher制作。'
+          '文件是用Microsoft Publisher制作的。'
         ],
         hungarianTitle: '匈牙利语语法',
         hungarianDescription: [
-          '这是我的期末展示讲义，',
-          '主题是匈牙利语和普通话语法的比较。',
-          '这份报告用LaTeX制作。'
+          '这是我期末展示的讲义，',
+          '展示的主题是：匈牙利语和普通话语法的比较。',
+          '这份报告是用LaTeX制作的。'
         ],
         csTitle: '计算机科学理论',
         csDescription: [
           '这里展示了一部分作业页面。',
-          '其中的图形用Microsoft Word绘制，',
-          '文件由LaTeX制作。'
+          '其中的图形是用Microsoft Word绘制的，',
+          '文件是由LaTeX制作的。'
         ],
         mathTitle: '常微分方程',
-        mathDescription: '这份作业由LaTeX完成。'
+        mathDescription: '这份作业是由LaTeX完成的。'
       },
       videos: {
         title: '视频',
         // TODO: Add Chinese translations
         videoEssayTitle: '简介视频',
         videoEssayDescription: [
-          '由于硕士学位项目申请需要，我做了这个简介视频。',
+          '为了准备申请硕士学位项目，我做了这个简介视频。',
           '也可以算做我的2分钟个人介绍呢！'
         ],
         orientationTitle: '迎新视频',
@@ -398,7 +398,7 @@ export const translations = {
           '在2019-2022年期间，',
           '我参加了哥伦比亚大学和香港城市大学之间的双联学士学位项目（双学位项目）。',
           '每年春天，这个项目都为录取学生举办行前说明会。',
-          '我给其中的两次说明会录制并剪辑了这两个视频。'
+          '我给其中的两次说明会录制并剪辑了视频。'
         ],
         introVideoTitle: '介绍视频',
         videoEssayLabel: '简介视频',
@@ -410,31 +410,31 @@ export const translations = {
         episode1Body: '2020年行前说明会',
         courseCreativeTitle: '音乐课创意项目',
         courseCreativeDescription: [
-          '我在哥伦比亚大学选修了一门必修音乐课。',
-          '这门课叫《西方音乐名作》。',
-          '课程提供了一个创造性的方式来完成期末跨学科项目。',
-          '我制作了这个视频作为项目作品。',
-          '这个视频的灵感来自游戏《Just Shapes & Beats (JSAB)》。'
+          '我在哥伦比亚大学修读了一门必修音乐课。',
+          '课程名叫《西方音乐名作》。',
+          '期末的跨学科结课项目可以用多元化的方式完成。',
+          '我剪了这个视频作为结课作品。',
+          '视频的灵感来自游戏《Just Shapes & Beats (JSAB)》。'
         ],
         courseCreativeVideoTitle: '音乐课创意项目',
         courseCreativeVideoDescription: '音乐的可视化',
-        courseCreativeVideoBody: '视频包含三首音乐作品。\n分别来自中世纪时期、古典主义时期和欧洲现代主义时期。'
+        courseCreativeVideoBody: '视频里包含三首音乐作品。\n分别代表了中世纪时期、古典主义时期和欧洲现代主义时期。'
       },
       websites: {
         title: '网站',
         // TODO: Add Chinese translations
         consultingTitle: '咨询公司网站',
         consultingDescription: [
-          'The Black Box Institute是位于加拿大多伦多的精品咨询公司。',
-          '我用Wix.com在一周内建成全站。',
+          'The Black Box Institute是一家位于加拿大多伦多的精品咨询公司。',
+          '我用Wix.com在一周内建成了全站。',
           '网站综合考虑了设计的专业性和更新的便捷性。',
-          '公司主管和合作伙伴对网站做出了高度评价。'
+          '公司主管和合作伙伴对我的网站做出了高度评价。'
         ],
         musicTitle: '乐理学习网站',
         musicDescription: [
-          '为了帮助朋友学习基础乐理知识，我设计了教学大纲，',
-          '然后在哥伦比亚大学带领4人小组完成了这个网站。',
-          '网站用基本的HTML、CSS和Javascript实现。'
+          '为了帮助朋友学习基础乐理知识，我设计了一份教学大纲，',
+          '然后在哥伦比亚大学带领了一个4人小组完成了这个网站。',
+          '网站是用基本的HTML、CSS和Javascript实现的。'
         ],
         visitOfficial: '前往官方网站',
         codeOnGithub: 'GitHub上的代码'
