@@ -123,14 +123,14 @@ export default function PageFooter() {
           }}
         >
           {/* Logo */}
-          <Box sx={{ 
-            position: 'relative', 
-            height: { xs: 'auto', sm: '80px' }, 
-            display: 'flex', 
+          <Box sx={{
+            position: 'relative',
+            height: { xs: 'auto', sm: '80px' },
+            display: 'flex',
             alignItems: { xs: 'center', sm: 'flex-end' },
             justifyContent: { xs: 'center', sm: 'flex-start' },
             zIndex: 2,
-            mb: { xs: 12, sm: 0 }
+            mb: { xs: 8, sm: 0 }
           }}>
             <Link href="/" style={{ textDecoration: 'none' }}>
               <Box
@@ -166,9 +166,9 @@ export default function PageFooter() {
             display: { xs: 'grid', sm: 'grid', md: 'grid', lg: 'grid' },
             alignItems: 'center',
             justifyContent: { xs: 'center', sm: 'flex-end', md: 'flex-end', lg: 'flex-end' },
-            // xs: 2 columns, 4 rows for 8 buttons
-            gridTemplateColumns: { 
-              xs: 'repeat(2, 1fr)',
+            // xs: 4 columns, 2 rows for 8 buttons
+            gridTemplateColumns: {
+              xs: 'repeat(4, 1fr)',
               lg: 'repeat(8, 1fr)',
               // md: 2 rows with 4 buttons each
               md: 'repeat(4, 1fr)',
@@ -176,7 +176,7 @@ export default function PageFooter() {
               sm: 'repeat(3, 1fr)'
             },
             gridTemplateRows: {
-              xs: 'repeat(4, 1fr)',
+              xs: 'repeat(2, 1fr)',
               lg: '1fr',
               md: 'repeat(2, 1fr)',
               sm: 'repeat(3, 1fr)'
@@ -206,7 +206,7 @@ export default function PageFooter() {
                 alignItems: 'center'
               }}
             >
-              <Box sx={{ position: 'relative', height: { xs: '130px', sm: '110px', md: '100px' }, width: { xs: '130px', sm: '110px', md: '100px' } }}>
+              <Box sx={{ position: 'relative', height: { xs: '80px', sm: '110px', md: '100px' }, width: { xs: '80px', sm: '110px', md: '100px' } }}>
                 <Image
                   src={language === 'zh-CN' ? '/buttons/button_homepage_cn_8.png' : '/buttons/button_homepage_en_8.png'}
                   alt={language === 'zh-CN' ? '切换到英文' : 'Switch to Chinese'}
@@ -245,23 +245,21 @@ export default function PageFooter() {
               };
               
               const getGridRow = () => {
-                // xs: 4 rows with 2 buttons each
-                // buttonPosition: 2->row1, 3->row2, 4->row2, 5->row3, 6->row3, 7->row4, 8->row4
-                const xs = Math.ceil(buttonPosition / 2).toString();
+                // xs: 2 rows with 4 buttons each (positions 1-4 in row 1, 5-8 in row 2)
+                const xs = buttonPosition <= 4 ? '1' : '2';
                 // lg: all in row 1
                 const lg = '1';
                 // md: 2 rows with 4 buttons each (positions 1-4 in row 1, 5-8 in row 2)
                 const md = buttonPosition <= 4 ? '1' : '2';
                 // sm: 3 rows with 3-3-2 pattern (1-3 in row 1, 4-6 in row 2, 7-8 in row 3)
                 const sm = buttonPosition <= 3 ? '1' : buttonPosition <= 6 ? '2' : '3';
-                
+
                 return { xs, lg, md, sm };
               };
-              
+
               const getGridColumnForAllScreens = () => {
-                // xs: 2 columns, alternating within each row
-                // buttonPosition: 2->col2, 3->col1, 4->col2, 5->col1, 6->col2, 7->col1, 8->col2
-                const xs = buttonPosition % 2 === 0 ? '2' : '1';
+                // xs: 4 columns, positions 1-4 map to columns 1-4, positions 5-8 map to columns 1-4
+                const xs = buttonPosition <= 4 ? buttonPosition.toString() : (buttonPosition - 4).toString();
                 // md: positions 1-4 map to columns 1-4, positions 5-8 map to columns 1-4
                 const md = buttonPosition <= 4 ? buttonPosition.toString() : (buttonPosition - 4).toString();
                 // sm: positions 1-3 map to columns 1-3, positions 4-6 map to columns 1-3, positions 7-8 map to columns 1-2
@@ -296,7 +294,7 @@ export default function PageFooter() {
                   }}
                 >
                   <Link href={s.href}>
-                    <Box sx={{ position: 'relative', height: { xs: '130px', sm: '110px', md: '100px' }, width: { xs: '130px', sm: '110px', md: '100px' } }}>
+                    <Box sx={{ position: 'relative', height: { xs: '80px', sm: '110px', md: '100px' }, width: { xs: '80px', sm: '110px', md: '100px' } }}>
                       <Image
                         src={buttonImage}
                         alt={t(s.labelKey)}
