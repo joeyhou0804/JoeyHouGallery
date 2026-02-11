@@ -8,6 +8,7 @@ import PageFooter from '@/components/PageFooter';
 import PageLoadingScreen from '@/components/PageLoadingScreen';
 import { useTranslation } from '@/hooks/useTranslation';
 import { usePageLoading } from '@/hooks/usePageLoading';
+import { rvw } from '@/utils/scaling';
 
 export default function PostersPage() {
   const { t } = useTranslation();
@@ -80,7 +81,7 @@ export default function PostersPage() {
       <MainSection section={capstoneSection} time={capstoneSection.time} isFirst={true} />
 
       <Section>
-        <SubsectionBox section={capstoneGallerySection} index={0} imageLayout="centered-single" sx={{ mb: 12 }} />
+        <SubsectionBox section={capstoneGallerySection} index={0} imageLayout="centered-single" sx={{ mb: rvw(96, 96) }} />
       </Section>
 
       <MainSection section={introSection} time={introSection.time} />
@@ -95,7 +96,7 @@ export default function PostersPage() {
         }
 
         return (
-          <Section key={i} sx={{ py: { xs: 1, sm: 1.5, md: 2 } }}>
+          <Section key={i} sx={{ py: rvw(8, 16) }}>
             <SubsectionBox section={s} index={i} imageLayout={imageLayout} />
           </Section>
         );

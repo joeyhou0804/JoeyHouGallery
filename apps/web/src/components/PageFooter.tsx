@@ -70,7 +70,7 @@ export default function PageFooter() {
             marginLeft: '-50vw',
             marginRight: '-50vw',
             minHeight: { xs: vw(160, 'mobile'), md: vw(160) },
-            mt: rvw(64, 64),
+            mt: rvw(96, 64),
             mb: 0,
             overflow: 'visible',
             zIndex: 0,
