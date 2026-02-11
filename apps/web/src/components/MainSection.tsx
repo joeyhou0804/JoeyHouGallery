@@ -281,7 +281,7 @@ export default function MainSection({
               xs: `${vw(1, 'mobile')} ${vw(1, 'mobile')} ${vw(2, 'mobile')} rgba(0, 0, 0, 0.3), 0px 0px ${vw(1, 'mobile')} rgba(0, 0, 0, 0.5)`,
               md: `${vw(1)} ${vw(1)} ${vw(2)} rgba(0, 0, 0, 0.3), 0px 0px ${vw(1)} rgba(0, 0, 0, 0.5)`,
             },
-            fontSize: rvw(24, 56),
+            fontSize: rvw(20, 56),
           }}
         >
           {title.includes('&') ? (
@@ -311,7 +311,7 @@ export default function MainSection({
                 <Typography
                   sx={{
                     color: '#432F2F',
-                    fontSize: rvw(18, 21),
+                    fontSize: rvw(16, 21),
                     lineHeight: 1.6,
                     textAlign: 'center',
                     fontWeight: 500,
@@ -328,7 +328,7 @@ export default function MainSection({
                       key={i}
                       sx={{
                         color: '#432F2F',
-                        fontSize: rvw(18, 21),
+                        fontSize: rvw(16, 21),
                         lineHeight: 1.6,
                         textAlign: 'center',
                         fontWeight: 500,
@@ -344,7 +344,7 @@ export default function MainSection({
             <Typography
               sx={{
                 color: '#432F2F',
-                fontSize: rvw(18, 21),
+                fontSize: rvw(16, 21),
                 lineHeight: 1.6,
                 textAlign: 'center',
                 fontWeight: 500,
