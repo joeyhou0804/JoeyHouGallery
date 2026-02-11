@@ -86,6 +86,7 @@ function SubsectionTitle({
             [theme.breakpoints.up('xs')]: {
               backgroundImage: `repeating-linear-gradient(-45deg, transparent, transparent ${vw(8, 'mobile')}, rgba(255, 255, 255, 0.3) ${vw(8, 'mobile')}, rgba(255, 255, 255, 0.3) ${vw(16, 'mobile')}), ${backgroundGradient}`,
               padding: vw(10, 'mobile'),
+              paddingTop: year ? vw(18, 'mobile') : vw(10, 'mobile'),
               marginTop: year ? vw(24, 'mobile') : vw(12, 'mobile'),
               marginLeft: vw(8, 'mobile'),
               marginRight: vw(8, 'mobile'),

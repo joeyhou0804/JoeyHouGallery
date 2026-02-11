@@ -4,12 +4,13 @@ import Box from '@mui/material/Box';
 import Section from '@/components/Section';
 import SubsectionBox from '@/components/SubsectionBox';
 import ControllableCarousel from '@/components/ControllableCarousel';
+import { vw, rvw } from '@/utils/scaling';
 import type { Section as SectionType } from '@/content/types';
 
 // Subsection Component: Background container with SubsectionBox and optional carousel
-export default function Subsection({ 
-  section, 
-  index, 
+export default function Subsection({
+  section,
+  index,
   year,
   customGradient,
   children,
@@ -21,8 +22,8 @@ export default function Subsection({
   customColor,
   extendBackground = false,
   hideImages = false
-}: { 
-  section: Extract<SectionType, { type: 'gallery' }> | any, 
+}: {
+  section: Extract<SectionType, { type: 'gallery' }> | any,
   index: number,
   year?: string,
   customGradient?: string,
@@ -39,102 +40,67 @@ export default function Subsection({
   // Convert customColor to gradient
   const colorGradients = {
     red: 'linear-gradient(to right, #FF8E65, #FF4582)',
-    blue: 'linear-gradient(to right, #75C5EB, #297BC8)', 
+    blue: 'linear-gradient(to right, #75C5EB, #297BC8)',
     green: 'linear-gradient(to right, #39DE88, #17CACB)'
   };
-  
-  const finalGradient = customColor ? colorGradients[customColor] : customGradient;
-  
-  return (
-    <Box 
-      sx={(theme) => {
-        const depth = {
-          xs: 6,   // smaller depth on mobile
-          sm: 8,   // medium depth on small screens
-          md: 10,  // original depth on medium+ screens
-        };
-        const steps = {
-          xs: 40,   // 20 teeth on mobile
-          sm: 80,   // 40 teeth on small screens  
-          md: 120,  // 60 teeth on desktop (original)
-        };
 
-        return {
-          backgroundImage: `url(${backgroundImage})`,
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center',
-          position: 'relative',
-          zIndex: zIndex,
-          marginTop: '-40px', // Move whole part up 40px to overlap MainSection zigzags
-          paddingTop: '40px', // Add padding to compensate for content position
-          marginBottom: extendBackground ? '-120px' : 0,
-          
-          // Responsive zigzag bottom (matching MainSection pattern)
-          [theme.breakpoints.up('xs')]: extendBackground ? {
-            paddingBottom: `calc(${theme.spacing(6)} + 120px)`,
-            clipPath: `polygon(
-              0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%
-            )`,
-          } : {
-            paddingBottom: `calc(${theme.spacing(6)} + ${depth.xs}px)`,
-            clipPath: `polygon(
-              0% 0%, 100% 0%, 
-              100% calc(100% - ${depth.xs}px),
-              ${Array.from({ length: steps.xs + 1 }, (_, i) => {
-                const x = ((steps.xs - i) / steps.xs) * 100;
-                const isPeak = i % 2 === 0;
-                const y = isPeak ? '100%' : `calc(100% - ${depth.xs}px)`;
-                return `${x.toFixed(2)}% ${y}`;
-              }).join(', ')},
-              0% calc(100% - ${depth.xs}px)
-            )`,
-          },
-          [theme.breakpoints.up('sm')]: extendBackground ? {
-            paddingBottom: `calc(${theme.spacing(6)} + 120px)`,
-            clipPath: `polygon(
-              0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%
-            )`,
-          } : {
-            paddingBottom: `calc(${theme.spacing(6)} + ${depth.sm}px)`,
-            clipPath: `polygon(
-              0% 0%, 100% 0%, 
-              100% calc(100% - ${depth.sm}px),
-              ${Array.from({ length: steps.sm + 1 }, (_, i) => {
-                const x = ((steps.sm - i) / steps.sm) * 100;
-                const isPeak = i % 2 === 0;
-                const y = isPeak ? '100%' : `calc(100% - ${depth.sm}px)`;
-                return `${x.toFixed(2)}% ${y}`;
-              }).join(', ')},
-              0% calc(100% - ${depth.sm}px)
-            )`,
-          },
-          [theme.breakpoints.up('md')]: extendBackground ? {
-            paddingBottom: `calc(${theme.spacing(6)} + 120px)`,
-            clipPath: `polygon(
-              0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%
-            )`,
-          } : {
-            paddingBottom: `calc(${theme.spacing(6)} + ${depth.md}px)`,
-            clipPath: `polygon(
-              0% 0%, 100% 0%, 
-              100% calc(100% - ${depth.md}px),
-              ${Array.from({ length: steps.md + 1 }, (_, i) => {
-                const x = ((steps.md - i) / steps.md) * 100;
-                const isPeak = i % 2 === 0;
-                const y = isPeak ? '100%' : `calc(100% - ${depth.md}px)`;
-                return `${x.toFixed(2)}% ${y}`;
-              }).join(', ')},
-              0% calc(100% - ${depth.md}px)
-            )`,
-          },
-        };
-      }}
+  const finalGradient = customColor ? colorGradients[customColor] : customGradient;
+
+  // Zigzag depth (small decorative — kept as raw px per scaling rules)
+  const depth = { xs: 6, md: 10 };
+  const steps = { xs: 40, md: 120 };
+
+  const buildZigzagClip = (d: number, s: number) => `polygon(
+    0% 0%, 100% 0%,
+    100% calc(100% - ${d}px),
+    ${Array.from({ length: s + 1 }, (_, i) => {
+      const x = ((s - i) / s) * 100;
+      const isPeak = i % 2 === 0;
+      const y = isPeak ? '100%' : `calc(100% - ${d}px)`;
+      return `${x.toFixed(2)}% ${y}`;
+    }).join(', ')},
+    0% calc(100% - ${d}px)
+  )`;
+
+  const straightClip = 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%)';
+
+  return (
+    <Box
+      sx={(theme) => ({
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        position: 'relative',
+        zIndex: zIndex,
+
+        // xs (mobile) breakpoint
+        [theme.breakpoints.up('xs')]: {
+          marginTop: vw(-40, 'mobile'),
+          paddingTop: vw(40, 'mobile'),
+          marginBottom: extendBackground ? vw(-120, 'mobile') : 0,
+          paddingBottom: extendBackground
+            ? vw(168, 'mobile') // 48 + 120
+            : `calc(${vw(48, 'mobile')} + ${depth.xs}px)`,
+          clipPath: extendBackground ? straightClip : buildZigzagClip(depth.xs, steps.xs),
+        },
+
+        // md (desktop) breakpoint
+        [theme.breakpoints.up('md')]: {
+          marginTop: vw(-40),
+          paddingTop: vw(40),
+          marginBottom: extendBackground ? vw(-120) : 0,
+          paddingBottom: extendBackground
+            ? vw(168) // 48 + 120
+            : `calc(${vw(48)} + ${depth.md}px)`,
+          clipPath: extendBackground ? straightClip : buildZigzagClip(depth.md, steps.md),
+        },
+      })}
     >
-      <Section sx={{ mt: { xs: 3, sm: 4, md: 5 }, py: { xs: 3, sm: 4, md: 6 } }}> {/* Responsive top margin and padding */}
-        <SubsectionBox 
-          section={section} 
-          index={index} 
+      <Section sx={{ mt: rvw(24, 40), py: rvw(24, 48) }}>
+        <SubsectionBox
+          section={section}
+          index={index}
           year={year}
           title={title}
           customGradient={finalGradient}
@@ -142,9 +108,9 @@ export default function Subsection({
         >
           {children}
         </SubsectionBox>
-        
+
         {carouselImages && carouselImages.length > 0 && (
-          <Box sx={{ mt: { xs: 3, sm: 4, md: 6 } }}>
+          <Box sx={{ mt: rvw(24, 48) }}>
             <ControllableCarousel images={carouselImages} />
           </Box>
         )}

@@ -17,6 +17,7 @@ import PageFooter from '@/components/PageFooter';
 import PageLoadingScreen from '@/components/PageLoadingScreen';
 import { useTranslation } from '@/hooks/useTranslation';
 import { usePageLoading } from '@/hooks/usePageLoading';
+import { vw, rvw } from '@/utils/scaling';
 
 export default function HandbooksPage() {
   const { t } = useTranslation();
@@ -146,7 +147,7 @@ export default function HandbooksPage() {
       zIndex={4}
       customColor="red"
     >
-      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 1, sm: 2 }} sx={{ justifyContent: 'center', my: { xs: 2, sm: 0 } }}>
+      <Stack direction={{ xs: 'column', md: 'row' }} spacing={rvw(8, 16)} sx={{ justifyContent: 'center', my: { xs: vw(16, 'mobile'), md: 0 } }}>
         <GlowPillButton
           href="/volume_columbia_2025_zh_cn.pdf"
           rel="noreferrer"
@@ -169,7 +170,7 @@ export default function HandbooksPage() {
       zIndex={3}
       customColor="blue"
     >
-      <Box sx={{ textAlign: 'center', my: { xs: 2, sm: 0 } }}>
+      <Box sx={{ textAlign: 'center', my: { xs: vw(16, 'mobile'), md: 0 } }}>
         {englishSection?.links?.[0] && (
           <GlowPillButton
             href={englishSection.links[0].href}
@@ -194,7 +195,7 @@ export default function HandbooksPage() {
       zIndex={2}
       customColor="green"
     >
-      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 1, sm: 2 }} sx={{ justifyContent: 'center', my: { xs: 2, sm: 0 } }}>
+      <Stack direction={{ xs: 'column', md: 'row' }} spacing={rvw(8, 16)} sx={{ justifyContent: 'center', my: { xs: vw(16, 'mobile'), md: 0 } }}>
         {traditionalSection?.links?.map((l: any) => (
           <GlowPillButton
             key={l.href}
@@ -219,7 +220,7 @@ export default function HandbooksPage() {
       zIndex={1}
       customColor="red"
     >
-      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 1, sm: 2 }} sx={{ justifyContent: 'center', my: { xs: 2, sm: 0 } }}>
+      <Stack direction={{ xs: 'column', md: 'row' }} spacing={rvw(8, 16)} sx={{ justifyContent: 'center', my: { xs: vw(16, 'mobile'), md: 0 } }}>
         {simplifiedSection?.links?.map((l: any) => (
           <GlowPillButton
             key={l.href}
@@ -246,7 +247,7 @@ export default function HandbooksPage() {
       {customOrder}
       
       {/* Music Tutorial Textbook MainSection */}
-      <Box sx={{ marginTop: '-40px' }}>
+      <Box sx={{ marginTop: rvw(-40, -40) }}>
         <MainSection 
           section={musicSection} 
           time="2018.06" 
