@@ -227,14 +227,14 @@ function CarouselRow({
           display: 'flex',
           alignItems: 'stretch',
           width: 'max-content',
-          // ✅ the same gap BETWEEN cycles (the seam)
-          gap: rvw(16, 16),
-          // expose the pixel value to children so inner cycles use the same exact gap
+          // gap between cycles (the seam) + expose as --g for inner cycle gap
           [theme.breakpoints.up('xs')]: {
             '--g': vw(16, 'mobile'),
+            gap: vw(16, 'mobile'),
           },
           [theme.breakpoints.up('md')]: {
             '--g': vw(16),
+            gap: vw(16),
           },
           animation: `${scrollKeyframes} ${durationSec}s linear infinite`,
           willChange: 'transform',
