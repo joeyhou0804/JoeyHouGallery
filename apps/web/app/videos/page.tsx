@@ -10,11 +10,11 @@ import PageFooter from '@/components/PageFooter';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import PageLoadingScreen from '@/components/PageLoadingScreen';
 import { useTranslation } from '@/hooks/useTranslation';
 import { usePageLoading } from '@/hooks/usePageLoading';
+import { rvw } from '@/utils/scaling';
 
 export default function VideosPage() {
   const { t } = useTranslation();
@@ -31,7 +31,7 @@ export default function VideosPage() {
   if (isLoading) {
     return <PageLoadingScreen progress={progress} title={t('videos')} />;
   }
-  
+
   // Create translated content structure
   const data = {
     sections: [
@@ -105,7 +105,7 @@ export default function VideosPage() {
       {data.sections.map((section, i) => (
         section.type === 'intro' ? (
           section.title === t('pages.videos.courseCreativeTitle') ? (
-            <Box key={i} sx={{ mt: 8 }}>
+            <Box key={i} sx={{ mt: rvw(64, 64) }}>
               <MainSection
                 section={section as Extract<typeof section, { type: 'intro' }>}
                 time={section.time}
@@ -131,10 +131,10 @@ export default function VideosPage() {
                 let sx = {};
                 if (section.title === t('pages.videos.videoEssayTitle')) {
                   // Video Essay: add top and bottom spaces
-                  sx = { mt: 4, mb: 10 };
+                  sx = { mt: rvw(32, 32), mb: rvw(80, 80) };
                 } else if (v.title === t('pages.videos.episode2Title')) {
                   // 2021 Episode 2: add top spaces
-                  sx = { mt: 4 };
+                  sx = { mt: rvw(32, 32) };
                 }
 
                 const currentColorIndex = globalVideoIndex++;
@@ -159,23 +159,25 @@ export default function VideosPage() {
                     {section.title}
                   </Typography>
                 </TextBlock>
-                <Grid container spacing={2}>
+                <Box sx={{
+                  display: 'grid',
+                  gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
+                  gap: rvw(16, 16),
+                }}>
                   {section.items.map((v) => (
-                    <Grid key={v.youtubeId} item xs={12} md={6}>
-                      <Card>
-                        <YouTubeEmbed id={v.youtubeId} title={v.title} />
-                        <CardContent>
-                          <Typography variant="subtitle1">{v.title}</Typography>
-                          {v.description && (
-                            <Typography variant="body2" color="text.secondary">
-                              {v.description}
-                            </Typography>
-                          )}
-                        </CardContent>
-                      </Card>
-                    </Grid>
+                    <Card key={v.youtubeId}>
+                      <YouTubeEmbed id={v.youtubeId} title={v.title} />
+                      <CardContent>
+                        <Typography variant="subtitle1">{v.title}</Typography>
+                        {v.description && (
+                          <Typography variant="body2" color="text.secondary">
+                            {v.description}
+                          </Typography>
+                        )}
+                      </CardContent>
+                    </Card>
                   ))}
-                </Grid>
+                </Box>
               </>
             )}
           </Section>
