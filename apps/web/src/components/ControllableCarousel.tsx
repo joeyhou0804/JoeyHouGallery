@@ -501,7 +501,9 @@ export default function ControllableCarousel({
           sx={{
             display: "flex",
             justifyContent: "center",
-            gap: rvw(8, 8),
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: rvw(4, 8),
             mt: rvw(24, 24),
           }}
         >
@@ -510,8 +512,9 @@ export default function ControllableCarousel({
               key={index}
               onClick={() => setCurrentIndex(index)}
               sx={{
-                width: rvw(10, 10),
-                height: rvw(10, 10),
+                width: rvw(6, 10),
+                height: rvw(6, 10),
+                flexShrink: 0,
                 borderRadius: "50%",
                 backgroundColor:
                   index === currentIndex ? "#BB8F43" : "rgba(0, 0, 0, 0.3)",
