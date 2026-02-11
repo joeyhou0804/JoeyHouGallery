@@ -80,20 +80,20 @@ function SubsectionTitle({
             backgroundRepeat: 'repeat, no-repeat',
             backgroundSize: 'auto, 100% 100%',
             backgroundPosition: 'left top, left top',
-            padding: rvw(16, 16),
             marginTop: 0,
-            marginBottom: 0,
 
             // Responsive margins, stripe pattern, and zigzag
             [theme.breakpoints.up('xs')]: {
               backgroundImage: `repeating-linear-gradient(-45deg, transparent, transparent ${vw(8, 'mobile')}, rgba(255, 255, 255, 0.3) ${vw(8, 'mobile')}, rgba(255, 255, 255, 0.3) ${vw(16, 'mobile')}), ${backgroundGradient}`,
-              marginTop: year ? vw(24, 'mobile') : vw(8, 'mobile'),
+              padding: vw(10, 'mobile'),
+              marginTop: year ? vw(24, 'mobile') : vw(12, 'mobile'),
               marginLeft: vw(8, 'mobile'),
               marginRight: vw(8, 'mobile'),
               clipPath: `polygon(0% 0%, 100% 0%, calc(100% - ${dXs}) 25%, 100% 50%, calc(100% - ${dXs}) 75%, 100% 100%, 0% 100%)`,
             },
             [theme.breakpoints.up('md')]: {
               backgroundImage: `repeating-linear-gradient(-45deg, transparent, transparent ${vw(8)}, rgba(255, 255, 255, 0.3) ${vw(8)}, rgba(255, 255, 255, 0.3) ${vw(16)}), ${backgroundGradient}`,
+              padding: vw(24),
               marginTop: vw(32),
               marginLeft: vw(32),
               marginRight: vw(32),
