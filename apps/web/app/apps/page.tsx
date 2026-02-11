@@ -9,6 +9,7 @@ import PageFooter from '@/components/PageFooter';
 import PageLoadingScreen from '@/components/PageLoadingScreen';
 import { useTranslation } from '@/hooks/useTranslation';
 import { usePageLoading } from '@/hooks/usePageLoading';
+import { rvw } from '@/utils/scaling';
 
 export default function ApplicationsPage() {
   const { t, language } = useTranslation();
@@ -87,7 +88,7 @@ export default function ApplicationsPage() {
       <MainSection section={introSection} backgroundType="bottom-only" />
 
       {gallerySections.map((s, i) => (
-        <Section key={i} sx={{ py: { xs: 1, sm: 1.5, md: 2 } }}>
+        <Section key={i} sx={{ py: rvw(8, 16) }}>
           {i === 2 ? ( // Third section (index 2) is the Manipulation section
             <>
               <SubsectionBox section={{ ...s, images: [] }} index={i} />

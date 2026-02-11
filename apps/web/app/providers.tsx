@@ -16,6 +16,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   const theme = React.useMemo(
     () =>
       createTheme({
+        breakpoints: { values: { xs: 0, sm: 600, md: 768, lg: 1200, xl: 1536 } },
         palette: {
           mode,
           primary: { main: '#1976d2' },

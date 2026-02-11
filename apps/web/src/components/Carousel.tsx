@@ -3,6 +3,7 @@
 import Box from '@mui/material/Box';
 import { keyframes } from '@emotion/react';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { vw, rvw } from '@/utils/scaling';
 
 type Dir = 'rtl' | 'ltr';
 
@@ -19,10 +20,9 @@ export default function Carousel({ images, speedPxPerSec = 40 }: CarouselProps) 
   const BackgroundZigZag = () => (
     <Box
       sx={(theme) => {
-        const depth = { xs: 6, sm: 8, md: 10 };
+        const depth = { xs: 6, md: 10 };
         const steps = {
           xs: 40,   // 20 teeth on mobile
-          sm: 80,   // 40 teeth on small screens  
           md: 120,  // 60 teeth on desktop (original)
         };
 
@@ -51,6 +51,7 @@ export default function Carousel({ images, speedPxPerSec = 40 }: CarouselProps) 
           
           // Responsive zigzag pattern (same as PageHeader)
           [theme.breakpoints.up('xs')]: {
+            '--stripe': `repeating-linear-gradient(-45deg, transparent, transparent ${vw(8, 'mobile')}, rgba(255, 255, 255, 0.3) ${vw(8, 'mobile')}, rgba(255, 255, 255, 0.3) ${vw(16, 'mobile')})`,
             paddingTop: `${depth.xs}px`,
             clipPath: `polygon(
               0% 0%,
@@ -68,25 +69,8 @@ export default function Carousel({ images, speedPxPerSec = 40 }: CarouselProps) 
               0% calc(100% - ${depth.xs}px), 0% 0%
             )`,
           },
-          [theme.breakpoints.up('sm')]: {
-            paddingTop: `${depth.sm}px`,
-            clipPath: `polygon(
-              0% 0%,
-              ${Array.from({ length: steps.sm + 1 }, (_, i) => {
-                const x = (i / steps.sm) * 100;
-                const y = i % 2 === 0 ? '0%' : `${depth.sm}px`;
-                return `${x.toFixed(2)}% ${y}`;
-              }).join(', ')},
-              100% 0%, 100% calc(100% - ${depth.sm}px),
-              ${Array.from({ length: steps.sm + 1 }, (_, i) => {
-                const x = ((steps.sm - i) / steps.sm) * 100;
-                const y = i % 2 === 0 ? '100%' : `calc(100% - ${depth.sm}px)`;
-                return `${x.toFixed(2)}% ${y}`;
-              }).join(', ')},
-              0% calc(100% - ${depth.sm}px), 0% 0%
-            )`,
-          },
           [theme.breakpoints.up('md')]: {
+            '--stripe': `repeating-linear-gradient(-45deg, transparent, transparent ${vw(8)}, rgba(255, 255, 255, 0.3) ${vw(8)}, rgba(255, 255, 255, 0.3) ${vw(16)})`,
             paddingTop: `${depth.md}px`,
             clipPath: `polygon(
               0% 0%,
@@ -110,7 +94,7 @@ export default function Carousel({ images, speedPxPerSec = 40 }: CarouselProps) 
   );
 
   return (
-    <Box sx={{ position: 'relative', mt: 8, mb: 4 }}>
+    <Box sx={{ position: 'relative', mt: rvw(64, 64), mb: rvw(32, 32) }}>
       <BackgroundZigZag />
       <CarouselRow images={firstHalf} direction="rtl" speedPxPerSec={speedPxPerSec} />
       <CarouselRow images={secondHalf} direction="ltr" speedPxPerSec={speedPxPerSec} />
@@ -193,16 +177,16 @@ function CarouselRow({
     >
       {images.map((img, i) => (
         <Box key={`${i}-${ariaHidden ? 'dup' : 'main'}`} sx={{
-          width: { xs: '60vw', sm: 240, md: 280 },
-          maxWidth: { xs: 250, sm: 240, md: 280 },
-          height: { xs: '36vw', sm: 150, md: 180 },
-          maxHeight: { xs: 150, sm: 150, md: 180 },
-          minWidth: { xs: 180, sm: 240, md: 280 },
+          width: { xs: vw(240, 'mobile'), md: vw(280) },
+          maxWidth: { xs: vw(250, 'mobile'), md: vw(280) },
+          height: { xs: vw(150, 'mobile'), md: vw(180) },
+          maxHeight: { xs: vw(150, 'mobile'), md: vw(180) },
+          minWidth: { xs: vw(180, 'mobile'), md: vw(280) },
           flexShrink: 0,
           backgroundColor: 'white',
-          borderRadius: 2,
-          padding: '6px',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+          borderRadius: rvw(8, 8),
+          padding: { xs: vw(6, 'mobile'), md: vw(6) },
+          boxShadow: { xs: `0 ${vw(2, 'mobile')} ${vw(8, 'mobile')} rgba(0,0,0,0.1)`, md: `0 ${vw(2)} ${vw(8)} rgba(0,0,0,0.1)` },
         }}>
           <img
             src={img}
@@ -227,13 +211,13 @@ function CarouselRow({
       ref={viewportRef}
       sx={{
         overflow: 'hidden',
-        width: { xs: 'calc(100vw - 16px)', sm: '100vw' },
+        width: { xs: `calc(100vw - ${vw(16, 'mobile')})`, md: '100vw' },
         position: 'relative',
         left: '50%',
         right: '50%',
-        marginLeft: { xs: 'calc(-50vw + 8px)', sm: '-50vw' },
-        marginRight: { xs: 'calc(-50vw + 8px)', sm: '-50vw' },
-        mb: 2,
+        marginLeft: { xs: `calc(-50vw + ${vw(8, 'mobile')})`, md: '-50vw' },
+        marginRight: { xs: `calc(-50vw + ${vw(8, 'mobile')})`, md: '-50vw' },
+        mb: rvw(16, 16),
         zIndex: 2,
       }}
     >
@@ -244,12 +228,14 @@ function CarouselRow({
           alignItems: 'stretch',
           width: 'max-content',
           // ✅ the same gap BETWEEN cycles (the seam)
-          gap: 2,
+          gap: rvw(16, 16),
           // expose the pixel value to children so inner cycles use the same exact gap
-          '--g': typeof window !== 'undefined' && getComputedStyle(document.documentElement).fontSize
-            ? // MUI spacing(2) ≈ 16px by default; use theme to compute precise px
-              theme.spacing(2)
-            : '16px',
+          [theme.breakpoints.up('xs')]: {
+            '--g': vw(16, 'mobile'),
+          },
+          [theme.breakpoints.up('md')]: {
+            '--g': vw(16),
+          },
           animation: `${scrollKeyframes} ${durationSec}s linear infinite`,
           willChange: 'transform',
         })}

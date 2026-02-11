@@ -8,18 +8,19 @@ import type { Section as SectionType } from '@/content/types';
 import { GlowPillButton } from '../../app/apps/GlowPillButton';
 import ControllableCarousel from './ControllableCarousel';
 import Section from './Section';
+import { vw, rvw } from '@/utils/scaling';
 
 // MainSection Component: Contains section title, text content, and buttons with background
-export default function MainSection({ 
-  section, 
-  time, 
-  isFirst = true, 
+export default function MainSection({
+  section,
+  time,
+  isFirst = true,
   backgroundType = 'full',
   extraTopPadding = 0,
   extendBackground = false
-}: { 
-  section: Extract<SectionType, { type: 'intro' }>, 
-  time?: string, 
+}: {
+  section: Extract<SectionType, { type: 'intro' }>,
+  time?: string,
   isFirst?: boolean,
   backgroundType?: 'full' | 'bottom-only',
   extraTopPadding?: number,
@@ -32,186 +33,190 @@ export default function MainSection({
   const bodyContent = section.body || [];
   const linkLabel = section.links?.[0]?.label || t('ui.goToGitHub');
 
+  // Zigzag configuration (2-tier: xs and md)
+  const depth = { xs: 6, md: 10 };
+  const steps = { xs: 40, md: 120 };
+  // Pre-compute vw strings for clip-path usage
+  const dXs = vw(depth.xs, 'mobile');
+  const dMd = vw(depth.md);
+
+  // Build clipPath polygons with proportional depth
+  const bottomOnlyClipXs = `polygon(
+    0% 0%, 100% 0%,
+    100% calc(100% - ${dXs}),
+    ${Array.from({ length: steps.xs + 1 }, (_, i) => {
+      const x = ((steps.xs - i) / steps.xs) * 100;
+      const isPeak = i % 2 === 0;
+      const y = isPeak ? '100%' : `calc(100% - ${dXs})`;
+      return `${x.toFixed(2)}% ${y}`;
+    }).join(', ')},
+    0% calc(100% - ${dXs})
+  )`;
+
+  const bottomOnlyClipMd = `polygon(
+    0% 0%, 100% 0%,
+    100% calc(100% - ${dMd}),
+    ${Array.from({ length: steps.md + 1 }, (_, i) => {
+      const x = ((steps.md - i) / steps.md) * 100;
+      const isPeak = i % 2 === 0;
+      const y = isPeak ? '100%' : `calc(100% - ${dMd})`;
+      return `${x.toFixed(2)}% ${y}`;
+    }).join(', ')},
+    0% calc(100% - ${dMd})
+  )`;
+
+  const extendClipXs = `polygon(
+    0% 0%,
+    ${Array.from({ length: steps.xs + 1 }, (_, i) => {
+      const x = (i / steps.xs) * 100;
+      const isPeak = i % 2 === 0;
+      const y = isPeak ? '0%' : dXs;
+      return `${x.toFixed(2)}% ${y}`;
+    }).join(', ')},
+    100% 0%, 100% 100%, 0% 100%, 0% 0%
+  )`;
+
+  const extendClipMd = `polygon(
+    0% 0%,
+    ${Array.from({ length: steps.md + 1 }, (_, i) => {
+      const x = (i / steps.md) * 100;
+      const isPeak = i % 2 === 0;
+      const y = isPeak ? '0%' : dMd;
+      return `${x.toFixed(2)}% ${y}`;
+    }).join(', ')},
+    100% 0%, 100% 100%, 0% 100%, 0% 0%
+  )`;
+
+  const fullClipXs = `polygon(
+    0% 0%,
+    ${Array.from({ length: steps.xs + 1 }, (_, i) => {
+      const x = (i / steps.xs) * 100;
+      const isPeak = i % 2 === 0;
+      const y = isPeak ? '0%' : dXs;
+      return `${x.toFixed(2)}% ${y}`;
+    }).join(', ')},
+    100% 0%, 100% calc(100% - ${dXs}),
+    ${Array.from({ length: steps.xs + 1 }, (_, i) => {
+      const x = ((steps.xs - i) / steps.xs) * 100;
+      const isPeak = i % 2 === 0;
+      const y = isPeak ? '100%' : `calc(100% - ${dXs})`;
+      return `${x.toFixed(2)}% ${y}`;
+    }).join(', ')},
+    0% calc(100% - ${dXs}), 0% 0%
+  )`;
+
+  const fullClipMd = `polygon(
+    0% 0%,
+    ${Array.from({ length: steps.md + 1 }, (_, i) => {
+      const x = (i / steps.md) * 100;
+      const isPeak = i % 2 === 0;
+      const y = isPeak ? '0%' : dMd;
+      return `${x.toFixed(2)}% ${y}`;
+    }).join(', ')},
+    100% 0%, 100% calc(100% - ${dMd}),
+    ${Array.from({ length: steps.md + 1 }, (_, i) => {
+      const x = ((steps.md - i) / steps.md) * 100;
+      const isPeak = i % 2 === 0;
+      const y = isPeak ? '100%' : `calc(100% - ${dMd})`;
+      return `${x.toFixed(2)}% ${y}`;
+    }).join(', ')},
+    0% calc(100% - ${dMd}), 0% 0%
+  )`;
+
+  // Inner title zigzag
+  const innerDepth = { xs: 20, md: 30 };
+  const hasMultipleLines = title.includes('&');
+  const getZigzagCount = (breakpoint: 'xs' | 'md') => {
+    if (breakpoint === 'xs') return 2;
+    return hasMultipleLines ? 3 : 2;
+  };
+
+  const createZigzagPolygon = (zigzagCount: number, d: string) => {
+    const pts: string[] = [];
+    pts.push('0% 0%', '100% 0%');
+    pts.push('100% 0%');
+    if (zigzagCount === 2) {
+      pts.push(`calc(100% - ${d}) 25%`);
+      pts.push('100% 50%');
+      pts.push(`calc(100% - ${d}) 75%`);
+    } else if (zigzagCount === 3) {
+      pts.push(`calc(100% - ${d}) 16.67%`);
+      pts.push('100% 33.33%');
+      pts.push(`calc(100% - ${d}) 50%`);
+      pts.push('100% 66.67%');
+      pts.push(`calc(100% - ${d}) 83.33%`);
+    }
+    pts.push('100% 100%');
+    pts.push('100% 100%', '0% 100%');
+    pts.push('0% 100%');
+    if (zigzagCount === 2) {
+      pts.push(`${d} 75%`);
+      pts.push('0% 50%');
+      pts.push(`${d} 25%`);
+    } else if (zigzagCount === 3) {
+      pts.push(`${d} 83.33%`);
+      pts.push('0% 66.67%');
+      pts.push(`${d} 50%`);
+      pts.push('0% 33.33%');
+      pts.push(`${d} 16.67%`);
+    }
+    pts.push('0% 0%');
+    return `polygon(${pts.join(', ')})`;
+  };
+
+  // Determine outer box sx based on backgroundType / extendBackground / isFirst
+  const getOuterSx = () => {
+    if (backgroundType === 'bottom-only') {
+      return {
+        // xs: spacing(6)+depth.xs = 48+6 = 54
+        paddingBottom: { xs: vw(54, 'mobile'), md: vw(58) },
+        marginTop: { xs: vw(-6, 'mobile'), md: vw(-10) },
+        clipPath: { xs: bottomOnlyClipXs, md: bottomOnlyClipMd },
+      };
+    }
+    if (extendBackground) {
+      return {
+        paddingTop: isFirst
+          ? { xs: vw(78 + extraTopPadding, 'mobile'), md: vw(98 + extraTopPadding) }
+          : { xs: vw(38 + extraTopPadding, 'mobile'), md: vw(50 + extraTopPadding) },
+        // xs: spacing(6)+120 = 168, md: spacing(8)+120 = 184
+        paddingBottom: { xs: vw(168, 'mobile'), md: vw(184) },
+        marginTop: isFirst
+          ? { xs: vw(-(depth.xs + 40), 'mobile'), md: vw(-(depth.md + 40)) }
+          : { xs: vw(-depth.xs, 'mobile'), md: vw(-depth.md) },
+        clipPath: { xs: extendClipXs, md: extendClipMd },
+      };
+    }
+    // Default: full zigzag (top + bottom)
+    return {
+      paddingTop: isFirst
+        ? { xs: vw(78 + extraTopPadding, 'mobile'), md: vw(98 + extraTopPadding) }
+        : { xs: vw(38 + extraTopPadding, 'mobile'), md: vw(50 + extraTopPadding) },
+      // xs: spacing(6)+depth.xs = 48+6 = 54, md: spacing(6)+depth.md = 48+10 = 58
+      paddingBottom: { xs: vw(54, 'mobile'), md: vw(58) },
+      marginTop: isFirst
+        ? { xs: vw(-(depth.xs + 40), 'mobile'), md: vw(-(depth.md + 40)) }
+        : { xs: vw(-depth.xs, 'mobile'), md: vw(-depth.md) },
+      clipPath: { xs: fullClipXs, md: fullClipMd },
+    };
+  };
+
   return (
     <Box
-      sx={(theme) => {
-        const depth = {
-          xs: 6,   // smaller depth on mobile
-          sm: 8,   // medium depth on small screens
-          md: 10,  // original depth on medium+ screens
-        };
-        const steps = {
-          xs: 40,   // 20 teeth on mobile
-          sm: 80,   // 40 teeth on small screens  
-          md: 120,  // 60 teeth on desktop (original)
-        };
-
-        return {
-          backgroundImage: `url(/backgrounds/section_background.png)`,
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center',
-          position: 'relative',
-          zIndex: 5, // Lower z-index than title section
-          paddingTop: `calc(${theme.spacing(3)} + ${extraTopPadding}px)`, // Base padding for xs
-          marginBottom: extendBackground ? '-120px' : 0,
-
-          // Responsive zigzag configuration
-          [theme.breakpoints.up('xs')]: backgroundType === 'bottom-only' ? {
-            paddingBottom: `calc(${theme.spacing(6)} + ${depth.xs}px)`,
-            marginTop: `-${depth.xs}px`,
-            clipPath: `polygon(
-              0% 0%, 100% 0%, 
-              100% calc(100% - ${depth.xs}px),
-              ${Array.from({ length: steps.xs + 1 }, (_, i) => {
-                const x = ((steps.xs - i) / steps.xs) * 100;
-                const isPeak = i % 2 === 0;
-                const y = isPeak ? '100%' : `calc(100% - ${depth.xs}px)`;
-                return `${x.toFixed(2)}% ${y}`;
-              }).join(', ')},
-              0% calc(100% - ${depth.xs}px)
-            )`,
-          } : extendBackground ? {
-            paddingTop: isFirst ? `calc(${theme.spacing(4)} + ${depth.xs + 40 + extraTopPadding}px)` : `calc(${theme.spacing(4)} + ${depth.xs + extraTopPadding}px)`,
-            paddingBottom: `calc(${theme.spacing(6)} + 120px)`,
-            marginTop: isFirst ? `-${depth.xs + 40}px` : `-${depth.xs}px`,
-            clipPath: `polygon(
-              0% 0%,
-              ${Array.from({ length: steps.xs + 1 }, (_, i) => {
-                const x = (i / steps.xs) * 100;
-                const isPeak = i % 2 === 0;
-                const y = isPeak ? '0%' : `${depth.xs}px`;
-                return `${x.toFixed(2)}% ${y}`;
-              }).join(', ')},
-              100% 0%, 100% 100%, 0% 100%, 0% 0%
-            )`,
-          } : {
-            paddingTop: isFirst ? `calc(${theme.spacing(4)} + ${depth.xs + 40 + extraTopPadding}px)` : `calc(${theme.spacing(4)} + ${depth.xs + extraTopPadding}px)`,
-            paddingBottom: `calc(${theme.spacing(6)} + ${depth.xs}px)`,
-            marginTop: isFirst ? `-${depth.xs + 40}px` : `-${depth.xs}px`,
-            clipPath: `polygon(
-              0% 0%,
-              ${Array.from({ length: steps.xs + 1 }, (_, i) => {
-                const x = (i / steps.xs) * 100;
-                const isPeak = i % 2 === 0;
-                const y = isPeak ? '0%' : `${depth.xs}px`;
-                return `${x.toFixed(2)}% ${y}`;
-              }).join(', ')},
-              100% 0%, 100% calc(100% - ${depth.xs}px),
-              ${Array.from({ length: steps.xs + 1 }, (_, i) => {
-                const x = ((steps.xs - i) / steps.xs) * 100;
-                const isPeak = i % 2 === 0;
-                const y = isPeak ? '100%' : `calc(100% - ${depth.xs}px)`;
-                return `${x.toFixed(2)}% ${y}`;
-              }).join(', ')},
-              0% calc(100% - ${depth.xs}px), 0% 0%
-            )`,
-          },
-          [theme.breakpoints.up('sm')]: backgroundType === 'bottom-only' ? {
-            paddingBottom: `calc(${theme.spacing(5)} + ${depth.sm}px)`, // Medium bottom padding
-            marginTop: `-${depth.sm}px`,
-            clipPath: `polygon(
-              0% 0%, 100% 0%, 
-              100% calc(100% - ${depth.sm}px),
-              ${Array.from({ length: steps.sm + 1 }, (_, i) => {
-                const x = ((steps.sm - i) / steps.sm) * 100;
-                const isPeak = i % 2 === 0;
-                const y = isPeak ? '100%' : `calc(100% - ${depth.sm}px)`;
-                return `${x.toFixed(2)}% ${y}`;
-              }).join(', ')},
-              0% calc(100% - ${depth.sm}px)
-            )`,
-          } : extendBackground ? {
-            paddingTop: isFirst ? `calc(${theme.spacing(5)} + ${depth.sm + 40 + extraTopPadding}px)` : `calc(${theme.spacing(4)} + ${depth.sm + extraTopPadding}px)`,
-            paddingBottom: `calc(${theme.spacing(7)} + 120px)`,
-            marginTop: isFirst ? `-${depth.sm + 40}px` : `-${depth.sm}px`,
-            clipPath: `polygon(
-              0% 0%,
-              ${Array.from({ length: steps.sm + 1 }, (_, i) => {
-                const x = (i / steps.sm) * 100;
-                const isPeak = i % 2 === 0;
-                const y = isPeak ? '0%' : `${depth.sm}px`;
-                return `${x.toFixed(2)}% ${y}`;
-              }).join(', ')},
-              100% 0%, 100% 100%, 0% 100%, 0% 0%
-            )`,
-          } : {
-            paddingTop: isFirst ? `calc(${theme.spacing(5)} + ${depth.sm + 40 + extraTopPadding}px)` : `calc(${theme.spacing(4)} + ${depth.sm + extraTopPadding}px)`,
-            paddingBottom: `calc(${theme.spacing(5)} + ${depth.sm}px)`,
-            marginTop: isFirst ? `-${depth.sm + 40}px` : `-${depth.sm}px`,
-            clipPath: `polygon(
-              0% 0%,
-              ${Array.from({ length: steps.sm + 1 }, (_, i) => {
-                const x = (i / steps.sm) * 100;
-                const isPeak = i % 2 === 0;
-                const y = isPeak ? '0%' : `${depth.sm}px`;
-                return `${x.toFixed(2)}% ${y}`;
-              }).join(', ')},
-              100% 0%, 100% calc(100% - ${depth.sm}px),
-              ${Array.from({ length: steps.sm + 1 }, (_, i) => {
-                const x = ((steps.sm - i) / steps.sm) * 100;
-                const isPeak = i % 2 === 0;
-                const y = isPeak ? '100%' : `calc(100% - ${depth.sm}px)`;
-                return `${x.toFixed(2)}% ${y}`;
-              }).join(', ')},
-              0% calc(100% - ${depth.sm}px), 0% 0%
-            )`,
-          },
-          [theme.breakpoints.up('md')]: backgroundType === 'bottom-only' ? {
-            paddingBottom: `calc(${theme.spacing(6)} + ${depth.md}px)`,
-            marginTop: `-${depth.md}px`,
-            clipPath: `polygon(
-              0% 0%, 100% 0%, 
-              100% calc(100% - ${depth.md}px),
-              ${Array.from({ length: steps.md + 1 }, (_, i) => {
-                const x = ((steps.md - i) / steps.md) * 100;
-                const isPeak = i % 2 === 0;
-                const y = isPeak ? '100%' : `calc(100% - ${depth.md}px)`;
-                return `${x.toFixed(2)}% ${y}`;
-              }).join(', ')},
-              0% calc(100% - ${depth.md}px)
-            )`,
-          } : extendBackground ? {
-            paddingTop: isFirst ? `calc(${theme.spacing(6)} + ${depth.md + 40 + extraTopPadding}px)` : `calc(${theme.spacing(5)} + ${depth.md + extraTopPadding}px)`,
-            paddingBottom: `calc(${theme.spacing(8)} + 120px)`,
-            marginTop: isFirst ? `-${depth.md + 40}px` : `-${depth.md}px`,
-            clipPath: `polygon(
-              0% 0%,
-              ${Array.from({ length: steps.md + 1 }, (_, i) => {
-                const x = (i / steps.md) * 100;
-                const isPeak = i % 2 === 0;
-                const y = isPeak ? '0%' : `${depth.md}px`;
-                return `${x.toFixed(2)}% ${y}`;
-              }).join(', ')},
-              100% 0%, 100% 100%, 0% 100%, 0% 0%
-            )`,
-          } : {
-            paddingTop: isFirst ? `calc(${theme.spacing(6)} + ${depth.md + 40 + extraTopPadding}px)` : `calc(${theme.spacing(5)} + ${depth.md + extraTopPadding}px)`,
-            paddingBottom: `calc(${theme.spacing(6)} + ${depth.md}px)`,
-            marginTop: isFirst ? `-${depth.md + 40}px` : `-${depth.md}px`,
-            clipPath: `polygon(
-              0% 0%,
-              ${Array.from({ length: steps.md + 1 }, (_, i) => {
-                const x = (i / steps.md) * 100;
-                const isPeak = i % 2 === 0;
-                const y = isPeak ? '0%' : `${depth.md}px`;
-                return `${x.toFixed(2)}% ${y}`;
-              }).join(', ')},
-              100% 0%, 100% calc(100% - ${depth.md}px),
-              ${Array.from({ length: steps.md + 1 }, (_, i) => {
-                const x = ((steps.md - i) / steps.md) * 100;
-                const isPeak = i % 2 === 0;
-                const y = isPeak ? '100%' : `calc(100% - ${depth.md}px)`;
-                return `${x.toFixed(2)}% ${y}`;
-              }).join(', ')},
-              0% calc(100% - ${depth.md}px), 0% 0%
-            )`,
-          },
-        };
+      sx={{
+        backgroundImage: `url(/backgrounds/section_background.png)`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        position: 'relative',
+        zIndex: 5,
+        paddingTop: { xs: vw(24 + extraTopPadding, 'mobile'), md: vw(24 + extraTopPadding) },
+        marginBottom: extendBackground ? { xs: vw(-120, 'mobile'), md: vw(-120) } : 0,
+        ...getOuterSx(),
       }}
     >
-      <Section sx={{ py: { xs: 3, sm: 4, md: 6 } }}>
-        <Stack spacing={{ xs: 2, sm: 2.5, md: 3 }}>
+      <Section sx={{ py: rvw(24, 48) }}>
+        <Stack spacing={rvw(16, 24)}>
           {/* Rectangle with zigzag borders for the title */}
           <Box
             sx={{
@@ -222,127 +227,61 @@ export default function MainSection({
             <Box
               sx={{
                 position: 'absolute',
-                top: { xs: -16, sm: -18, md: -20 },
+                top: rvw(-16, -20),
                 left: '50%',
                 transform: 'translateX(-50%)',
                 backgroundColor: 'white',
-                border: '2px solid #BB8F43',
-                borderRadius: '20px',
-                padding: '4px 16px',
+                borderWidth: rvw(2, 2),
+                borderStyle: 'solid',
+                borderColor: '#BB8F43',
+                borderRadius: rvw(20, 20),
+                py: rvw(4, 4),
+                px: rvw(16, 16),
                 display: 'flex',
                 alignItems: 'center',
-                gap: 1,
+                gap: rvw(8, 8),
                 zIndex: 1,
               }}
             >
-              <Typography sx={{ color: '#BB8F43', fontSize: { xs: '0.7rem', sm: '0.8rem', md: '0.9rem' }, pt: '2px' }}>★</Typography>
-              <Typography sx={{ color: '#BB8F43', fontWeight: 'bold', fontSize: { xs: '0.9rem', sm: '1.1rem', md: '1.2rem' }, pt: '2px' }}>
+              <Typography sx={{ color: '#BB8F43', fontSize: rvw(11, 14), pt: rvw(2, 2) }}>★</Typography>
+              <Typography sx={{ color: '#BB8F43', fontWeight: 'bold', fontSize: rvw(14, 19), pt: rvw(2, 2) }}>
                 {time || '2022.04'}
               </Typography>
-              <Typography sx={{ color: '#BB8F43', fontSize: { xs: '0.7rem', sm: '0.8rem', md: '0.9rem' }, pt: '2px' }}>★</Typography>
+              <Typography sx={{ color: '#BB8F43', fontSize: rvw(11, 14), pt: rvw(2, 2) }}>★</Typography>
             </Box>
 
         <Box
-        sx={(theme) => {
-          const depth = {
-            xs: 20,  // smaller teeth on mobile
-            sm: 25,  // medium teeth on small screens
-            md: 30,  // original depth on desktop
-          };
-          const hasMultipleLines = title.includes('&');
-          // Use 2 zigzags on xs and sm screens, original logic for md+
-          const getZigzagCount = (breakpoint: string) => {
-            if (breakpoint === 'xs' || breakpoint === 'sm') return 2;
-            return hasMultipleLines ? 3 : 2;
-          };
+        sx={{
+          // Yellow gradient background with stripes (proportional)
+          backgroundImage: {
+            xs: `repeating-linear-gradient(-45deg, transparent, transparent ${vw(8, 'mobile')}, rgba(255, 255, 255, 0.3) ${vw(8, 'mobile')}, rgba(255, 255, 255, 0.3) ${vw(16, 'mobile')}), linear-gradient(to bottom, #BB8F43, #DFBF23)`,
+            md: `repeating-linear-gradient(-45deg, transparent, transparent ${vw(8)}, rgba(255, 255, 255, 0.3) ${vw(8)}, rgba(255, 255, 255, 0.3) ${vw(16)}), linear-gradient(to bottom, #BB8F43, #DFBF23)`,
+          },
+          backgroundRepeat: 'repeat, no-repeat',
+          backgroundSize: 'auto, 100% 100%',
+          backgroundPosition: 'left top, left top',
 
-          // Create zigzag polygon with dynamic zigzag count (90-degree angles)
-          const createZigzagPolygon = (zigzagCount: number, depthPx: number) => {
-            const pts: string[] = [];
-            // Top edge (left to right)
-            pts.push('0% 0%', '100% 0%');
-            
-            // Right edge with dynamic zigzags (90-degree angles)
-            pts.push('100% 0%');        // start at top-right
-            if (zigzagCount === 2) {
-              // 2 zigzags: 25%, 50%, 75%
-              pts.push(`calc(100% - ${depthPx}px) 25%`);  // in to first zigzag
-              pts.push('100% 50%');       // out to middle peak
-              pts.push(`calc(100% - ${depthPx}px) 75%`);  // in to second zigzag
-            } else if (zigzagCount === 3) {
-              // 3 zigzags evenly distributed: 16.67%, 33.33%, 50%, 66.67%, 83.33%
-              pts.push(`calc(100% - ${depthPx}px) 16.67%`);  // in to first zigzag
-              pts.push('100% 33.33%');       // out to first peak
-              pts.push(`calc(100% - ${depthPx}px) 50%`);  // in to second zigzag
-              pts.push('100% 66.67%');       // out to second peak
-              pts.push(`calc(100% - ${depthPx}px) 83.33%`);  // in to third zigzag
-            }
-            pts.push('100% 100%');      // end at bottom-right
-            
-            // Bottom edge (right to left)
-            pts.push('100% 100%', '0% 100%');
-            
-            // Left edge with dynamic zigzags (90-degree angles, bottom to top)
-            pts.push('0% 100%');        // start at bottom-left
-            if (zigzagCount === 2) {
-              // 2 zigzags: 75%, 50%, 25%
-              pts.push(`${depthPx}px 75%`); // in to first zigzag
-              pts.push('0% 50%');         // out to middle peak
-              pts.push(`${depthPx}px 25%`); // in to second zigzag
-            } else if (zigzagCount === 3) {
-              // 3 zigzags evenly distributed: 83.33%, 66.67%, 50%, 33.33%, 16.67%
-              pts.push(`${depthPx}px 83.33%`); // in to third zigzag
-              pts.push('0% 66.67%');         // out to second peak
-              pts.push(`${depthPx}px 50%`); // in to second zigzag
-              pts.push('0% 33.33%');         // out to first peak
-              pts.push(`${depthPx}px 16.67%`); // in to first zigzag
-            }
-            pts.push('0% 0%');          // end at top-left
-            
-            return `polygon(${pts.join(', ')})`;
-          };
+          position: 'relative',
 
-          return {
-            // Yellow gradient background with stripes
-            '--stripe': `repeating-linear-gradient(
-              -45deg,
-              transparent,
-              transparent 8px,
-              rgba(255, 255, 255, 0.3) 8px,
-              rgba(255, 255, 255, 0.3) 16px
-            )`,
-            '--yellow': 'linear-gradient(to bottom, #BB8F43, #DFBF23)',
-            backgroundImage: 'var(--stripe), var(--yellow)',
-            backgroundRepeat: 'repeat, no-repeat',
-            backgroundSize: 'auto, 100% 100%',
-            backgroundPosition: 'left top, left top',
-            
-            position: 'relative',
-
-            // Responsive clipPath
-            [theme.breakpoints.up('xs')]: {
-              padding: 2,
-              clipPath: createZigzagPolygon(getZigzagCount('xs'), depth.xs),
-            },
-            [theme.breakpoints.up('sm')]: {
-              padding: 3,
-              clipPath: createZigzagPolygon(getZigzagCount('sm'), depth.sm),
-            },
-            [theme.breakpoints.up('md')]: {
-              padding: 4,
-              clipPath: createZigzagPolygon(getZigzagCount('md'), depth.md),
-            },
-          };
+          // Responsive padding and clipPath (2-tier)
+          padding: { xs: vw(16, 'mobile'), md: vw(32) },
+          clipPath: {
+            xs: createZigzagPolygon(getZigzagCount('xs'), vw(innerDepth.xs, 'mobile')),
+            md: createZigzagPolygon(getZigzagCount('md'), vw(innerDepth.md)),
+          },
         }}
       >
-        <Typography 
-          variant="h4" 
-          sx={{ 
+        <Typography
+          variant="h4"
+          sx={{
             textAlign: 'center',
             color: 'white',
             fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
-            textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3), 0px 0px 1px rgba(0, 0, 0, 0.5)',
-            fontSize: { xs: '1.5rem', sm: '2rem', md: '3.5rem', lg: '3.5rem' }
+            textShadow: {
+              xs: `${vw(1, 'mobile')} ${vw(1, 'mobile')} ${vw(2, 'mobile')} rgba(0, 0, 0, 0.3), 0px 0px ${vw(1, 'mobile')} rgba(0, 0, 0, 0.5)`,
+              md: `${vw(1)} ${vw(1)} ${vw(2)} rgba(0, 0, 0, 0.3), 0px 0px ${vw(1)} rgba(0, 0, 0, 0.5)`,
+            },
+            fontSize: rvw(24, 56),
           }}
         >
           {title.includes('&') ? (
@@ -361,18 +300,18 @@ export default function MainSection({
       {/* Description text below the zigzag banner */}
       <Box
         sx={{
-          px: '30px',
+          px: rvw(30, 30),
         }}
       >
-        <Stack spacing={1}>
+        <Stack spacing={rvw(8, 8)}>
           {Array.isArray(bodyContent) ? (
             <>
               {/* On xs screens, combine all paragraphs into one */}
-              <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
-                <Typography 
-                  sx={{ 
+              <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+                <Typography
+                  sx={{
                     color: '#432F2F',
-                    fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
+                    fontSize: rvw(18, 21),
                     lineHeight: 1.6,
                     textAlign: 'center',
                     fontWeight: 500,
@@ -381,15 +320,15 @@ export default function MainSection({
                   {bodyContent.join(' ')}
                 </Typography>
               </Box>
-              {/* On sm+ screens, keep separate paragraphs */}
-              <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                <Stack spacing={1}>
+              {/* On md+ screens, keep separate paragraphs */}
+              <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+                <Stack spacing={rvw(8, 8)}>
                   {bodyContent.map((p, i) => (
-                    <Typography 
+                    <Typography
                       key={i}
-                      sx={{ 
+                      sx={{
                         color: '#432F2F',
-                        fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
+                        fontSize: rvw(18, 21),
                         lineHeight: 1.6,
                         textAlign: 'center',
                         fontWeight: 500,
@@ -403,9 +342,9 @@ export default function MainSection({
             </>
           ) : (
             <Typography
-              sx={{ 
+              sx={{
                 color: '#432F2F',
-                fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
+                fontSize: rvw(18, 21),
                 lineHeight: 1.6,
                 textAlign: 'center',
                 fontWeight: 500,

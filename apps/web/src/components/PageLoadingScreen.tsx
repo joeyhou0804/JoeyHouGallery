@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import LoadingSpinner from './LoadingSpinner';
 import { useTranslation } from '@/hooks/useTranslation';
+import { vw, rvw } from '@/utils/scaling';
 
 interface PageLoadingScreenProps {
   progress: number;
@@ -26,7 +27,7 @@ export default function PageLoadingScreen({ progress, title, subtitle }: PageLoa
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
-        gap: 3,
+        gap: rvw(24, 24),
         position: 'relative',
         overflow: 'hidden',
       }}
@@ -40,10 +41,12 @@ export default function PageLoadingScreen({ progress, title, subtitle }: PageLoa
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: 3,
+          gap: rvw(24, 24),
         }}
       >
-        <LoadingSpinner size={50} variant="circular" />
+        <Box sx={{ width: rvw(50, 50), height: rvw(50, 50) }}>
+          <LoadingSpinner size="100%" variant="circular" />
+        </Box>
 
         {(title || subtitle) && (
           <Box sx={{ textAlign: 'center' }}>
@@ -51,7 +54,7 @@ export default function PageLoadingScreen({ progress, title, subtitle }: PageLoa
               <Typography
                 sx={{
                   color: '#432F2F',
-                  fontSize: '1.2rem',
+                  fontSize: rvw(19, 19),
                   fontWeight: 'normal',
                   textAlign: 'center',
                   fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
@@ -64,11 +67,11 @@ export default function PageLoadingScreen({ progress, title, subtitle }: PageLoa
               <Typography
                 sx={{
                   color: '#432F2F',
-                  fontSize: '1.6rem',
+                  fontSize: rvw(26, 26),
                   fontWeight: 'normal',
                   textAlign: 'center',
                   fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
-                  mt: 0.5,
+                  mt: rvw(4, 4),
                 }}
               >
                 {subtitle}
@@ -80,7 +83,7 @@ export default function PageLoadingScreen({ progress, title, subtitle }: PageLoa
         <Typography
           sx={{
             color: '#666',
-            fontSize: '1rem',
+            fontSize: rvw(16, 16),
             fontWeight: 500,
             textAlign: 'center',
           }}

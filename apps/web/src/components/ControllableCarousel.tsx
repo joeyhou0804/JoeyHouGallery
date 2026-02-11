@@ -6,6 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useMediaQuery, useTheme, CircularProgress } from "@mui/material";
+import { vw, rvw } from "@/utils/scaling";
 
 interface ControllableCarouselProps {
   images: string[];
@@ -46,22 +47,21 @@ export default function ControllableCarousel({
     (img as any).fetchPriority = "low";
     img.src = url;
     prefetched.current.add(url);
-    prefetchImg.current = img; // keep a ref so it’s not GC’d immediately
+    prefetchImg.current = img; // keep a ref so it's not GC'd immediately
   }, []);
 
-  // Breakpoints
+  // Breakpoints (2-tier: xs / md)
   const upMd = useMediaQuery(theme.breakpoints.up("md"));
-  const upSm = useMediaQuery(theme.breakpoints.up("sm"));
-  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+  const isXs = useMediaQuery(theme.breakpoints.down("md"));
 
   // Sizes
   const sizes = useMemo(() => {
-    const centerW = upMd ? 450 : upSm ? 400 : 300;
-    const centerH = upMd ? 600 : upSm ? 500 : 400;
-    const sideW = upSm ? 224 : 160;
-    const sideH = upSm ? 320 : 240;
+    const centerW = upMd ? 450 : 300;
+    const centerH = upMd ? 600 : 400;
+    const sideW = 224;
+    const sideH = 320;
     return { centerW, centerH, sideW, sideH };
-  }, [upMd, upSm]);
+  }, [upMd]);
 
   const { centerW, sideW } = sizes;
 
@@ -207,12 +207,12 @@ export default function ControllableCarousel({
   }, [isXs]);
 
   return (
-    <Box sx={{ py: 4, position: "relative" }}>
+    <Box sx={{ py: rvw(32, 32), position: "relative" }}>
       {/* Full-bleed container */}
       <Box
         sx={{
           position: "relative",
-          height: { xs: "500px", sm: "500px", md: "600px" },
+          height: { xs: vw(500, "mobile"), md: vw(600) },
           width: "100vw",
           left: "50%",
           right: "50%",
@@ -230,9 +230,9 @@ export default function ControllableCarousel({
             bottom: 0,
             transform: "translateX(-50%)",
             zIndex: 3,
-            width: { xs: "90vw", sm: "400px", md: "450px" },
-            maxWidth: { xs: "400px", sm: "400px", md: "450px" },
-            height: { xs: "500px", sm: "500px", md: "600px" },
+            width: { xs: vw(351, "mobile"), md: vw(450) },
+            maxWidth: { xs: vw(400, "mobile"), md: vw(450) },
+            height: { xs: vw(500, "mobile"), md: vw(600) },
           }}
         >
           {/* STAGED card (xs only) */}
@@ -241,9 +241,12 @@ export default function ControllableCarousel({
               sx={{
                 position: "absolute",
                 inset: 0,
-                borderRadius: 2,
+                borderRadius: rvw(8, 8),
                 overflow: "hidden",
-                boxShadow: "0 8px 24px rgba(0,0,0,0.3)",
+                boxShadow: {
+                  xs: `0 ${vw(8, 'mobile')} ${vw(24, 'mobile')} rgba(0,0,0,0.3)`,
+                  md: `0 ${vw(8)} ${vw(24)} rgba(0,0,0,0.3)`,
+                },
                 zIndex: 1,
               }}
             >
@@ -282,7 +285,7 @@ export default function ControllableCarousel({
                     pointerEvents: "none",
                   }}
                 >
-                  <CircularProgress size={32} thickness={5} />
+                  <CircularProgress size={Math.round(32 * (typeof window !== 'undefined' ? window.innerWidth : 390) / 390)} thickness={5} />
                 </Box>
               )}
             </Box>
@@ -297,9 +300,12 @@ export default function ControllableCarousel({
             sx={{
               position: "absolute",
               inset: 0,
-              borderRadius: 2,
+              borderRadius: rvw(8, 8),
               overflow: "hidden",
-              boxShadow: "0 8px 24px rgba(0, 0, 0, 0.3)",
+              boxShadow: {
+                xs: `0 ${vw(8, 'mobile')} ${vw(24, 'mobile')} rgba(0, 0, 0, 0.3)`,
+                md: `0 ${vw(8)} ${vw(24)} rgba(0, 0, 0, 0.3)`,
+              },
               cursor: isXs ? "grab" : "default",
               transform: isXs ? `translateX(${dragX}px)` : "translateX(0)",
               transition: isXs ? transitionCSS : "none",
@@ -337,7 +343,7 @@ export default function ControllableCarousel({
                 onClick={() => setCurrentIndex(leftIndex)}
                 sx={{
                   position: "absolute",
-                  right: `calc(50% + ${sideDistancePx(offset)}px)`,
+                  right: `calc(50% + ${vw(sideDistancePx(offset))})`,
                   bottom: 0,
                   transform: "translateX(50%)",
                   zIndex: 3 - offset,
@@ -346,12 +352,15 @@ export default function ControllableCarousel({
                 <Box
                   sx={{
                     cursor: images.length > 1 ? "pointer" : "default",
-                    height: { xs: "240px", sm: "320px" },
-                    width: { xs: "160px", sm: "224px" },
-                    borderRadius: 2,
+                    height: { xs: vw(240, "mobile"), md: vw(320) },
+                    width: { xs: vw(160, "mobile"), md: vw(224) },
+                    borderRadius: rvw(8, 8),
                     overflow: "hidden",
                     opacity: 0.7,
-                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+                    boxShadow: {
+                      xs: `0 ${vw(4, 'mobile')} ${vw(12, 'mobile')} rgba(0, 0, 0, 0.2)`,
+                      md: `0 ${vw(4)} ${vw(12)} rgba(0, 0, 0, 0.2)`,
+                    },
                     transition: "all 0.25s ease",
                     "&:hover": {
                       opacity: 1,
@@ -387,7 +396,7 @@ export default function ControllableCarousel({
                 onClick={() => setCurrentIndex(rightIndex)}
                 sx={{
                   position: "absolute",
-                  left: `calc(50% + ${sideDistancePx(offset)}px)`,
+                  left: `calc(50% + ${vw(sideDistancePx(offset))})`,
                   bottom: 0,
                   transform: "translateX(-50%)",
                   zIndex: 3 - offset,
@@ -396,12 +405,15 @@ export default function ControllableCarousel({
                 <Box
                   sx={{
                     cursor: images.length > 1 ? "pointer" : "default",
-                    height: { xs: "240px", sm: "320px" },
-                    width: { xs: "160px", sm: "224px" },
-                    borderRadius: 2,
+                    height: { xs: vw(240, "mobile"), md: vw(320) },
+                    width: { xs: vw(160, "mobile"), md: vw(224) },
+                    borderRadius: rvw(8, 8),
                     overflow: "hidden",
                     opacity: 0.7,
-                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+                    boxShadow: {
+                      xs: `0 ${vw(4, 'mobile')} ${vw(12, 'mobile')} rgba(0, 0, 0, 0.2)`,
+                      md: `0 ${vw(4)} ${vw(12)} rgba(0, 0, 0, 0.2)`,
+                    },
                     transition: "all 0.25s ease",
                     "&:hover": {
                       opacity: 1,
@@ -432,18 +444,18 @@ export default function ControllableCarousel({
             onClick={goToPrevious}
             sx={{
               position: "absolute",
-              right: `calc(50% + ${arrowOffsetPx}px)`,
+              right: `calc(50% + ${vw(arrowOffsetPx)})`,
               top: "30%",
               transform: "translateY(-50%)",
               zIndex: 4,
               backgroundColor: "transparent",
-              padding: 2,
+              padding: vw(16),
               "&:hover": { backgroundColor: "rgba(241, 252, 135, 0.1)" },
             }}
           >
             <ArrowBackIosIcon
               sx={{
-                fontSize: "3.5rem",
+                fontSize: vw(56),
                 color: "#F1FC87",
                 strokeWidth: 1,
                 stroke: "#2D1619",
@@ -460,18 +472,18 @@ export default function ControllableCarousel({
             onClick={goToNext}
             sx={{
               position: "absolute",
-              left: `calc(50% + ${arrowOffsetPx}px)`,
+              left: `calc(50% + ${vw(arrowOffsetPx)})`,
               top: "30%",
               transform: "translateY(-50%)",
               zIndex: 4,
               backgroundColor: "transparent",
-              padding: 2,
+              padding: vw(16),
               "&:hover": { backgroundColor: "rgba(241, 252, 135, 0.1)" },
             }}
           >
             <ArrowForwardIosIcon
               sx={{
-                fontSize: "3.5rem",
+                fontSize: vw(56),
                 color: "#F1FC87",
                 strokeWidth: 1,
                 stroke: "#2D1619",
@@ -489,8 +501,8 @@ export default function ControllableCarousel({
           sx={{
             display: "flex",
             justifyContent: "center",
-            gap: 1,
-            mt: 3,
+            gap: rvw(8, 8),
+            mt: rvw(24, 24),
           }}
         >
           {images.map((_, index) => (
@@ -498,8 +510,8 @@ export default function ControllableCarousel({
               key={index}
               onClick={() => setCurrentIndex(index)}
               sx={{
-                width: 10,
-                height: 10,
+                width: rvw(10, 10),
+                height: rvw(10, 10),
                 borderRadius: "50%",
                 backgroundColor:
                   index === currentIndex ? "#BB8F43" : "rgba(0, 0, 0, 0.3)",

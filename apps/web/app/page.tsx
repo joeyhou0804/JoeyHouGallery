@@ -17,6 +17,7 @@ import { useMediaQuery, useTheme } from '@mui/material';
 import { usePageLoading } from '@/hooks/usePageLoading';
 import PageLoadingScreen from '@/components/PageLoadingScreen';
 import confetti from 'canvas-confetti';
+import { vw, rvw } from '@/utils/scaling';
 
 // ------------------------------
 // Config
@@ -30,13 +31,6 @@ const sections = [
   { href: '/videos', labelKey: 'sectionsLabels.videos', buttonIndex: 6 },
   { href: '/websites', labelKey: 'sectionsLabels.websites', buttonIndex: 7 }
 ];
-
-// Layout tunables
-const CLUSTER_W = 296;
-const LOGO_MIN = 320;
-const LOGO_MAX = 600;
-const EDGE_MIN = 80;
-const INNER_MAX = 'clamp(8px, 2vw, 40px)';
 
 // Layout stagger (kept for button timing logic)
 const STAGGER_MS = 90;
@@ -177,13 +171,13 @@ export default function HomePage() {
         gridTemplateColumns: {
           xs: '1fr',
           md: `
-            minmax(${EDGE_MIN}px, 1fr)
-            ${CLUSTER_W}px
-            minmax(0, ${INNER_MAX})
-            minmax(${LOGO_MIN}px, ${LOGO_MAX}px)
-            minmax(0, ${INNER_MAX})
-            ${CLUSTER_W}px
-            minmax(${EDGE_MIN}px, 1fr)
+            minmax(${vw(80)}, 1fr)
+            ${vw(296)}
+            minmax(0, ${vw(40)})
+            minmax(${vw(320)}, ${vw(600)})
+            minmax(0, ${vw(40)})
+            ${vw(296)}
+            minmax(${vw(80)}, 1fr)
           `,
         },
         alignItems: 'center',
@@ -193,9 +187,6 @@ export default function HomePage() {
         backgroundPosition: 'center',
         color: '#fff',
         minWidth: 0,
-        pt: { xs: 0, md: 0 },
-        pb: { xs: 0, md: 0 },
-        gap: { xs: 0, md: 0 },
       }}
     >
       {/* Cluster A (Left on desktop, Top on mobile) */}
@@ -206,19 +197,19 @@ export default function HomePage() {
           justifySelf: { xs: 'center', md: 'center' },
           alignSelf: { xs: 'flex-end', md: 'center' },
           display: 'grid',
-          gridTemplateColumns: { xs: 'repeat(2, min(110px, 18dvh))', sm: 'repeat(2, 160px)' },
-          gridTemplateRows: { xs: 'repeat(2, min(110px, 18dvh))', sm: 'repeat(2, 160px)' },
-          gap: { xs: 0.5, sm: 2 },
+          gridTemplateColumns: { xs: `repeat(2, ${vw(110, 'mobile')})`, md: `repeat(2, ${vw(160)})` },
+          gridTemplateRows: { xs: `repeat(2, ${vw(110, 'mobile')})`, md: `repeat(2, ${vw(160)})` },
+          gap: rvw(4, 16),
           justifyItems: 'center',
           alignItems: 'center',
           mx: { xs: 'auto', md: 0 },
-          mb: { xs: 2, md: 0 },
+          mb: { xs: vw(16, 'mobile'), md: 0 },
           zIndex: 1,
         }}
       >
         {/* Slot 0 (TL): Language switch */}
         <EnterButton delayMs={baseA + STAGGER_MS * 0} fromX={vecA[0]?.x || 0} fromY={vecA[0]?.y || 0} imagesLoaded={!isLoading}>
-          <Box onClick={handleLanguageSwitch} sx={{ cursor: 'pointer', height: { xs: 'min(110px, 18dvh)', sm: '160px' } }}>
+          <Box onClick={handleLanguageSwitch} sx={{ cursor: 'pointer', height: { xs: vw(110, 'mobile'), md: vw(160) } }}>
             <Image
               src={language === 'zh-CN' ? '/buttons/button_homepage_cn_8.png' : '/buttons/button_homepage_en_8.png'}
               alt={language === 'zh-CN' ? '切换到英文' : 'Switch to Chinese'}
@@ -229,7 +220,7 @@ export default function HomePage() {
               style={{
                 width: 'auto',
                 height: '100%',
-                maxWidth: '480px',
+                maxWidth: vw(480),
                 cursor: 'pointer',
                 transition: 'transform 0.2s ease, opacity 0.2s ease',
                 flexShrink: 1,
@@ -248,11 +239,11 @@ export default function HomePage() {
               ? `/buttons/button_homepage_cn_${s.buttonIndex}.png`
               : `/buttons/button_homepage_en_${s.buttonIndex}.png`;
           // Add extra spacing for second row (Arts=i:1, Handbooks=i:2)
-          const extraMargin = i === 1 ? { mr: { xs: 'min(80px, 14dvh)', sm: 0 } } : i === 2 ? { ml: { xs: 'min(80px, 14dvh)', sm: 0 } } : {};
+          const extraMargin = i === 1 ? { mr: { xs: vw(80, 'mobile'), md: 0 } } : i === 2 ? { ml: { xs: vw(80, 'mobile'), md: 0 } } : {};
           return (
             <EnterButton key={s.href} delayMs={baseA + STAGGER_MS * pos} fromX={vecA[pos]?.x || 0} fromY={vecA[pos]?.y || 0} imagesLoaded={!isLoading}>
               <Link href={s.href} style={{ height: 'inherit' }}>
-                <Box sx={{ height: { xs: 'min(110px, 18dvh)', sm: '160px' }, ...extraMargin }}>
+                <Box sx={{ height: { xs: vw(110, 'mobile'), md: vw(160) }, ...extraMargin }}>
                   <Image
                     src={buttonImage}
                     alt={t(s.labelKey)}
@@ -263,7 +254,7 @@ export default function HomePage() {
                     style={{
                       width: 'auto',
                       height: '100%',
-                      maxWidth: '480px',
+                      maxWidth: vw(480),
                       cursor: 'pointer',
                       transition: 'transform 0.2s ease, opacity 0.2s ease',
                       flexShrink: 1,
@@ -285,10 +276,10 @@ export default function HomePage() {
           gridRow: { xs: 'unset', md: 'auto' },
           justifySelf: 'center',
           alignSelf: 'center',
-          width: { xs: language === 'zh-CN' ? '50%' : '65%', sm: language === 'zh-CN' ? '80%' : '95%', md: '100%' },
-          maxWidth: { xs: 250, sm: LOGO_MAX, md: LOGO_MAX },
-          height: { xs: 'auto', sm: 450, md: 500 },
-          maxHeight: { xs: '16dvh', sm: 450, md: 500 },
+          width: { xs: language === 'zh-CN' ? '50%' : '65%', md: '100%' },
+          maxWidth: { xs: vw(250, 'mobile'), md: vw(600) },
+          height: { xs: 'auto', md: vw(500) },
+          maxHeight: { xs: '16dvh', md: vw(500) },
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -339,13 +330,13 @@ export default function HomePage() {
           justifySelf: { xs: 'center', md: 'center' },
           alignSelf: { xs: 'flex-start', md: 'center' },
           display: 'grid',
-          gridTemplateColumns: { xs: 'repeat(2, min(110px, 18dvh))', sm: 'repeat(2, 160px)' },
-          gridTemplateRows: { xs: 'repeat(2, min(110px, 18dvh))', sm: 'repeat(2, 160px)' },
-          gap: { xs: 0.5, sm: 2 },
+          gridTemplateColumns: { xs: `repeat(2, ${vw(110, 'mobile')})`, md: `repeat(2, ${vw(160)})` },
+          gridTemplateRows: { xs: `repeat(2, ${vw(110, 'mobile')})`, md: `repeat(2, ${vw(160)})` },
+          gap: rvw(4, 16),
           justifyItems: 'center',
           alignItems: 'center',
           mx: { xs: 'auto', md: 0 },
-          mt: { xs: 2, md: 0 },
+          mt: { xs: vw(16, 'mobile'), md: 0 },
           zIndex: 1,
         }}
       >
@@ -357,11 +348,11 @@ export default function HomePage() {
               ? `/buttons/button_homepage_cn_${s.buttonIndex}.png`
               : `/buttons/button_homepage_en_${s.buttonIndex}.png`;
           // Add extra spacing for first row (Posters=i:0, Reports=i:1)
-          const extraMargin = i === 0 ? { mr: { xs: 'min(80px, 14dvh)', sm: 0 } } : i === 1 ? { ml: { xs: 'min(80px, 14dvh)', sm: 0 } } : {};
+          const extraMargin = i === 0 ? { mr: { xs: vw(80, 'mobile'), md: 0 } } : i === 1 ? { ml: { xs: vw(80, 'mobile'), md: 0 } } : {};
           return (
             <EnterButton key={s.href} delayMs={baseB + STAGGER_MS * pos} fromX={vecB[pos]?.x || 0} fromY={vecB[pos]?.y || 0} imagesLoaded={!isLoading}>
               <Link href={s.href} style={{ height: 'inherit' }}>
-                <Box sx={{ height: { xs: 'min(110px, 18dvh)', sm: '160px' }, ...extraMargin }}>
+                <Box sx={{ height: { xs: vw(110, 'mobile'), md: vw(160) }, ...extraMargin }}>
                   <Image
                     src={buttonImage}
                     alt={t(s.labelKey)}
@@ -372,7 +363,7 @@ export default function HomePage() {
                     style={{
                       width: 'auto',
                       height: '100%',
-                      maxWidth: '480px',
+                      maxWidth: vw(480),
                       cursor: 'pointer',
                       transition: 'transform 0.2s ease, opacity 0.2s ease',
                       flexShrink: 1,
@@ -397,15 +388,14 @@ export default function HomePage() {
           right: 0,
           display: 'flex',
           justifyContent: 'center',
-          pt: { xs: 0, md: 0 },
-          pb: { xs: 1, md: 3 },
+          pb: rvw(8, 24),
         }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: rvw(8, 8) }}>
           <Typography
             sx={{
               color: '#000',
-              fontSize: { xs: '1rem', sm: '1.1rem' },
+              fontSize: rvw(16, 18),
               lineHeight: 1.6,
               fontWeight: 500,
               textAlign: 'center',
@@ -414,7 +404,7 @@ export default function HomePage() {
             {t('ui.madeBy')}
           </Typography>
 
-          <Box sx={{ display: 'flex', gap: 0.5 }}>
+          <Box sx={{ display: 'flex', gap: rvw(4, 4) }}>
             <IconButton
               component="a"
               href="https://www.linkedin.com/in/joey1m/"
@@ -422,11 +412,11 @@ export default function HomePage() {
               rel="noopener noreferrer"
               sx={{
                 color: '#000',
-                p: 0.5,
+                p: rvw(4, 4),
                 '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.1)' },
               }}
             >
-              <LinkedInIcon sx={{ fontSize: { xs: '1rem', sm: '1.1rem' } }} />
+              <LinkedInIcon sx={{ fontSize: rvw(16, 18) }} />
             </IconButton>
 
             <IconButton
@@ -436,11 +426,11 @@ export default function HomePage() {
               rel="noopener noreferrer"
               sx={{
                 color: '#000',
-                p: 0.5,
+                p: rvw(4, 4),
                 '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.1)' },
               }}
             >
-              <FacebookIcon sx={{ fontSize: { xs: '1rem', sm: '1.1rem' } }} />
+              <FacebookIcon sx={{ fontSize: rvw(16, 18) }} />
             </IconButton>
 
             <IconButton
@@ -450,11 +440,11 @@ export default function HomePage() {
               rel="noopener noreferrer"
               sx={{
                 color: '#000',
-                p: 0.5,
+                p: rvw(4, 4),
                 '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.1)' },
               }}
             >
-              <InstagramIcon sx={{ fontSize: { xs: '1rem', sm: '1.1rem' } }} />
+              <InstagramIcon sx={{ fontSize: rvw(16, 18) }} />
             </IconButton>
 
             <IconButton
@@ -464,11 +454,11 @@ export default function HomePage() {
               rel="noopener noreferrer"
               sx={{
                 color: '#000',
-                p: 0.5,
+                p: rvw(4, 4),
                 '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.1)' },
               }}
             >
-              <GitHubIcon sx={{ fontSize: { xs: '1rem', sm: '1.1rem' } }} />
+              <GitHubIcon sx={{ fontSize: rvw(16, 18) }} />
             </IconButton>
           </Box>
         </Box>

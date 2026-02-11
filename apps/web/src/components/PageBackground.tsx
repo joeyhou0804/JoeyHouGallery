@@ -2,6 +2,7 @@
 
 import Box from '@mui/material/Box';
 import { ReactNode } from 'react';
+import { vw } from '@/utils/scaling';
 
 interface PageBackgroundProps {
   children: ReactNode;
@@ -10,14 +11,8 @@ interface PageBackgroundProps {
 export default function PageBackground({ children }: PageBackgroundProps) {
   return (
     <Box sx={{
-      minHeight: 'calc(100vh - 120px)',
+      minHeight: { xs: `calc(100vh - ${vw(120, 'mobile')})`, md: `calc(100vh - ${vw(120)})` },
       backgroundColor: '#2B91E1'
-      // Previous background (saved for future use):
-      // backgroundImage: `url(/page_background.png)`,
-      // backgroundSize: 'cover',
-      // backgroundRepeat: 'no-repeat',
-      // backgroundPosition: 'center',
-      // backgroundAttachment: 'fixed'
     }}>
       {children}
     </Box>

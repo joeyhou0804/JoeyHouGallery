@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 
 interface LoadingSpinnerProps {
-  size?: number;
+  size?: number | string;
   color?: string;
   variant?: 'circular' | 'pulse' | 'minimal';
 }
@@ -53,8 +53,8 @@ export default function LoadingSpinner({
           justifyContent: 'center',
           '&::before': {
             content: '""',
-            width: size * 0.8,
-            height: size * 0.8,
+            width: typeof size === 'number' ? size * 0.8 : `calc(${size} * 0.8)`,
+            height: typeof size === 'number' ? size * 0.8 : `calc(${size} * 0.8)`,
             borderRadius: '50%',
             border: `2px solid ${color}`,
             borderTop: '2px solid transparent',

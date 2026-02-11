@@ -7,18 +7,19 @@ import Stack from '@mui/material/Stack';
 import ImageGrid from '@/components/ImageGrid';
 import CloudImage from '@/components/CloudImage';
 import { useTranslation } from '@/hooks/useTranslation';
+import { vw, rvw } from '@/utils/scaling';
 import type { Section as SectionType } from '@/content/types';
 
 // SubsectionTitle Component: Colored gradient backgrounds for subsection titles with optional year capsule
-function SubsectionTitle({ 
-  title, 
-  language, 
-  colorIndex, 
+function SubsectionTitle({
+  title,
+  language,
+  colorIndex,
   year,
-  customGradient 
-}: { 
-  title: string; 
-  language: string; 
+  customGradient
+}: {
+  title: string;
+  language: string;
   colorIndex: number;
   year?: string;
   customGradient?: string;
@@ -26,12 +27,12 @@ function SubsectionTitle({
   // Color gradients for different sections (left to right)
   const gradients = [
     'linear-gradient(to right, #75C5EB, #297BC8)', // Blue gradient
-    'linear-gradient(to right, #FF8E65, #FF4582)', // Red/Pink gradient  
+    'linear-gradient(to right, #FF8E65, #FF4582)', // Red/Pink gradient
     'linear-gradient(to right, #39DE88, #17CACB)', // Green/Teal gradient
   ];
-  
+
   const backgroundGradient = customGradient || gradients[colorIndex] || gradients[0];
-  
+
   // Extract right side color from gradient for capsule border
   const rightColor = (() => {
     const match = backgroundGradient?.match(/#[A-Fa-f0-9]{6}(?![A-Fa-f0-9])/g);
@@ -45,84 +46,73 @@ function SubsectionTitle({
         <Box
           sx={{
             position: 'absolute',
-            top: { xs: -16, sm: -18, md: -20 },
+            top: rvw(-16, -20),
             left: '50%',
             transform: 'translateX(-50%)',
             backgroundColor: 'white',
-            border: `2px solid ${rightColor}`,
-            borderRadius: '20px',
-            padding: '4px 16px',
+            borderWidth: rvw(2, 2),
+            borderStyle: 'solid',
+            borderColor: rightColor,
+            borderRadius: rvw(20, 20),
+            py: rvw(4, 4),
+            px: rvw(16, 16),
             display: 'flex',
             alignItems: 'center',
-            gap: 1,
+            gap: rvw(8, 8),
             zIndex: 1,
           }}
         >
-          <Typography sx={{ color: rightColor, fontSize: { xs: '0.7rem', sm: '0.8rem', md: '0.9rem' }, pt: '2px' }}>★</Typography>
-          <Typography sx={{ color: rightColor, fontWeight: 'bold', fontSize: { xs: '0.9rem', sm: '1.1rem', md: '1.2rem' }, pt: '2px', whiteSpace: 'nowrap' }}>
+          <Typography sx={{ color: rightColor, fontSize: rvw(11, 14), pt: rvw(2, 2) }}>★</Typography>
+          <Typography sx={{ color: rightColor, fontWeight: 'bold', fontSize: rvw(14, 19), pt: rvw(2, 2), whiteSpace: 'nowrap' }}>
             {year}
           </Typography>
-          <Typography sx={{ color: rightColor, fontSize: { xs: '0.7rem', sm: '0.8rem', md: '0.9rem' }, pt: '2px' }}>★</Typography>
+          <Typography sx={{ color: rightColor, fontSize: rvw(11, 14), pt: rvw(2, 2) }}>★</Typography>
         </Box>
       )}
 
       {/* Title background */}
       <Box
         sx={(theme) => {
-          const depth = {
-            xs: 12,   // smaller depth on mobile
-            sm: 14,   // medium depth on small screens
-            md: 16,   // original depth on medium+ screens
-          };
+          const dXs = vw(12, 'mobile');
+          const dMd = vw(16);
 
           return {
-            backgroundImage: `
-              repeating-linear-gradient(
-                -45deg,
-                transparent,
-                transparent 8px,
-                rgba(255, 255, 255, 0.3) 8px,
-                rgba(255, 255, 255, 0.3) 16px
-              ),
-              ${backgroundGradient}
-            `,
             backgroundRepeat: 'repeat, no-repeat',
             backgroundSize: 'auto, 100% 100%',
             backgroundPosition: 'left top, left top',
-            padding: 2, // Consistent padding regardless of capsule
-            marginTop: year ? '32px' : 0,
-            marginBottom: 0, // Fixed bottom margin
+            padding: rvw(16, 16),
+            marginTop: 0,
+            marginBottom: 0,
 
-            // Responsive margins and zigzag pattern
+            // Responsive margins, stripe pattern, and zigzag
             [theme.breakpoints.up('xs')]: {
-              marginTop: year ? '24px' : '8px',
-              marginLeft: '8px',
-              marginRight: '8px',
-              clipPath: `polygon(0% 0%, 100% 0%, calc(100% - ${depth.xs}px) 25%, 100% 50%, calc(100% - ${depth.xs}px) 75%, 100% 100%, 0% 100%)`,
-            },
-            [theme.breakpoints.up('sm')]: {
-              marginTop: year ? '32px' : '24px',
-              marginLeft: '24px',
-              marginRight: '24px',
-              clipPath: `polygon(0% 0%, 100% 0%, calc(100% - ${depth.sm}px) 25%, 100% 50%, calc(100% - ${depth.sm}px) 75%, 100% 100%, 0% 100%)`,
+              backgroundImage: `repeating-linear-gradient(-45deg, transparent, transparent ${vw(8, 'mobile')}, rgba(255, 255, 255, 0.3) ${vw(8, 'mobile')}, rgba(255, 255, 255, 0.3) ${vw(16, 'mobile')}), ${backgroundGradient}`,
+              marginTop: year ? vw(24, 'mobile') : vw(8, 'mobile'),
+              marginLeft: vw(8, 'mobile'),
+              marginRight: vw(8, 'mobile'),
+              clipPath: `polygon(0% 0%, 100% 0%, calc(100% - ${dXs}) 25%, 100% 50%, calc(100% - ${dXs}) 75%, 100% 100%, 0% 100%)`,
             },
             [theme.breakpoints.up('md')]: {
-              marginTop: year ? '32px' : '32px',
-              marginLeft: '32px',
-              marginRight: '32px',
-              clipPath: `polygon(0% 0%, 100% 0%, calc(100% - ${depth.md}px) 25%, 100% 50%, calc(100% - ${depth.md}px) 75%, 100% 100%, 0% 100%)`,
+              backgroundImage: `repeating-linear-gradient(-45deg, transparent, transparent ${vw(8)}, rgba(255, 255, 255, 0.3) ${vw(8)}, rgba(255, 255, 255, 0.3) ${vw(16)}), ${backgroundGradient}`,
+              marginTop: vw(32),
+              marginLeft: vw(32),
+              marginRight: vw(32),
+              clipPath: `polygon(0% 0%, 100% 0%, calc(100% - ${dMd}) 25%, 100% 50%, calc(100% - ${dMd}) 75%, 100% 100%, 0% 100%)`,
             },
           };
         }}
       >
-        <Typography 
-          variant="h4" 
-          sx={{ 
+        <Typography
+          variant="h4"
+          sx={{
             textAlign: 'center',
             color: 'white',
             fontFamily: language === 'zh-CN' ? 'MarioChinese, Mario, sans-serif' : 'Mario, sans-serif',
-            textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3), 0px 0px 1px rgba(0, 0, 0, 0.5)',
-            fontSize: { xs: '1.2rem', sm: '1.6rem', md: '2.8rem', lg: '2.8rem' }
+            textShadow: {
+              xs: `${vw(1, 'mobile')} ${vw(1, 'mobile')} ${vw(2, 'mobile')} rgba(0, 0, 0, 0.3), 0px 0px ${vw(1, 'mobile')} rgba(0, 0, 0, 0.5)`,
+              md: `${vw(1)} ${vw(1)} ${vw(2)} rgba(0, 0, 0, 0.3), 0px 0px ${vw(1)} rgba(0, 0, 0, 0.5)`,
+            },
+            fontSize: rvw(19, 45),
           }}
         >
           {title}
@@ -164,24 +154,27 @@ export default function SubsectionBox({
     <Box
       sx={{
         backgroundColor: 'white',
-        borderRadius: 2,
-        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+        borderRadius: rvw(8, 8),
+        boxShadow: {
+          xs: `0 ${vw(4, 'mobile')} ${vw(20, 'mobile')} rgba(0, 0, 0, 0.1)`,
+          md: `0 ${vw(4)} ${vw(20)} rgba(0, 0, 0, 0.1)`,
+        },
         overflow: 'hidden',
-        mt: index === 0 ? 6 : 1, // Extra margin top for the first gallery section (Application Idea)
+        mt: index === 0 ? rvw(48, 48) : rvw(8, 8),
         ...sx,
       }}
     >
       {/* SubsectionTitle */}
-      <SubsectionTitle 
-        title={title} 
-        language={language} 
-        colorIndex={index} 
+      <SubsectionTitle
+        title={title}
+        language={language}
+        colorIndex={index}
         year={year}
         customGradient={customGradient}
       />
 
       {/* Body content section */}
-      <Box sx={{ p: { xs: 1, sm: 2.5, md: 3 } }}>
+      <Box sx={{ p: rvw(8, 24) }}>
         {/* Custom children content (like buttons) */}
         {children && (
           <Box sx={{
@@ -193,29 +186,29 @@ export default function SubsectionBox({
             {children}
           </Box>
         )}
-        
+
         {/* Default body text only if no images */}
         {body && !children && !section.images && (
           <Typography
-            sx={{ 
+            sx={{
               color: '#432F2F',
-              fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
+              fontSize: rvw(18, 21),
               lineHeight: 1.6,
               textAlign: 'center',
               fontWeight: 500,
-              mb: 3,
+              mb: rvw(24, 24),
             }}
           >
             {body}
           </Typography>
         )}
-        
+
         {/* Images */}
         {section.images && !children && !hideImages && (
-          <Box sx={{ mx: { md: '8px' } }}>
+          <Box sx={{ mx: { md: vw(8) } }}>
             {imageLayout === 'centered-stacked' ? (
               // Two images stacked vertically, centered
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: rvw(16, 16) }}>
                 {section.images.map((src: string, imgIndex: number) => (
                   <Box key={imgIndex} sx={{ width: '100%' }}>
                     <Card>
@@ -239,14 +232,18 @@ export default function SubsectionBox({
                 {section.images.length === 1 && (index === 0 || index === 1) ? (
                   // Single image centered and larger for Application Idea and High Level Overview
                   <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <img
+                    <Box
+                      component="img"
                       src={section.images[0]}
                       alt={title}
-                      style={{
+                      sx={{
                         width: '100%',
                         height: 'auto',
-                        borderRadius: '8px',
-                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                        borderRadius: rvw(8, 8),
+                        boxShadow: {
+                          xs: `0 ${vw(2, 'mobile')} ${vw(8, 'mobile')} rgba(0, 0, 0, 0.1)`,
+                          md: `0 ${vw(2)} ${vw(8)} rgba(0, 0, 0, 0.1)`,
+                        },
                       }}
                     />
                   </Box>
@@ -263,15 +260,15 @@ export default function SubsectionBox({
         {section.images && !children && !hideImages && (
           <>
             {body && (
-              <Box sx={{ mt: 3 }}>
+              <Box sx={{ mt: rvw(24, 24) }}>
                 {Array.isArray(body) ? (
                   <>
                     {/* On xs screens, combine all paragraphs into one */}
-                    <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
-                      <Typography 
-                        sx={{ 
+                    <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+                      <Typography
+                        sx={{
                           color: '#432F2F',
-                          fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
+                          fontSize: rvw(18, 21),
                           lineHeight: 1.6,
                           textAlign: 'center',
                           fontWeight: 500,
@@ -280,15 +277,15 @@ export default function SubsectionBox({
                         {body.join(' ')}
                       </Typography>
                     </Box>
-                    {/* On sm+ screens, keep separate paragraphs */}
-                    <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                      <Stack spacing={1}>
+                    {/* On md+ screens, keep separate paragraphs */}
+                    <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+                      <Stack spacing={rvw(8, 8)}>
                         {body.map((p, i) => (
                           <Typography
                             key={i}
-                            sx={{ 
+                            sx={{
                               color: '#432F2F',
-                              fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
+                              fontSize: rvw(18, 21),
                               lineHeight: 1.6,
                               textAlign: 'center',
                               fontWeight: 500,
@@ -302,9 +299,9 @@ export default function SubsectionBox({
                   </>
                 ) : (
                   <Typography
-                    sx={{ 
+                    sx={{
                       color: '#432F2F',
-                      fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
+                      fontSize: rvw(18, 21),
                       lineHeight: 1.6,
                       textAlign: 'center',
                       fontWeight: 500,
@@ -324,11 +321,11 @@ export default function SubsectionBox({
             {Array.isArray(body) ? (
               <>
                 {/* On xs screens, combine all paragraphs into one */}
-                <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
-                  <Typography 
-                    sx={{ 
+                <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+                  <Typography
+                    sx={{
                       color: '#432F2F',
-                      fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
+                      fontSize: rvw(18, 21),
                       lineHeight: 1.6,
                       textAlign: 'center',
                       fontWeight: 500,
@@ -337,15 +334,15 @@ export default function SubsectionBox({
                     {body.join(' ')}
                   </Typography>
                 </Box>
-                {/* On sm+ screens, keep separate paragraphs */}
-                <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                  <Stack spacing={1}>
+                {/* On md+ screens, keep separate paragraphs */}
+                <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+                  <Stack spacing={rvw(8, 8)}>
                     {body.map((p, i) => (
                       <Typography
                         key={i}
-                        sx={{ 
+                        sx={{
                           color: '#432F2F',
-                          fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
+                          fontSize: rvw(18, 21),
                           lineHeight: 1.6,
                           textAlign: 'center',
                           fontWeight: 500,
@@ -359,9 +356,9 @@ export default function SubsectionBox({
               </>
             ) : (
               <Typography
-                sx={{ 
+                sx={{
                   color: '#432F2F',
-                  fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.3rem' },
+                  fontSize: rvw(18, 21),
                   lineHeight: 1.6,
                   textAlign: 'center',
                   fontWeight: 500,
